@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>UI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+  <style>
+    .demo {
+      overflow: hidden;
+      padding-left: 0 !important;
+      color: #fff;
+      border-radius: 10px;
+    }
+    .demo li {
+      margin-bottom: 0 !important;
+      padding: 10px 30px;
+      list-style: none;
+    }
+    .demo li span {
+      display: block;
+      font-size: 12px;
+      opacity: .6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/ui.png" />UI</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0);">设计类网站</a>
+        <ul class="dropdown">
+          <li><a href="https://ui.cn/">UI 中国</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0);">技术类网站</a>
+        <ul class="dropdown">
+          <li><a href="https://developers.weixin.qq.com/miniprogram/dev">微信小程序</a></li>
+          <li><a href="https://cn.vuejs.org/v2/guide/">Vue.js</a></li>
+          <li><a href="https://element.eleme.cn/#/zh-CN/component/installation">Element</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0);">博客类网站</a>
+        <ul class="dropdown">
+          <li><a href="https://zhihu.com/">知乎</a></li>
+          <li><a href="https://jianshu.com/">简书</a></li>
+          <li><a href="https://segmentfault.com/">思否</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>布局</h1>
+    <div class="row">
+      <div class="col-3">
+        <p class="alert-info">col-3</p>
+      </div>
+      <div class="col-9">
+        <p class="alert-info">col-9</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <p class="alert-info">col-4</p>
+      </div>
+      <div class="col-8">
+        <p class="alert-info">col-8</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <p class="alert-info">col-6</p>
+      </div>
+      <div class="col-6">
+        <p class="alert-info">col-6</p>
+      </div>
+    </div>
+    <h1>色彩</h1>
+    <h2>主色</h2>
+    <div class="row">
+      <div class="col-3">
+        <ul class="demo">
+          <li>brand<span>#42b983</span></li>
+        </ul>
+      </div>
+    </div>
+    <h2>辅助色</h2>
+    <div class="row">
+      <div class="col-3">
+        <ul class="demo">
+          <li>success<span>#42b983</span></li>
+          <li>warning<span>#e6a23c</span></li>
+          <li>danger<span>#f56c6c</span></li>
+          <li>info<span>#909399</span></li>
+        </ul>
+      </div>
+      <div class="col-3">
+        <ul class="demo color-dark">
+          <li>success<span>#f0f9eb</span></li>
+          <li>warning<span>#fdf6ec</span></li>
+          <li>danger<span>#fef0f0</span></li>
+          <li>info<span>#f4f4f5</span></li>
+        </ul>
+      </div>
+      <div class="col-3">
+        <ul class="demo">
+          <li>link<span>#4183c4</span></li>
+          <li>code<span>#c7254e</span></li>
+        </ul>
+      </div>
+    </div>
+    <h2>中性色</h2>
+    <div class="row">
+      <div class="col-3">
+        <ul class="demo">
+          <li>font-dark<span>#303133</span></li>
+          <li>font-base<span>#606266</span></li>
+          <li>font-gray<span>#909399</span></li>
+        </ul>
+      </div>
+      <div class="col-3">
+        <ul class="demo color-dark">
+          <li>bg-deep<span>#f4f4f5</span></li>
+          <li>bg-light<span>#fafafa</span></li>
+          <li>bg-body<span>#f6f8f9</span></li>
+        </ul>
+      </div>
+      <div class="col-3">
+        <ul class="demo color-dark">
+          <li>border-deep<span>#dcdfe6</span></li>
+          <li>border-light<span>#ebeef5</span></li>
+        </ul>
+      </div>
+      <div class="col-3">
+        <ul class="demo color-dark">
+          <li>rgb-40<span>rgba(0, 0, 0, .4)</span></li>
+          <li>rgb-20<span>rgba(0, 0, 0, .2)</span></li>
+          <li>rgb-10<span>rgba(0, 0, 0, .1)</span></li>
+        </ul>
+      </div>
+    </div>
+    <h2>首页色</h2>
+    <div class="row">
+      <div class="col-3">
+        <ul class="demo">
+          <li>index-menu-bg<span>#30333c</span></li>
+          <li>index-menu-color<span>#6b7386</span></li>
+        </ul>
+      </div>
+    </div>
+    <h1>元素</h1>
+    <h2>按钮</h2>
+    <button class="btn-default">默认按钮</button>
+    <button class="btn-info">信息按钮</button>
+    <button class="btn-success">成功按钮</button>
+    <button class="btn-warning">警告按钮</button>
+    <button class="btn-danger">危险按钮</button>
+    <h2>提示</h2>
+    <div class="alert-info">信息提示</div>
+    <div class="alert-success">成功提示</div>
+    <div class="alert-warning">警告提示</div>
+    <div class="alert-error">错误提示</div>
+    <h2>引用</h2>
+    <blockquote>文字</blockquote>
+    <h2>代码</h2>
+    <ol>
+      <li>行内代码：<code>margin-bottom: 10px</code></li>
+      <li>多行代码：</li>
+    </ol>
+    <pre><code class="css">.page-container ul,
+.page-container ol {
+    margin-bottom: 10px;
+    padding-left: 30px;
+}</code></pre>
+    <h2>列表</h2>
+    <div class="row">
+      <div class="col-3">
+        <ul>
+          <li>文字</li>
+          <li>文字</li>
+          <li>文字</li>
+        </ul>
+      </div>
+      <div class="col-3">
+        <ol>
+          <li>文字</li>
+          <li>文字</li>
+          <li>文字</li>
+        </ol>
+      </div>
+    </div>
+    <h2>表格</h2>
+    <table class="table-border table-striped table-hover" data-height="260px">
+      <thead>
+        <tr>
+          <th>表头</th>
+          <th>表头</th>
+          <th>表头</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>表头</th>
+          <td>文字</td>
+          <td>文字</td>
+        </tr>
+        <tr>
+          <th>表头</th>
+          <td>文字</td>
+          <td>文字</td>
+        </tr>
+        <tr>
+          <th>表头</th>
+          <td>文字</td>
+          <td>文字</td>
+        </tr>
+        <tr>
+          <th>表头</th>
+          <td>文字</td>
+          <td>文字</td>
+        </tr>
+        <tr>
+          <th>表头</th>
+          <td>文字</td>
+          <td>文字</td>
+        </tr>
+        <tr>
+          <th>表头</th>
+          <td>文字</td>
+          <td>文字</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>操作</h1>
+    <h2>隐藏块</h2>
+    <p><a data-block="#hideBlock">点击查看</a></p>
+    <div class="alert-info hide" id="hideBlock">文字</div>
+    <h2>对话框</h2>
+    <p><a data-dialog="#dialog">点击查看</a></p>
+    <div class="dialog" id="dialog" title="标题">文字</div>
+    <h1>构建菜单</h1>
+    <ol>
+      <li>根据 <code>page-container</code> 中的 <code>h1</code>, <code>h2</code>, <code>h3</code> 标签自动构建菜单。</li>
+      <li>在 <code>page-sidebar > ul</code> 标签上添加 <code>id="menu"</code> 选择构建菜单的位置。</li>
+    </ol>
+    <h1>参考网站</h1>
+    <ul>
+      <li>设计类网站：参考布局、色彩、字体。</li>
+      <li>技术类网站：菜单固定在页面最左侧，文章固定在菜单右侧。两者间距不宜过大，文章不宜过宽。</li>
+      <li>博客类网站：菜单和文章作为一个整体，在页面中以固定宽度居中，两者左右各占一列。一般菜单靠右，突出显示文章。</li>
+    </ul>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+  <script>
+    $('.demo li').each(function() {
+      const _color = $(this).find('span').text();
+      $(this).css('background-color', _color);
+    });
+  </script>
+</body>
+
+</html>

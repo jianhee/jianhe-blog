@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Git</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/git.png" />Git</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0);">官方资料</a>
+        <ul class="dropdown">
+          <li><a href="https://git-scm.com/">Git 官网</a></li>
+          <li><a href="https://git-scm.com/book/zh/v2">Git 中文文档</a></li>
+          <li><a href="https://git-scm.com/docs">手册</a></li>
+          <li><a href="https://git-scm.com/downloads">下载</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0);">参考资料</a>
+        <ul class="dropdown">
+          <li><a href="https://yiibai.com/git">Git 教程</a></li>
+          <li><a href="https://liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">Git 教程</a></li>
+          <li><a href="https://ruanyifeng.com/blog/2015/08/git-use-process.html">Git 使用规范流程</a></li>
+          <li><a href="https://ruanyifeng.com/blog/2012/07/git.html">Git 分支管理策略</a></li>
+          <li><a href="https://ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">Git 常用命令清单</a></li>
+          <li><a href="https://ruanyifeng.com/blog/2014/06/git_remote.html">Git 远程操作详解</a></li>
+          <li><a href="https://ruanyifeng.com/blog/2015/12/git-workflow.html">Git 工作流程</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>起步</h1>
+    <h2>关于版本控制<a href="https://git-scm.com/book/zh/v2/起步-关于版本控制"></a></h2>
+    <h3 class="h4">集中式版本控制系统</h3>
+    <ul>
+      <li>这类系统，比如 SVN 等，都有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。</li>
+      <li>它的缺点是中央服务器的单点故障。如果宕机，谁都无法提交更新，也就无法协同工作。如果中心数据库所在的磁盘发生损坏，就可能丢失所有数据，包括项目的整个变更历史。</li>
+    </ul>
+    <h3 class="h4">分布式版本控制系统</h3>
+    <ul>
+      <li>这类系统，比如 Git 等，客户端并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。许多这类系统都可以指定和若干不同的远端代码仓库进行交互。籍此，你就可以在同一个项目中，分别和不同工作小组的人相互协作。</li>
+      <li>任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。因为每一次的克隆操作，实际上都是一次对代码仓库的完整备份。</li>
+    </ul>
+    <h3 class="h4">文件格式</h3>
+    <ul>
+      <li>所有的版本控制系统都不支持跟踪二进制格式的文件。</li>
+      <li>文本文件比如 <code>.txt</code>, <code>.html</code> 等，可以跟踪文件内容的变化，比如在具体修改过哪些地方。</li>
+      <li>二进制文件比如而 <code>.doc</code>, <code>.jpg</code> 等，无法跟踪文件内容的变化，只能记录名称、大小等文件信息的改变。</li>
+    </ul>
+    <h2>Git 原理<a href="https://git-scm.com/book/zh/v2/起步-Git-基础"></a></h2>
+    <h3 class="h4">直接记录快照，而非差异比较。</h3>
+    <p>SVN 等大部分系统以文件变更列表的方式存储信息。这类系统将它们保存的信息看作是一组基本文件和每个文件随时间逐步累积的差异，存储每个文件与初始版本的差异。</p>
+    <img data-src="../images/article/git-deltas.png" />
+    <p>Git 更像是把数据看作是对小型文件系统的一组快照。每次你提交更新，或在 Git 中保存项目状态时，它主要对当时的全部文件制作一个快照并保存这个快照的索引。为了高效，如果文件没有修改，Git 不再重新存储该文件，而是只保留一个链接指向之前存储的文件。Git 对待数据更像是一个快照流，存储项目随时间改变的快照。</p>
+    <img data-src="../images/article/git-snapshots.png" />
+    <h3 class="h4">近乎所有操作都是本地执行</h3>
+    <p>在 Git 中的绝大多数操作都只需要访问本地文件和资源，一般不需要来自网络上其它计算机的信息。因为本地磁盘上就有项目的完整历史，所以大部分操作看起来瞬间完成。</p>
+    <p>举个例子，要浏览项目的历史，只需直接从本地数据库中读取。如果想查看当前版本与一个月前的版本之间引入的修改，Git 会查找到一个月前的文件做一次本地的差异计算，而不是由远程服务器处理或从远程服务器拉回旧版本文件再来本地处理。这也意味着你离线时，几乎可以进行任何操作。比如离线时提交修改，直到有网络连接时再上传。</p>
+    <h3 class="h4">Git 保证完整性</h3>
+    <p>Git 中所有数据在存储前都计算校验和，然后以校验和来引用。这意味着不可能在 Git 不知情时更改任何文件内容或目录内容。这个功能建构在 Git 底层，是构成 Git 哲学不可或缺的部分。若你在传送过程中丢失信息或损坏文件，Git 就能发现。</p>
+    <p>Git 用以计算校验和的机制叫做 SHA-1 散列（hash，哈希）。Git 数据库中保存的信息都是以文件内容的哈希值来索引，而不是文件名。</p>
+    <h3 class="h4">Git 一般只添加数据</h3>
+    <p>你执行的 Git 操作，几乎只往 Git 数据库中增加数据。很难让 Git 执行任何不可逆操作，或者让它以任何方式清除数据。未提交更新时有可能丢失或弄乱修改的内容，但是一旦你提交快照到 Git 中，就难以再丢失数据。</p>
+    <h2>Git 状态</h2>
+    <h3 class="h4">工作目录下的文件状态</h3>
+    <ol>
+      <li><b>未跟踪：</b>工作目录中除已跟踪文件以外的所有其它文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有放入暂存区。</li>
+      <li><b>已跟踪：</b>被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能处于未修改、已修改或已放入暂存区。</li>
+    </ol>
+    <h3 class="h4">已跟踪的文件状态</h3>
+    <ol>
+      <li><b>已修改：</b>表示修改了文件，但还没保存到数据库中。</li>
+      <li><b>已暂存：</b>表示对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。</li>
+      <li><b>已提交：</b>表示数据已经安全的保存在本地数据库中。</li>
+    </ol>
+    <img data-src="../images/article/git-lifecycle.png" />
+    <h2>Git 分区</h2>
+    <h3 class="h4">工作区域</h3>
+    <ol>
+      <li><b>工作目录：</b>对项目的某个版本独立提取出来的内容。这些从 Git 仓库的压缩数据库中提取出来的文件，放在磁盘上供你使用或修改。</li>
+      <li><b>暂存区域：</b>一个文件，保存了下次将提交的文件列表信息，一般在 Git 仓库目录中。</li>
+      <li><b>Git 仓库：</b>Git 用来保存项目的元数据和对象数据库的地方。这是 Git 中最重要的部分，从其它计算机克隆仓库时，拷贝的就是这里的数据。</li>
+    </ol>
+    <h3 class="h4">工作流程</h3>
+    <ol>
+      <li>在工作目录中修改文件。</li>
+      <li>暂存文件，将文件的快照放入暂存区域。</li>
+      <li>提交更新，找到暂存区域的文件，将快照永久性存储到 Git 仓库目录。</li>
+    </ol>
+    <img data-src="../images/article/git-areas.png" />
+    <h1>Git 命令</h1>
+    <h2>初次运行前的配置<a href="https://git-scm.com/book/zh/v2/起步-初次运行-Git-前的配置"></a></h2>
+    <ul>
+      <li>安装 Git 后使用 <code>git config</code> 命令来定制 Git 环境。</li>
+      <li>每台计算机上只需要配置一次，程序升级时会保留配置信息。你可以在任何时候再次通过运行命令来修改它们。</li>
+      <li>这些配置变量存储在三个不同的位置，并且每一个级别覆盖上一级别的配置。</li>
+    </ul>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>命令</th>
+          <th>影响范围</th>
+          <th>存储位置</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>git config --system</code></td>
+          <td>设置系统上每一个用户及他们仓库的通用配置</td>
+          <td><code>/etc/gitconfig</code></td>
+        </tr>
+        <tr>
+          <td><code>git config --global</code></td>
+          <td>只针对当前用户</td>
+          <td><code>~/.gitconfig</code> 或者 <code>~/.config/git/config</code></td>
+        </tr>
+        <tr>
+          <td><code>git config</code></td>
+          <td>只针对当前仓库</td>
+          <td><code>当前仓库/.git/config</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>用户信息</h4>
+    <pre><code class="shell">$ git config --global user.name "John Doe"              # 配置姓名
+$ git config --global user.email johndoe@example.com    # 配置邮箱</code></pre>
+    <h4>换行方式</h4>
+    <pre><code class="shell">$ git config --global core.autocrlf true                # 提交LF 检出CRLF
+$ git config --global core.autocrlf input               # 提交LF 检出不转换
+$ git config --global core.autocrlf false               # 提交和检出都不转换</code></pre>
+    <h4>检查配置信息</h4>
+    <pre><code class="shell">$ git config --list     # 检查所有配置
+$ git config user.name  # 检查某一项配置</code></pre>
+    <h2>获取帮助<a href="https://git-scm.com/book/zh/v2/起步-获取帮助"></a></h2>
+    <ul>
+      <li>使用 <code>help</code> 选项，可以找到 Git 命令的使用手册。</li>
+      <li>例如，要想获得 config 命令的手册，可以执行三种方法。</li>
+    </ul>
+    <pre><code class="shell">$ git help config
+$ git config --help
+$ man git-config</code></pre>
+    <h2>创建仓库<a href="https://git-scm.com/book/zh/v2/Git-基础-获取-Git-仓库"></a></h2>
+    <h4>在现有目录中初始化仓库</h4>
+    <ul>
+      <li>在项目目录中使用 <code>git init</code> 命令来初始化一个 Git 仓库。</li>
+      <li>该命令将自动创建一个 <code>.git</code> 子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干。</li>
+      <li>如果你是在一个已经存在文件的文件夹（而不是空文件夹）中初始化 Git 仓库来进行版本控制的话，你应该开始跟踪这些文件并提交。你可通过 <code>git add</code> 命令来实现对指定文件的跟踪，然后执行 <code>git commit</code> 提交。</li>
+    </ul>
+    <pre><code class="shell">$ git init                                  # 初始化仓库
+$ git add LICENSE                           # 跟踪指定文件
+$ git commit -m 'initial project version'   # 提交文件</code></pre>
+    <h4>克隆现有的仓库</h4>
+    <ul>
+      <li>使用 <code>git clone</code> 命令来克隆一个仓库。</li>
+      <li>Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。当你执行克隆命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。</li>
+      <li>该命令会在当前目录下创建一个和远程仓库同名的目录，并在这个目录下初始化一个 <code>.git</code> 文件夹，从远程仓库拉取下所有数据放入 <code>.git</code> 文件夹，然后从中读取最新版本的文件的拷贝。</li>
+      <li>克隆远程仓库的时，也可以自定义本地仓库的名字。</li>
+    </ul>
+    <pre><code class="shell">$ git clone https://github.com/libgit2/libgit2
+$ git clone https://github.com/libgit2/libgit2 mylibgit # 自定义本地仓库的名字</code></pre>
+    <h2>查看仓库</h2>
+    <h4>查看文件的状态<a href="https://git-scm.com/book/zh/v2/Git-基础-记录每次更新到仓库"></a></h4>
+    <ul>
+      <li>使用 <code>git status</code> 命令查看哪些文件处于什么状态，还显示了当前所在分支，并告诉你这个分支同远程服务器上对应的分支没有偏离。</li>
+      <li>使用 <code>-s</code> 或者 <code>--short</code> 选项得到一种更为紧凑的格式输出。</li>
+    </ul>
+    <pre><code class="shell">$ git status
+On branch master                            # 分支名是 “master”
+nothing to commit, working directory clean  # 所有已跟踪文件在上次提交后都未被更改过，并且没有出现任何处于未跟踪状态的新文件
+Untracked files                             # 未跟踪文件
+Changes not staged for commit               # 已修改未暂存
+Changes to be committed                     # 已暂存未提交</code></pre>
+    <h4>查看文件的修改<a href="https://git-scm.com/book/zh/v2/Git-基础-记录每次更新到仓库"></a></h4>
+    <ul>
+      <li>使用 <code>git diff</code> 命令比较工作目录中当前文件和暂存区域快照之间的差异，也就是已修改未暂存的变化。</li>
+      <li>使用 <code>--cached</code> 或者 <code>--staged</code> 选项比较暂存区域和分支之间的差异，也就是已暂存未提交的变化。后者在 Git 1.6.1 及更高版使用。</li>
+    </ul>
+    <pre><code class="shell">$ git diff
+$ git diff --cached
+$ git diff --staged</code></pre>
+    <h4>查看提交历史<a href="https://git-scm.com/book/zh/v2/Git-基础-查看提交历史"></a></h4>
+    <ul>
+      <li>使用 <code>git log</code> 命令查看提交历史。默认不用任何参数的话，该命令会按提交时间列出所有的更新，最近的更新排在最上面。</li>
+      <li>使用 <code>--pretty=oneline</code> 选项将每个提交放在一行显示。它还有一些内建的子选项可以使用，展示的信息各不相同。</li>
+      <li>该命令还有许多选项可以帮助你搜寻你所要找的提交，可以在这里看到最常用的选项<a href="https://git-scm.com/book/zh/v2/Git-基础-查看提交历史"></a>。</li>
+    </ul>
+    <pre><code class="shell">$ git log
+$ git log --pretty=oneline # 在一行显示</code></pre>
+    <h2>记录更新<a href="https://git-scm.com/book/zh/v2/Git-基础-记录每次更新到仓库"></a></h2>
+    <h4>跟踪和暂存</h4>
+    <ul>
+      <li>使用 <code>git add</code> 命令跟踪新文件，或者暂存已修改的文件，还能用于合并时把有冲突的文件标记为已解决状态等。</li>
+      <li>该命令可以理解为添加内容到下一次提交中，而不是将一个文件添加到项目中。</li>
+      <li>该命令使用文件或目录的路径作为参数。如果参数是目录的路径，该命令将递归地跟踪或暂存该目录下的所有文件。</li>
+    </ul>
+    <pre><code class="shell">$ git add README.md
+$ git add README.md index.html  # 暂存多个文件
+$ git add src                   # 暂存目录下的所有文件</code></pre>
+    <h4>提交更新</h4>
+    <ul>
+      <li>使用 <code>git commit</code> 命令提交已暂存的文件。提交时记录的是放在暂存区域的快照，任何还未暂存的仍然保持已修改状态。</li>
+      <li>该命令会启动文本编辑器以便输入本次提交的说明，默认的提交消息包含最后一次运行 <code>git status</code> 的输出。</li>
+      <li>使用 <code>-m</code> 选项，将提交信息与命令放在同一行，可以自定义提交信息。</li>
+      <li>使用 <code>-a</code> 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 <code>git add</code> 步骤。</li>
+    </ul>
+    <pre><code class="shell">$ git commit                # 在文本编辑器中输入提交信息
+$ git commit -m "msg"       # 在命令行中直接输入提交信息
+$ git commit -a -m "msg"    # 跳过使用暂存区域</code></pre>
+    <h4>移除文件</h4>
+    <table class="table-border text-nowrap">
+      <thead>
+        <tr>
+          <th>命令</th>
+          <th>删除位置</th>
+          <th>在工作目录状态</th>
+          <th>在暂存区状态</th>
+          <th>同等命令组合</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>rm</code></td>
+          <td>从本地磁盘删除</td>
+          <td>已删除未暂存</td>
+          <td>无变化</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>git rm</code></td>
+          <td>从本地磁盘和暂存区删除</td>
+          <td>不存在</td>
+          <td>已删除未提交</td>
+          <td><code>rm</code> <code>git add</code></td>
+        </tr>
+        <tr>
+          <td><code>git rm --cache</code></td>
+          <td>从暂存区删除，本地磁盘保留</td>
+          <td>未跟踪状态</td>
+          <td>已删除未提交</td>
+          <td><code>rm</code> <code>git add</code> <code>新建</code></td>
+        </tr>
+        <tr>
+          <td><code>git rm -f</code></td>
+          <td colspan="4">强制删除修改过并且已暂存的文件。<br />这是一种安全特性，用于防止误删还没有添加到快照的数据，这样的数据不能被 Git 恢复。</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre><code class="shell">$ git rm README.md
+$ git rm --cached README.md
+$ git rm -f README.md</code></pre>
+    <h4>移动文件</h4>
+    <ul>
+      <li>使用 <code>git mv</code> 命令重命名文件。</li>
+      <li>Git 并不显式跟踪文件移动操作。如果在 Git 中重命名了某个文件，仓库中存储的元数据并不会体现出这是一次改名操作。不过 Git 会推断出究竟发生了什么，查看状态信息也会看到关于重命名操作的说明。</li>
+    </ul>
+    <pre><code class="shell">$ git mv README.md README</code></pre>
+    <ul>
+      <li>运行该命令相当于运行了以下三条命令。两种方式结果都一样，唯一的区别是一种一条命令，另一种三条命令，直接 <code>git mv</code> 更方便。</li>
+    </ul>
+    <pre><code class="shell">$ mv README.md README   # 在本地磁盘手动重命名
+$ git rm README.md      # 删除旧文件
+$ git add README        # 暂存新文件</code></pre>
+    <h4>忽略文件</h4>
+    <ul>
+      <li>一般我们总会有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。在这种情况下，我们可以创建一个 <code>.gitignore</code> 文件，列出要忽略的文件模式。</li>
+      <li>官方文档提供了 <code>.gitignore</code> 文件的格式规范<a href="https://git-scm.com/book/zh/v2/Git-基础-记录每次更新到仓库"></a>。</li>
+      <li>GitHub 有一个十分详细的针对数十种项目及语言的 <code>.gitignore</code> 文件列表 <a href="https://github.com/github/gitignore"></a>。</li>
+    </ul>
+    <h2>撤销操作<a href="https://git-scm.com/book/zh/v2/Git-基础-撤消操作"></a></h2>
+    <h4>重新提交</h4>
+    <ul>
+      <li>使用 <code>git commit --amend</code> 命令重新提交上次提交漏掉的文件，或者写错的提交信息。</li>
+      <li>该命令会将暂存区中的文件提交。如果文件没有修改，那么快照会保持不变，只会修改提交信息。新的提交将代替上次提交的结果，最终只会有一个提交。</li>
+      <li>运行命令，会启动文本编辑器，可以看到之前的提交信息。编辑后保存会覆盖原来的提交信息。</li>
+      <li>使用 <code>-m</code> 选项可以直接提交暂存的文件和新的信息，不用启动文本编辑器。</li>
+    </ul>
+    <pre><code class="shell">$ git commit --amend                  # 启动文本编辑器中重新编辑
+$ git commit --amend -m "新的提交信息" # 在命令行中直接编辑</code></pre>
+    <h4>撤消对文件的修改</h4>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>命令</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>git reset</code></td>
+          <td>撤消暂存区的修改，但不会撤消工作目录中未暂存的修改。</td>
+          <td>
+            <ol>
+              <li>不带参数：将所有文件恢复到上次提交的版本</li>
+              <li>版本号：恢复到指定提交</li>
+              <li>文件名：恢复指定文件</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>git reset --hard</code></td>
+          <td>同时撤消暂存区和工作目录中的修改。</td>
+          <td>
+            <ol>
+              <li>不带参数</li>
+              <li>版本号</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>git checkout -- [file]</code></td>
+          <td>撤消工作目录中的修改，不会撤消暂存区的修改。</td>
+          <td>
+            <ol>
+              <li>文件名：不能省略，将指定文件恢复到上次提交的版本。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>git checkout [branch]</code></td>
+          <td>切换分支</td>
+          <td>
+            <ol>
+              <li>分支名</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pre><code class="shell">$ git reset                     # 不带参数
+$ git reset 3e1609              # 指定提交
+$ git reset 3e1609 README.md    # 指定提交和文件
+$ git reset --hard              # 不带参数
+$ git reset --hard 3e1609       # 指定提交
+$ git checkout -- README.md     # 指定文件
+$ git checkout master           # 切换分支</code></pre>
+    <h1>远程仓库<a href="https://git-scm.com/book/zh/v2/Git-基础-远程仓库的使用"></a></h1>
+    <h2>传输协议<a href="https://git-scm.com/book/zh/v2/服务器上的-Git-协议"></a></h2>
+    <table>
+      <tr>
+        <td>SSH 协议</td>
+        <td>传输数据经过授权和加密。不能匿名访问，读写都需要设置 SSH 公钥授权，但是传输高效。</td>
+      </tr>
+      <tr>
+        <td class="text-nowrap">智能 HTTP 协议</td>
+        <td>传输数据经过授权和加密。允许匿名读取，写入可以使用各种 HTTP 验证机制，比如用户名和密码授权，无需设置 SSH 公钥。Git 1.6.6 版本使用。</td>
+      </tr>
+      <tr>
+        <td>哑 HTTP 协议</td>
+        <td>通常是只读模式的。Git 1.6.6 版本之前使用。</td>
+      </tr>
+      <tr>
+        <td>Git 协议</td>
+        <td>网络传输协议里最快的，但是缺乏授权机制。</td>
+      </tr>
+      <tr>
+        <td>本地协议</td>
+        <td>其中的远程版本库就是硬盘内的另一个目录。</td>
+      </tr>
+    </table>
+    <pre><code class="shell">$ git clone user@server:project.git             # SSH 协议
+$ git clone ssh://user@server/project.git       # SSH 协议
+$ git clone http://example.com/gitproject.git   # HTTP 协议
+$ git clone /opt/git/project.git                # 本地协议
+$ git clone file:///opt/git/project.git         # 本地协议
+</code></pre>
+    <h4>使用 SSH 协议连接远程仓库<a href="https://help.github.com/articles/connecting-to-github-with-ssh/"></a></h4>
+    <ol>
+      <li>在用户目录使用 <code>ssh-keygen -t rsa -C </code>命令和 <code>"email"</code> 参数来生成新的 SSH 秘钥，运行后回车选择默认值即可。</li>
+      <li>该命令会自动创建一个 <code>.ssh</code> 子目录，这个子目录含有两个文件：私钥 <code>id_rsa</code> 和公钥 <code>id_rsa.pub</code>。</li>
+      <li>将生成的公钥添加到自己的远程仓库秘钥列表中。第一次连接验证会有一个警告，直接确认即可，以后的操作不会再有警告。</li>
+    </ol>
+    <pre><code class="shell">$ ssh-keygen -t rsa -C "your_email@example.com"</code></pre>
+    <h2>查看远程仓库</h2>
+    <ul>
+      <li>使用 <code>git remote</code> 命令，查看已经配置的远程仓库服务器。它会列出你指定的每一个远程服务器的简写。</li>
+      <li>使用 <code>-v</code> 选项，会显示远程仓库的简写与其对应的 URL。</li>
+      <li>使用 <code>show</code> 选项和 <code>[remote-name]</code> 参数，可以查看某一个远程仓库的更多信息。</li>
+      <li>克隆仓库后，Git 会自动将其添加为远程仓库，并默认以 “origin” 作为简写。还可以使用命令添加其它远程仓库。</li>
+    </ul>
+    <pre><code class="shell">$ git remote
+origin
+$ git remote -v
+origin	https://github.com/schacon/ticgit (fetch)
+origin	https://github.com/test/ticgit (push)
+$ git remote show origin</code></pre>
+    <h2>管理远程仓库</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>命令</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tr>
+        <td><code>git remote add</code></td>
+        <td>添加一个新的远程仓库。一个本地仓库可以添加多个远程仓库。</td>
+        <td>
+          <ol>
+            <li>自定义的远程仓库的简写</li>
+            <li>远程仓库的地址，之后可以使用简写代替整个 URL 来运行其它命令</li>
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td><code>git remote rm</code></td>
+        <td>移除一个远程仓库</td>
+        <td>
+          <ol>
+            <li>远程仓库的名称</li>
+          </ol>
+        </td>
+      </tr>
+      <tr>
+        <td><code>git remote rename</code></td>
+        <td>修改一个远程仓库的简写名</td>
+        <td>
+          <ol>
+            <li>当前名称</li>
+            <li>新的名称</li>
+          </ol>
+        </td>
+      </tr>
+    </table>
+    <pre><code class="shell">$ git remote add pb https://github.com/paulboone/ticgit
+$ git remote rm paul
+$ git remote rename pb paul                          # 把 pb 重命名为 paul</code></pre>
+    <h2>拉取和推送</h2>
+    <table class="table-border text-nowrap">
+      <thead>
+        <tr>
+          <th>命令</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>git fetch</code></td>
+          <td>将远程仓库中的所有数据拉取到本地仓库，但是不会自动合并或修改当前分支</td>
+          <td>
+            <ol>
+              <li>不带参数：拉取所有远程仓库</li>
+              <li>远程仓库简称：拉取指定仓库</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>git pull</code></td>
+          <td>将远程仓库中的所有数据拉取到本地仓库，并且会自动合并远程分支到当前分支</td>
+          <td>
+            <ol>
+              <li>不带参数：将默认远程仓库的默认远程分支合并到当前分支</li>
+              <li>远程仓库名称：</li>
+              <li>远程分支名称：</li>
+              <li>本地分支名称：</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>git push</code></td>
+          <td>将本地仓库的数据推送到远程仓库</td>
+          <td>
+            <ol>
+              <li>不带参数：将当前分支推送到默认远程仓库的默认远程分支</li>
+              <li>远程仓库名称：推送到指定的远程仓库</li>
+              <li>本地分支名称：将本地仓库指定分支推送到远程仓库</li>
+              <li>远程分支名称：推送到指定的远程分支</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>git push -u</code></td>
+          <td>如果当前分支与多个远程仓库存在追踪关系，可以指定一个默认的远程仓库，之后推送时可以不加任何参数。</td>
+          <td>
+            <ol>
+              <li>远程仓库名称：指定的默认远程仓库</li>
+              <li>本地分支名称：指定的默认本地分支</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pre><code class="shell">$ git fetch origin
+$ git fetch                     # 参数用法与 git pull 相同
+$ git pull origin master:master # 从远程仓库 origin 的 master 分支拉取，然后合并到本地 master 分支
+$ git pull origin master        # 省略本地分支名称，合并到当前分支
+$ git pull origin               # 省略远程分支名称，当前分支已跟踪远程分支时可用
+$ git pull                      # 省略远程仓库名称，当前分支只跟踪一个远程分支时可用
+$ git push -u origin master     # 默认把本地 master 分支推送到远程仓库 origin，并自动创建远程分支 master
+$ git push                      # 参数用法与 git pull 相同
+
+$ git push -u origin master
+$ git push -f</code></pre>
+    <h2>分界线</h2>
+    <h1>Git 分支</h1>
+    <h2>打标签</h2>
+    <p>标签总是和某个提交挂钩。如果这个提交既出现在 master 分支，又出现在 dev 分支，那么在这两个分支上都可以看到这个标签。</p>
+    <ol>
+      <li><code>git tag</code> 以字母顺序列出标签。添加 <code>-l</code> 选项加参数可以查找包含指定内容的标签。</li>
+      <li><code>git show &lt;tagname&gt;</code> 查看标签信息。</li>
+      <li>
+        <p><code>git tag &lt;tagname&gt;</code> 创建轻量标签。默认在当前分支的最新提交上创建，添加 <code>commitid</code> 参数在指定提交上创建。</p>
+        <p><code>git tag -a &lt;tagname&gt;</code> 创建附注标签。必须添加 <code>-m</code> 选项加参数指定说明信息。</p>
+      </li>
+      <li><code>git tag -d</code> 删除标签。添加 <code>tagname</code> 参数删除指定标签，添加 <code>--tags</code> 选项删除所有标签。</li>
+      <li><code>git push</code> 推送标签到远程仓库。添加 <code>tagname</code> 参数推送指定标签，添加 <code>--tags</code> 选项推送所有标签。</li>
+    </ol>
+    <pre><code class="shell">$ git tag
+$ git tag -l 'v1.0'
+$ git show v1.0
+$ git tag v1.1
+$ git tag v1.2 2e4332
+$ git tag -a v1.3 -m 'desc'
+$ git tag -d v1.3
+$ git tag -d --tags
+$ git push origin v1.4
+$ git push origin --tags</code></pre>
+    <h2>分支原理</h2>
+    <table class="table-border text-nowrap">
+      <thead>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+          <th>示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>分支本质</th>
+          <td>
+            <p>Git 的分支，其实本质上仅仅是指向提交对象的可变指针。<br />Git 初始化后默认创建 master 分支，它指向最后一个提交对象，每次提交操作时，它都会自动向前移动。<br />Git 还有一个名为 HEAD 的特殊指针，它指向当前所在的本地分支，可以理解为当前分支的别名。</p>
+          </td>
+          <td>
+            <p class="color-gray">分支及其提交历史</p>
+            <img data-src="../images/article/git-branch-and-history.png" width="300px" />
+          </td>
+        </tr>
+        <tr>
+          <th>分支创建</th>
+          <td>Git 创建新分支时，只是创建一个可以移动的新的指针，指向当前所在的提交对象。<br />Git 创建新分支后，并不会自动切换到新分支中去，你仍然在 master 分支上。</td>
+          <td>
+            <p class="color-gray">两个指向相同提交历史的分支</p>
+            <img data-src="../images/article/git-head-to-master.png" width="300px" />
+          </td>
+        </tr>
+        <tr>
+          <th>分支切换</th>
+          <td>Git 切换分支时，就是改变 HEAD 指针的指向。</td>
+          <td>
+            <p class="color-gray">HEAD 指向当前所在的分支</p>
+            <img data-src="../images/article/git-head-to-testing.png" width="300px" />
+          </td>
+        </tr>
+        <tr>
+          <th>分支提交</th>
+          <td>在新的分支上创建提交后，testing 分支向前移动，但是 master 分支不变，HEAD 会跟随 testing 分支向前移动。</td>
+          <td>
+            <p class="color-gray">HEAD 分支随着提交操作自动向前移动</p>
+            <img data-src="../images/article/git-advance-testing.png" width="300px" />
+          </td>
+        </tr>
+        <tr>
+          <th>分叉历史</th>
+          <td>在两个分支分别创建不同的提交，两个分支都会向前移动。</td>
+          <td>
+            <p class="color-gray">项目分叉历史</p>
+            <img data-src="../images/article/git-advance-master.png" width="300px" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>操作分支</h2>
+    <div class="row">
+      <ol class="col-6">
+        <li><code>git branch</code> 查看所有分支，当前分支前面会标一个 * 号。</li>
+        <li><code>git branch &lt;name&gt;</code> 创建分支</li>
+        <li><code>git checkout &lt;name&gt;</code> 切换分支</li>
+        <li><code>git checkout -b &lt;name&gt;</code> 创建并切换分支。如果存在分支则切换到分支，如果不存在则先创建再切换。</li>
+        <li><code>git merge &lt;name&gt;</code> 将指定分支合并到当前分支。</li>
+        <li><code>git merge --no-ff</code> 合并时禁用 <code>Fast-forward</code> 模式。</li>
+        <li><code>git branch -d &lt;name&gt;</code> 删除分支</li>
+        <li><code>git branch -D &lt;name&gt;</code> 强行删除没有合并过的分支</li>
+      </ol>
+      <div class="col-6">
+        <pre><code class="shell">$ git branch
+  dev
+* master
+$ git branch dev
+$ git checkout dev
+$ git checkout -b dev
+$ git merge dev
+$ git merge --no-ff -m "提交信息" dev
+$ git branch -d dev</code></pre>
+      </div>
+    </div>
+    <h2>操作工作区</h2>
+    <p>如果修复 bug 时 dev 分支上工作区的修改还没提交，可以临时储存工作区并清空未提交的修改，然后切换到 master 创建新的 bug 分支，修复后合并删除，然后切换到 dev 分支再恢复工作区继续工作。</p>
+    <div class="row">
+      <ol class="col-6">
+        <li><code>git stash</code> 储存工作区并清空未提交的修改</li>
+        <li><code>git stash list</code> 查看储存的工作区</li>
+        <li><code>git stash pop</code> 恢复并删除储存的工作区，默认第一个，可以指定其它的</li>
+        <li><code>git stash apply</code> 恢复储存的工作区，但不删除</li>
+        <li><code>git stash drop</code> 删除储存的工作区</li>
+        <li><code>git stash clear</code> 删除所有储存的工作区</li>
+      </ol>
+      <div class="col-6">
+        <pre><code>$ git stash
+$ git stash list
+stash@{0}: WIP on dev: cb9d781 1
+stash@{1}: WIP on dev: cb9d781 1
+$ git stash pop
+$ git stash pop stash@{1}
+$ git stash apply stash@{1}
+$ git stash drop stash@{1}
+$ git stash drop stash@{1}</code></pre>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

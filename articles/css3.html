@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>CSS 3</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/css3.png" />CSS 3</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0);">官方资料</a>
+        <ul class="dropdown">
+          <li><a href="">CSS</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>CSS选择器</h1>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>分类</th>
+          <th>选择器示例</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="4">常用选择器</th>
+          <td><code>*</code></td>
+          <td>通配符选择器，选择所有元素，或者某个元素中的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>.class</code></td>
+          <td>类选择器，选择 class="class" 的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>#id</code></td>
+          <td>id 选择器，选择 id="id" 的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>p</code></td>
+          <td>元素选择器，选择所有 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <th rowspan="5">组合选择器</th>
+          <td><code>div, p</code></td>
+          <td>群组选择器，选择所有 &lt;div&gt; 元素和所有 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>div p</code></td>
+          <td>后代选择器，选择 &lt;div&gt; 元素内部的所有 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>div > p</code></td>
+          <td>子代选择器，选择父元素为 &lt;div&gt; 元素的所有 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>div + p</code></td>
+          <td>同级相邻选择器，选择相同父元素中 &lt;div&gt; 元素之后（不是内部）紧跟着的第一个同级 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>div ~ p</code></td>
+          <td>同级全体选择器，选择相同父元素中 &lt;div&gt; 元素之后（不是内部）的所有 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <th rowspan="8">属性选择器</th>
+          <td><code>[title]</code></td>
+          <td>选择带有 title 属性的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>[title=hello]</code></td>
+          <td>选择 title 属性值为 "hello" 的所有元素，"hello" 和属性值必须完全匹配。</td>
+        </tr>
+        <tr>
+          <td><code>[title~=hello]</code></td>
+          <td>选择 title 属性值中包含 "hello" 的所有元素，"hello" 和某个属性值必须完全匹配。</td>
+        </tr>
+        <tr>
+          <td><code>[title|=hello]</code></td>
+          <td>选择 title 属性值为 "hello" 或者以 "hello-" 开头的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>p:lang(en)</code></td>
+          <td>选择 lang 属性值为 "en" 或者以 "en" 开头的每个 &lt;p&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>[title^=hello]</code></td>
+          <td>选择 title 属性值以 "hello" 开头的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>[title$=hello]</code></td>
+          <td>选择 title 属性值以 "hello" 结尾的所有元素。</td>
+        </tr>
+        <tr>
+          <td><code>[title*=hello]</code></td>
+          <td>选择 title 属性值中包含 "hello" 的所有元素。</td>
+        </tr>
+        <tr>
+          <th rowspan="4">伪元素选择器</th>
+          <td><code>p::before</code></td>
+          <td>在每个 &lt;p&gt; 元素的内容之前插入内容。</td>
+        </tr>
+        <tr>
+          <td><code>p::after</code></td>
+          <td>在每个 &lt;p&gt; 元素的内容之后插入内容。</td>
+        </tr>
+        <tr>
+          <td><code>p::first-letter</code></td>
+          <td>选择每个 &lt;p&gt; 元素的首字母。</td>
+        </tr>
+        <tr>
+          <td><code>p::first-line</code></td>
+          <td>选择每个 &lt;p&gt; 元素的首行。</td>
+        </tr>
+        <tr>
+          <th rowspan="10">伪类选择子元素</th>
+          <td><code>p:nth-child(2)</code></td>
+          <td>选择相同父元素中所有同级子元素中的第二个 &lt;p&gt; 元素。如果不指定 &lt;p&gt; 元素，会选择第一个子元素。如果 &lt;p&gt; 元素不是第一个子元素，就不会选择。</td>
+        </tr>
+        <tr>
+          <td><code>p:nth-last-child(2)</code></td>
+          <td>同上，从最后一个子元素开始计数。<br /></td>
+        </tr>
+        <tr>
+          <td><code>p:first-child</code></td>
+          <td>同上，选择第一个子元素。等同于 <code>p:nth-child(1)</code>。</td>
+        </tr>
+        <tr>
+          <td><code>p:last-child</code></td>
+          <td>同上，选择最后一个子元素。等同于 <code>p:nth-last-child(1)</code>。</td>
+        </tr>
+        <tr>
+          <td><code>p:only-child</code></td>
+          <td>同上，选择唯一子元素。如果有多个子元素，所有元素都不会选择。</td>
+        </tr>
+        <tr>
+          <td><code>p:nth-of-type(2)</code></td>
+          <td>选择相同父元素中所有同级 &lt;p&gt; 元素中的第二个元素。如果不指定 &lt;p&gt; 元素类型，会选择每个类型的第一个元素。</td>
+        </tr>
+        <tr>
+          <td><code>p:nth-last-of-type(2)</code></td>
+          <td>同上，从指定类型的最后一个子元素开始计数。<br /></td>
+        </tr>
+        <tr>
+          <td><code>p:first-of-type</code></td>
+          <td>同上，选择指定类型的第一个子元素。等同于 <code>p:nth-of-type(1)</code>。</td>
+        </tr>
+        <tr>
+          <td><code>p:last-of-type</code></td>
+          <td>同上，选择指定类型的最后一个子元素。等同于 <code>p:nth-last-child(1)</code>。</td>
+        </tr>
+        <tr>
+          <td><code>p:only-of-type</code></td>
+          <td>同上，选择指定类型的唯一元素。如果子元素中有多个 &lt;p&gt; 元素，所有 &lt;p&gt; 元素都不会选择。</td>
+        </tr>
+        <tr>
+          <th rowspan="1">伪类选择链接</th>
+          <td><code>a:link</code> <code>a:visited</code> <code>a:hover</code> <code>a:active</code></td>
+          <td>选择所有未访问/已访问/活动/悬浮的 &lt;a&gt; 元素。</td>
+        </tr>
+        <tr>
+          <th rowspan="4">伪类选择表单元素</th>
+          <td><code>input:focus</code></td>
+          <td>选择获得焦点的 &lt;input&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>input:enabled</code></td>
+          <td>选择每个启用的 &lt;input&gt; 元素。</td>
+        </tr>
+        <tr>
+          <td><code>input:disabled</code></td>
+          <td>选择每个禁用的 &lt;input&gt; 元素</td>
+        </tr>
+        <tr>
+          <td><code>input:checked</code></td>
+          <td>选择每个被选中的 &lt;input&gt; 元素。</td>
+        </tr>
+        <tr>
+          <th rowspan="5">其它伪类选择器</th>
+          <td><code>:root</code></td>
+          <td>选择文档的根元素。</td>
+        </tr>
+        <tr>
+          <td><code>p:empty</code></td>
+          <td>选择没有子元素的每个 &lt;p&gt; 元素（包括文本节点）。</td>
+        </tr>
+        <tr>
+          <td><code>#news:target</code></td>
+          <td>选择当前活动的 #news 元素。</td>
+        </tr>
+        <tr>
+          <td><code>:not(p)</code></td>
+          <td>选择非 &lt;p&gt; 元素的每个元素。</td>
+        </tr>
+        <tr>
+          <td><code>::selection</code></td>
+          <td>选择被用户选取的元素部分。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

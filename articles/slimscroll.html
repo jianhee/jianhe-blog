@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>slimScroll.js</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><span>S</span>slimScroll.js</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0)">官方资料</a>
+        <ul class="dropdown">
+          <li><a href="https://rocha.la/jQuery-slimScroll">官网</a></li>
+          <li><a href="https://github.com/rochal/jQuery-slimScroll">Github</a></li>
+          <li><a href="https://bootcdn.cn/jQuery-slimScroll/">CDN</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>起步</h1>
+    <h2>Libs</h2>
+    <pre><code class="html">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"&gt;&lt;/script&gt;</code></pre>
+    <h2>JavaScript</h2>
+    <pre><code class="html">&lt;script&gt;
+    // resize 不会自动 reset 需要重新初始化
+    $('#slimscroll').slimScroll();
+&lt;/script&gt;</code></pre>
+    <h1>配置</h1>
+    <h2>默认配置</h2>
+    <pre><code class="javascript">$("#slimscroll").slimScroll({
+    width: 'none',                  // 可滚动区域宽度
+    height: '250px',                // 可滚动区域高度，auto自适应父元素高度
+
+    alwaysVisible: false,           // 组件默认隐藏，鼠标经过可滚动区域时显示
+    disableFadeOut: false,          // 鼠标静止不动或离开时隐藏组件，值为 true 时鼠标静止不动不会隐藏，离开时才会隐藏
+
+    wrapperClass: 'slimScrollDiv',  // 组件外包div类名
+    size: '7px',                    // 组件宽度
+    position: 'right',              // 组件位置，值为 left/right
+    distance: '1px',                // 组件与侧边之间的距离
+
+    railClass: 'slimScrollRail',    // 轨道div类名
+    railVisible: false,             // 轨道默认隐藏
+    railDraggable: true,            // 滚动条默认可拖动
+    railColor: '#333',              // 轨道颜色
+    railOpacity: .2,                // 轨道透明度
+    railBorderRadius: '7px',        // 轨道圆角
+
+    barClass: 'slimScrollBar',      // 滚动条div类名
+    color: '#000',                  // 滚动条颜色
+    opacity: .4,                    // 滚动条透明度
+    borderRadius: '7px',            // 滚动条圆角
+
+    start: 'top',                   // 滚动开始位置: top/bottom/$('selector')
+    allowPageScroll: false,         // 滚动条到达顶端/底端时，默认不会滚动窗口
+    wheelStep: 20,                  // 使用鼠标滑动时滚动条滚动量
+    touchScrollStep: 200            // 使用手势滑动时滚动条滚动量
+});</code></pre>
+    <h2>绑定事件</h2>
+    <h4>动作触发</h4>
+    <pre><code class="javascript">$('#btn').click(function() {
+    $('#slimscroll').slimScroll({
+        scrollBy: '50px',   // 滚动指定的距离
+        scrollTo: '50px'    // 滚动到与顶部指定距离的位置
+    });
+})</code></pre>
+    <h4>滚动触发</h4>
+    <pre><code class="javascript">// 滚动到顶部返回 pos = top
+// 滚动到底部返回 pos = bottom
+$('#slimscroll').slimScroll().bind('slimscroll', function(e, pos){
+    // do something...
+    if(pos === 'bottom'){
+        // do something...
+    }
+});</code></pre>
+    <h1>示例</h1>
+    <h2>Deafult</h2>
+    <div class="row">
+      <div class="col-6">
+        <pre><code class="javascript">// Deafult
+$('#testDeafult').slimscroll();</code></pre>
+      </div>
+      <div class="col-6">
+        <div class="alert-warning">
+          <div class="slimscroll" id="testDeafult"></div>
+        </div>
+      </div>
+    </div>
+    <h2>Basic</h2>
+    <div class="row">
+      <div class="col-6">
+        <pre><code class="javascript">// Basic
+$('#testBasic').slimscroll({
+    width: '100%',
+    height: '500px',
+
+    alwaysVisible: true,
+
+    size: '15px',
+    position: 'left',
+    distance: '10px',
+
+    railVisible: true,
+    railDraggable: false,
+    railColor: '#000',
+    railOpacity: 0.8,
+    railBorderRadius: '0',
+
+    color: '#c00',
+    opacity: 0.8,
+    borderRadius: '0',
+
+    start: 'top',
+    allowPageScroll: false,
+    wheelStep: 50,
+});</code></pre>
+      </div>
+      <div class="col-6">
+        <div class="alert-warning">
+          <div class="slimscroll" id="testBasic" style="padding-left: 60px;"></div>
+        </div>
+      </div>
+    </div>
+    <h2>Event</h2>
+    <div class="row">
+      <div class="col-6">
+        <pre><code class="javascript">// scrollBy
+$('#scrollUp').click(function() {
+    $('#testEvent').slimScroll({
+        scrollBy: '-50px'
+    });
+});
+$('#scrollDown').click(function() {
+    $('#testEvent').slimScroll({
+        scrollBy: '50px'
+    });
+});
+
+// scrollTo
+$('#scrollUpTo').click(function() {
+    $('#testEvent').slimScroll({
+        scrollTo: '20px'
+    });
+});
+$('#scrollDownTo').click(function() {
+    $('#testEvent').slimScroll({
+        scrollTo: '300px'
+    });
+});
+
+// scroll event
+$('#testEvent').slimscroll().bind('slimscroll', function(e, pos) {
+    $('#testEventDiv').append('滚动到 ' + pos + '&lt;br&gt;');
+});</code></pre>
+      </div>
+      <div class="col-6">
+        <div class="alert-warning slimscroll" id="testEvent"></div>
+        <div class="mt-10 mb-10">
+          <button class="btn-default" id="scrollUp">向上滚动50px</button>
+          <button class="btn-default" id="scrollUpTo">滚动到顶部下方20px</button>
+        </div>
+        <div class="mt-10 mb-10">
+          <button class="btn-default" id="scrollDown">向下滚动50px</button>
+          <button class="btn-default" id="scrollDownTo">滚动到顶部下方300px</button>
+        </div>
+        <div class="alert-warning" id="testEventRes"></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+  <script src="../scripts/article.js"></script>
+  <script>
+    // add text
+    $('.slimscroll').html(`
+            <p>故事的小黄花 从出生那年就飘着</p>
+            <p>童年的荡秋千 随记忆一直晃到现在</p>
+            <p>Re So So Si Do Si La</p>
+            <p>So La Si Si Si Si La Si La So</p>
+            <p>吹着前奏 望着天空</p>
+            <p>我想起花瓣 试着掉落</p>
+            <p>为你翘课的那一天</p>
+            <p>花落的那一天</p>
+            <p>教室的那一间 我怎么看不见</p>
+            <p>消失的下雨天 我好想再淋一遍</p>
+            <p>没想到 失去的勇气我还留着</p>
+            <p>好想再问一遍 你会等待还是离开</p>
+            <p>刮风这天 我试过握着你手</p>
+            <p>但偏偏 雨渐渐</p>
+            <p>大到我看你不见</p>
+            <p>还要多久 我才能在你身边</p>
+            <p>等到放晴的那天</p>
+            <p>也许我会比较好一点</p>
+            <p>从前从前 有个人爱你很久</p>
+            <p>但偏偏 风渐渐</p>
+            <p>把距离吹得好远</p>
+            <p>好不容易 又能再多爱一天</p>
+            <p>但故事的最后</p>
+            <p>你好像还是说了 拜拜</p>
+            <p>为你翘课的那一天</p>
+            <p>花落的那一天</p>
+            <p>教室的那一间 我怎么看不见</p>
+            <p>消失的下雨天 我好想再淋一遍</p>
+            <p>没想到 失去的勇气我还留着</p>
+            <p>好想再问一遍</p>
+            <p>你会等待还是离开</p>
+            <p>但故事的最后</p>
+            <p>你好像还是说了 拜拜</p>
+            <p>刮风这天 我试过握着你手</p>
+            <p>但偏偏 雨渐渐</p>
+            <p>大到我看你不见</p>
+            <p>还要多久 我才能在你身边</p>
+            <p>等到放晴的那天</p>
+            <p>也许我会比较好一点</p>
+            <p>从前从前 有个人爱你很久</p>
+            <p>偏偏 风渐渐</p>
+            <p>把距离吹得好远</p>
+            <p>好不容易 又能再多爱一天</p>
+            <p>但故事的最后</p>
+            <p>你好像还是说了 拜拜</p>
+            <p>刮风这天 我试过握着你手</p>
+            <p>但偏偏 雨渐渐</p>
+            <p>大到我看你不见</p>
+            <p>还要多久 我才能够在你身边</p>
+            <p>等到放晴那天</p>
+            <p>也许我会比较好一点</p>
+            <p>从前从前 有个人爱你很久</p>
+            <p>但偏偏 风渐渐</p>
+            <p>把距离吹得好远</p>
+            <p>好不容易 又能再多爱一天</p>`);
+
+    // Deafult
+    $('#testDeafult').slimscroll();
+
+    // Basic
+    $('#testBasic').slimscroll({
+      width: '100%',
+      height: '500px',
+
+      alwaysVisible: true,
+
+      size: '15px',
+      position: 'left',
+      distance: '10px',
+
+      railVisible: true,
+      railDraggable: false,
+      railColor: '#000',
+      railOpacity: 0.8,
+      railBorderRadius: '0',
+
+      color: '#c00',
+      opacity: 0.8,
+      borderRadius: '0',
+
+      start: 'top',
+      allowPageScroll: false,
+      wheelStep: 50
+    });
+
+    // scrollBy
+    $('#scrollUp').click(() => {
+      $('#testEvent').slimScroll({
+        scrollBy: '-50px'
+      });
+    });
+    $('#scrollDown').click(() => {
+      $('#testEvent').slimScroll({
+        scrollBy: '50px'
+      });
+    });
+
+    // scrollTo
+    $('#scrollUpTo').click(() => {
+      $('#testEvent').slimScroll({
+        scrollTo: '20px'
+      });
+    });
+    $('#scrollDownTo').click(() => {
+      $('#testEvent').slimScroll({
+        scrollTo: '300px'
+      });
+    });
+
+    // scroll event
+    $('#testEvent')
+      .slimscroll()
+      .bind('slimscroll', (e, pos) => {
+        $('#testEventRes').append(`滚动到 ${pos}<br>`);
+      });
+  </script>
+</body>
+
+</html>

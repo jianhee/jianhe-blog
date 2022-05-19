@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>SVG</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shotcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/svg.png" />SVG</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0);">参考资料</a>
+        <ul class="dropdown">
+          <li><a href="https://www.ruanyifeng.com/blog/2018/08/svg.html">阮一峰</a></li>
+          <li><a href="https://www.w3school.com.cn/svg/index.asp">W3school</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>概述</h1>
+    <h2>简介</h2>
+    <ul>
+      <li>SVG 全称是可缩放矢量图（Scalable Vector Graphics）。</li>
+      <li>SVG 是一种基于 XML 语法的图像格式，使用代码描述图像的形状，本质上是文本文件。</li>
+    </ul>
+    <h2>使用方式</h2>
+    <ol>
+      <li>使用 <code>&lt;svg&gt;</code> 标签，将代码直接写在 HTML 文档中，使其成为 DOM 的一部分，这样可以直接用 JavaScript 和 CSS 进行操作。</li>
+      <li>将代码写在独立的 <code>.svg</code> 文件中，然后使用 <code>&lt;iframe&gt;</code> <code>&lt;img&gt;</code> 等标签插入 HTML 文档中。</li>
+      <li>在 CSS 中也可以使用 <code>.svg</code> 文件。</li>
+      <li><code>.svg</code> 文件还可以转为 BASE64 编码，然后作为 Data URI 写入网页。</li>
+    </ol>
+    <div class="row">
+      <div class="col-6">
+        <pre><code class="xml">&lt;svg viewBox="...">...&lt;svg>
+&lt;iframe src="icon.svg">&lt;/iframe>
+&lt;img src="icon.svg">
+&lt;img src="data:image/svg+xml;base64,[data]"></code></pre>
+      </div>
+      <div class="col-6">
+        <pre><code class="css">.logo {
+    background: url(icon.svg);
+}</code></pre>
+      </div>
+    </div>
+    <h1>语法</h1>
+    <h2>基础语法</h2>
+    <ul>
+      <li>所有的开启标签必须有关闭标签。</li>
+      <li>所有的坐标都是相对于 <code>&lt;svg&gt;</code> 画布的左上角原点。</li>
+      <li>
+        <p>SVG 有三个特殊的 CSS 属性，可以直接写在标签上，或者写在 <code>style</code> 属性中，或者写在 CSS 中。</p>
+        <ol>
+          <li><code>fill</code> 填充色</li>
+          <li><code>stroke</code> 描边色</li>
+          <li><code>stroke-width</code> 边框宽度</li>
+        </ol>
+      </li>
+    </ul>
+    <h2>绘制形状</h2>
+    <table class="table-border" data-height="400px">
+      <thead>
+        <tr>
+          <th width="90px">标签</th>
+          <th width="190px">说明</th>
+          <th>属性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;svg&gt;</code></td>
+          <td>顶层标签</td>
+          <td>
+            <ol>
+              <li><code>width</code> <code>height</code> 指定 SVG 图像在 HTML 元素中所占据的宽度和高度。不指定时默认 300*150 像素。</li>
+              <li><code>viewBox</code> 指定视口左上角的横坐标和纵坐标、宽度和高度。可用来展示 SVG 图像的一部分，视口会放大去适配 SVG 图像的大小。如果不指定 width 和 height，只指定 viewBox，则相当于指定 SVG 图像的长宽比。这时，SVG 图像的默认大小将等于所在的 HTML 元素的大小。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;circle&gt;</code></td>
+          <td>圆形</td>
+          <td>
+            <ol>
+              <li><code>cx</code> <code>cy</code> 圆心的横坐标和纵坐标。</li>
+              <li><code>r</code> 圆的半径。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;ellipse&gt;</code></td>
+          <td>椭圆形</td>
+          <td>
+            <ol>
+              <li><code>cx</code> <code>cy</code> 椭圆中心的横坐标和纵坐标。</li>
+              <li><code>rx</code> <code>ry</code> 椭圆横向轴和纵向轴的半径。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;rect&gt;</code></td>
+          <td>矩形</td>
+          <td>
+            <ol>
+              <li><code>x</code> <code>y</code> 矩形左上角的横坐标和纵坐标。</li>
+              <li><code>width</code> <code>height</code> 矩形的宽度和高度。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;line&gt;</code></td>
+          <td>直线</td>
+          <td>
+            <ol>
+              <li><code>x1</code> <code>y1</code> 起点的横坐标和纵坐标。</li>
+              <li><code>x2</code> <code>y2</code> 终点的横坐标和纵坐标。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;polyline&gt;</code></td>
+          <td>折线</td>
+          <td>
+            <ol>
+              <li><code>points</code> 指定每个端点的坐标。横坐标与纵坐标之间用逗号分隔，点与点之间用空格分隔。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;polygon&gt;</code></td>
+          <td>多边形（不少于三个边）</td>
+          <td>
+            <ol>
+              <li><code>points</code> 指定每个端点的坐标。横坐标与纵坐标之间用逗号分隔，点与点之间用空格分隔。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;path&gt;</code></td>
+          <td>路径</td>
+          <td>
+            <ol>
+              <li>
+                <p><code>d</code> 绘制顺序。它的值是一个长字符串，每个字母表示一个绘制动作，后面跟着坐标。大写表示绝对定位，小写表示相对定位。</p>
+                <ol>
+                  <li><code>M</code> 移动到（moveto）</li>
+                  <li><code>L</code> 画直线到（lineto）</li>
+                  <li><code>Z</code> 闭合路径</li>
+                </ol>
+              </li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="html,result" data-user="jianhee" data-slug-hash="BeXWWB" style="box-sizing: border-box; display: flex; justify-content: center; align-items: center; height: 265px; margin: 1em 0; padding: 1em; border: 2px solid;" data-pen-title="SVG basic">
+      <span>See the Pen <a href="https://codepen.io/jianhee/pen/BeXWWB/"> SVG basic</a> by jianhee (<a href="https://codepen.io/jianhee">@jianhee</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+    </p>
+    <h2>绘制动画</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="90px">标签</th>
+          <th width="190px">说明</th>
+          <th>属性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;animate&gt;</code></td>
+          <td>动画效果，但是不支持变形</td>
+          <td>
+            <ol>
+              <li><code>attributeName</code> 发生动画效果的属性名。可以在多个属性上面定义动画。</li>
+              <li><code>from</code> 单次动画的初始值。</li>
+              <li><code>to</code> 单次动画的结束值。</li>
+              <li><code>dur</code> 单次动画的持续时间。</li>
+              <li><code>repeatCount</code> 动画的循环模式。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;animateTransform&gt;</code></td>
+          <td>变形的动画</td>
+          <td>
+            <ol>
+              <li><code>type</code> 变形的类型，比如 rotate。</li>
+              <li><code>begin</code> 开始时间。</li>
+              <li><code>from</code> <code>to</code> 这时属性值有三个数字，第一个是角度值，第二个和第三个是旋转中心的坐标。</li>
+              <li>其余属性同上。</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="html,result" data-user="jianhee" data-slug-hash="BeXvej" style="box-sizing: border-box; display: flex; justify-content: center; align-items: center; height: 265px; margin: 1em 0; padding: 1em; border: 2px solid;" data-pen-title="SVG animate">
+      <span>See the Pen <a href="https://codepen.io/jianhee/pen/BeXvej/"> SVG animate</a> by jianhee (<a href="https://codepen.io/jianhee">@jianhee</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+    </p>
+    <h2>插入图像</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="90px">标签</th>
+          <th width="190px">说明</th>
+          <th>属性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;text&gt;</code></td>
+          <td>插入文本</td>
+          <td>
+            <ol>
+              <li><code>x</code> <code>y</code> 文本区块基线起点（左下角）的横坐标和纵坐标。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;image&gt;</code></td>
+          <td>插入图片文件</td>
+          <td>
+            <ol>
+              <li><code>x</code> <code>y</code> 图片左上角的横坐标和纵坐标。</li>
+              <li><code>width</code> <code>height</code> 图片的宽度和高度。</li>
+              <li><code>xlink:href</code> 图片的地址。</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="html,result" data-user="jianhee" data-slug-hash="WBVPvp" style="box-sizing: border-box; display: flex; justify-content: center; align-items: center; height: 265px; margin: 1em 0; padding: 1em; border: 2px solid;" data-pen-title="SVG img">
+      <span>See the Pen <a href="https://codepen.io/jianhee/pen/WBVPvp/"> SVG img</a> by jianhee (<a href="https://codepen.io/jianhee">@jianhee</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+    </p>
+    <h2>复用图像</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="90px">标签</th>
+          <th width="190px">说明</th>
+          <th>属性</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;defs&gt;</code></td>
+          <td colspan="2">这个标签内的图案，默认不会显示，只有在引用时才会显示。</td>
+        </tr>
+        <tr>
+          <td><code>&lt;g&gt;</code></td>
+          <td colspan="2">这个标签用于将多个图案组成一个组，方便复用。</td>
+        </tr>
+        <tr>
+          <td><code>&lt;use&gt;</code></td>
+          <td>这个标签用于复制一个或者一组图案。</td>
+          <td>
+            <ol>
+              <li><code>x</code> <code>y</code> <code>width</code> <code>height</code> 等。</li>
+              <li><code>href</code> 指定所要复制的节点。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>&lt;pattern&gt;</code></td>
+          <td>这个标签用来被别的区域引用，以标签为单位平铺该区域，展示标签内的图案。</td>
+          <td>
+            <ol>
+              <li><code>x</code> <code>y</code> <code>width</code> <code>height</code> 等。</li>
+              <li><code>patternUnits</code> 定义 pattern 的坐标系统。默认值 objectBoundingBox 会对图案的单位进行缩放，设置为 userSpaceOnUse 不会缩放。</li>
+              <li>被引用时将节点名称写在 <code>fill</code> 属性的 <code>url</code> 中。</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="html,result" data-user="jianhee" data-slug-hash="EzqrGB" style="box-sizing: border-box; display: flex; justify-content: center; align-items: center; height: 265px; margin: 1em 0; padding: 1em; border: 2px solid;" data-pen-title="SVG copy">
+      <span>See the Pen <a href="https://codepen.io/jianhee/pen/EzqrGB/"> SVG copy</a> by jianhee (<a href="https://codepen.io/jianhee">@jianhee</a>) on <a href="https://codepen.io">CodePen</a>.</span>
+    </p>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="https://static.codepen.io/assets/embed/ei.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>
