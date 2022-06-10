@@ -1,0 +1,36 @@
+// Dialog
+// --------------------------
+.dialog {
+  @include position-fixed(0, 0, 0, 0, 999);
+
+  display: none;
+  background-color: $rgb-40;
+  .content {
+    width: 70vw;
+    max-height: 80vh;
+    margin: 10vh auto;
+    overflow-y: auto;
+    background-color: $bg-white;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: $padding-base;
+    font-size: $font-size-h3;
+    line-height: $line-height-base;
+    border-bottom: $border-light;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+  }
+  .close {
+    font-style: normal;
+    color: $color-gray;
+    cursor: pointer;
+    &:hover {
+      color: $color-danger;
+    }
+  }
+  .body {
+    padding: $padding-base;
+  }
+}

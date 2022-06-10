@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue.js</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/vue.png" />Vue.js</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0);">官方资料</a>
+        <ul class="dropdown">
+          <li><a href="https://cn.vuejs.org/v2/guide/">教程</a></li>
+          <li><a href="https://cn.vuejs.org/v2/api/">API</a></li>
+          <li><a href="https://cn.vuejs.org/v2/style-guide/">风格指南</a></li>
+          <li><a href="https://cn.vuejs.org/v2/examples/">示例</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0);">官方工具</a>
+        <ul class="dropdown">
+          <li><a href="https://github.com/vuejs/vue-devtools">Vue Devtools</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0);">作者文章</a>
+        <ul class="dropdown">
+          <li><a href="https://zhuanlan.zhihu.com/p/23134551">Vue 学习顺序</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:void(0);">参考资料</a>
+        <ul class="dropdown">
+          <li><a href="https://cloud.tencent.com/developer/column/1930">腾讯云社区专栏</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>起步</h1>
+    <h2>简介</h2>
+    <ul>
+      <li>Vue 是一套用于构建用户界面的渐进式框架。</li>
+      <li>Vue.js 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 DOM 的系统，所有东西都是响应式的。</li>
+    </ul>
+    <h2>安装</h2>
+    <h4>script</h4>
+    <pre><code class="javascript">&lt;script src="https://cdn.jsdelivr.net/npm/vue"&gt;&lt;/script&gt;</code></pre>
+    <h4>npm</h4>
+    <pre><code class="shell">npm install vue</code></pre>
+    <h2>创建 Vue 实例</h2>
+    <ul>
+      <li>每个 Vue 应用都是通过用 <code>Vue</code> 函数创建一个新的 Vue 实例开始的。</li>
+      <li>通常使用 <code>vm</code> 这个变量名表示 Vue 实例。</li>
+      <li>当创建一个 Vue 实例时，你可以传入一个选项对象来创建你想要的行为。</li>
+      <li>一个 Vue 应用由一个通过 <code>new Vue</code> 创建的根 Vue 实例，以及可选的嵌套的、可复用的组件树组成。</li>
+      <li>所有的 Vue 组件都是 Vue 实例，并且接受相同的选项对象 (一些根实例特有的选项除外)。</li>
+    </ul>
+    <pre><code class="javascript">var vm = new Vue({
+    data() {},
+    created(){},
+    watch: {},
+    methods: {}
+})</code></pre>
+    <h1>实例选项</h1>
+    <ul>
+      <li>不要在选项属性或回调上使用箭头函数，因为箭头函数并没有 this，this 会作为变量一直向上级词法作用域查找，直至找到为止，经常导致错误。</li>
+    </ul>
+    <h2>数据属性</h2>
+    <h3>data</h3>
+    <ul>
+      <li>当一个 Vue 实例被创建时，它将 data 对象中的所有的属性加入到 Vue 的响应式系统中。</li>
+      <li>设置属性也会影响到原始数据，反之亦然。</li>
+      <li>当这些数据改变时，视图会进行重渲染，匹配更新为新的值。</li>
+      <li>只有当实例被创建时 data 中存在的属性才是响应式的。如果添加新的属性，将不会触发任何视图的更新，所以需要为以后用到的属性设置一些初始值。</li>
+      <li>使用<code>Object.freeze()</code> 方法冻结对象，这会阻止修改现有的属性，也意味着响应系统无法再追踪变化。</li>
+    </ul>
+    <h3>computed 计算属性</h3>
+    <ul>
+      <li>如果模板内的表达式太多或者逻辑复杂，应当使用计算属性。</li>
+      <li>可以像绑定普通属性一样在模板中绑定计算属性。默认的 <code>get</code> 函数会返回一个值，并且在依赖的数据发生改变时重新求值，所有依赖计算属性的绑定也会更新。计算属性还提供 <code>set</code> 函数，在返回值改变时调用。</li>
+      <li>计算属性是基于它们的响应式依赖进行缓存的，只在相关响应式依赖发生改变时它们才会重新求值。如果没有发生改变，会返回之前的计算结果，不会再次执行函数。调用方法可以达到同样的效果，但是每当触发重新渲染时，调用方法将总会再次执行函数。</li>
+      <li>如果有一些数据需要随着其它数据变动而变动时，更好的做法是使用计算属性求值而不是侦听属性。</li>
+    </ul>
+    <h3>watch 侦听属性</h3>
+    <ul>
+      <li>侦听属性提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。</li>
+    </ul>
+    <h2>生命周期钩子</h2>
+    <p>每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。</p>
+    <img data-src="../images/article/vue-lifecycle.png" />
+    <h3>create</h3>
+    <p>在一个实例被创建之后执行代码</p>
+    <h3>mounted</h3>
+    <h3>updated</h3>
+    <h3>destroyed</h3>
+    <h1>实例属性和方法</h1>
+    <p>Vue 实例还暴露了一些有用的实例属性与方法。它们都有前缀 $，以便与用户定义的属性区分开来。</p>
+    <h1>数据绑定</h1>
+    <h2>插值</h2>
+    <ul>
+      <li>插值使用双大括号表示，可以绑定对象属性，输出属性键值。或者绑定单个表达式，输出解析后的文本。</li>
+      <li>绑定的数据发生改变时，插值处的内容都会更新。使用 <code>v-once</code> 指令执行一次性地插值，当数据改变时，插值处的内容不会更新。</li>
+      <li>表达式会在所属 Vue 实例的数据作用域下作为 JavaScript 被解析。每个绑定都只能包含单个表达式，只能访问 JS 预设的全局变量，不能访问自定义的全局变量。</li>
+      <li>插值不会输出 HTML，需要使用 <code>v-html</code> 指令。</li>
+      <li>插值不能作用于 HTML 特性上，需要使用 <code>v-bind</code> 指令。</li>
+    </ul>
+    <h2>指令</h2>
+    <ul>
+      <li>指令是带有 <code>v-</code> 前缀的特殊特性。</li>
+      <li>指令特性的值预期是单个 JavaScript 表达式。</li>
+      <li>指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。</li>
+      <li>指令修饰符是以半角句号 <code>.</code> 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。</li>
+    </ul>
+    <h3>v-html</h3>
+    <ul>
+      <li>你的站点上动态渲染的任意 HTML 可能会非常危险，因为它很容易导致 XSS 攻击。请只对可信内容使用 HTML 插值，绝不要对用户提供的内容使用插值。</li>
+    </ul>
+    <h3>v-bind</h3>
+    <ul>
+      <li>缩写 <code>:</code></li>
+      <li>绑定 HTML 元素特性</li>
+    </ul>
+    <h4>v-bind:class</h4>
+    <ul>
+      <li>绑定的表达式结果可以是字符串、对象、数组。</li>
+      <li>指令也可以与普通的 class 属性共存。</li>
+      <li>自定义组件的 class 属性将被添加到该组件的根元素，根元素上已经存在的类不会被覆盖。</li>
+    </ul>
+    <pre><code class="html">&lt;!-- 字符串 --&gt;
+&lt;div v-bind:class="activeClass"&gt;&lt;/div&gt;
+&lt;!-- 内联对象 --&gt;
+&lt;div v-bind:class="{ active: isActive, 'text-danger': hasError }"&gt;&lt;/div&gt;
+&lt;!-- 自定义对象或计算属性 --&gt;
+&lt;div v-bind:class="classObject"&gt;&lt;/div&gt;
+&lt;!-- 字符串数组 --&gt;
+&lt;div v-bind:class="[activeClass, errorClass]"&gt;&lt;/div&gt;
+&lt;!-- 对象数组 --&gt;
+&lt;div v-bind:class="[{ active: isActive }, errorClass]"&gt;&lt;/div&gt;</code></pre>
+    <h4>v-bind:style</h4>
+    <ul>
+      <li>绑定的表达式结果可以是字符串、对象、数组。</li>
+      <li>CSS 属性名可以用驼峰式或短横线分隔来命名。</li>
+      <li>CSS 属性会自动侦测并添加相应的前缀。</li>
+      <li>CSS 属性可以提供一个包含多个值的数组。</li>
+    </ul>
+    <pre><code class="html">&lt;!-- 字符串 --&gt;
+&lt;div v-bind:style="activeColor"&gt;&lt;/div&gt;
+&lt;!-- 内联对象 --&gt;
+&lt;div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"&gt;&lt;/div&gt;
+&lt;!-- 自定义对象或计算属性 --&gt;
+&lt;div v-bind:style="styleObject"&gt;&lt;/div&gt;
+&lt;!-- 字符串数组 --&gt;
+&lt;div v-bind:style="[baseStyles, overridingStyles]"&gt;&lt;/div&gt;
+&lt;!-- 属性包含多个值 --&gt;
+&lt;div v-bind:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"&gt;&lt;/div&gt;</code></pre>
+    <h3>v-if</h3>
+    <ul>
+      <li><code>v-if</code> 条件渲染，用于条件性地渲染一块内容。</li>
+      <li><code>v-else</code>、<code>v-else-if</code> 表示其他条件，必须紧跟在使用 <code>-if</code> 的元素后面。</li>
+      <li>在 <code>&lt;template&gt;</code> 元素上使用 <code>v-if</code> 来切换多个元素，最终的渲染结果将不包含 <code>&lt;template&gt;</code> 元素。</li>
+      <li>Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从头开始渲染。这么做除了使 Vue 变得非常快之外，不会清除用户已经输入的内容。如果希望两个元素是完全独立的，不要复用它们，只需添加一个具有唯一值的 <code>key</code> 属性，这样每次切换时元素都将被重新渲染<a href="https://cn.vuejs.org/v2/guide/conditional.html#用-key-管理可复用的元素"></a>。</li>
+      <li>不能在同一元素上使用 <code>v-if</code> 和 <code>v-for</code>，因为 <code>v-for</code> 的优先级更高，<code>v-if</code> 将分别重复运行于每个循环中。</li>
+    </ul>
+    <h4>v-if 和 v-show</h4>
+    <ul>
+      <li><code>v-if</code> 在初始条件为假时不渲染，直到条件第一次变为真时，才会开始渲染条件块。</li>
+      <li><code>v-if</code> 在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。</li>
+      <li><code>v-show</code> 不管初始条件是什么，元素总是会被渲染，并且始终保留在 DOM 中，只是简单地基于 CSS 进行切换。</li>
+      <li><code>v-if</code> 有更高的切换开销，<code>v-show</code> 有更高的初始渲染开销。</li>
+    </ul>
+    <h3>v-for</h3>
+    <ul>
+      <li><code>v-for</code> 列表渲染，可以基于一个数组来渲染一个列表，参数是数组元素、索引 <code>(item, index) in array</code>。</li>
+      <li><code>v-for</code> 也可以遍历一个对象的属性，参数是对象属性值、属性名、索引 <code>(value, name, index) in object</code>。</li>
+      <li><code>v-for</code> 也可以接受整数。在这种情况下，它会把模板重复对应次数。</li>
+      <li>分隔符可以是 <code>in</code> 或者 <code>of</code>。</li>
+      <li>在 <code>&lt;template&gt;</code> 元素上使用 <code>v-for</code> 来循环渲染一段包含多个元素的内容。</li>
+      <li>改变数组顺序时，不会移动 DOM 元素，而是更新每个元素。如果要跟踪每个节点的身份来重用和重新排序现有元素，需要为每项提供一个唯一 <code>key</code> 属性，而且只能使用字符串或数值类型的值 <a href="https://cn.vuejs.org/v2/guide/list.html#维护状态"></a>。</li>
+    </ul>
+    <h4>v-for 数组和对象的更新检测<a href="https://cn.vuejs.org/v2/guide/list.html#数组更新检测"></a></h4>
+    <ul>
+      <li><code>push()</code> 等变异方法会改变原始数组，触发视图更新。</li>
+      <li><code>filter()</code> 等非变异方法不会改变原始数组，可以用返回的新数组替换原始数组，更新视图。这可以用在计算属性或方法中，显示过滤或排序后的结果。</li>
+      <li>利用索引直接设置一个数组项不会被检测，可以使用 <code>Vue.set()</code> 或者 <code>splice()</code> 方法实现。</li>
+      <li>修改数组的长度不会被检测，可以使用 <code>splice()</code> 方法实现。</li>
+      <li>对象属性的添加或删除不会被检测，并且已经创建的实例中不允许动态添加根级别的响应式属性，可以使用<code>Vue.set()</code> 方法向嵌套对象添加响应式属性。</li>
+      <li>如果要为已有对象添加多个新的响应式属性，可以使用 <code>Object.assign()</code> 或者 <code>_.extend()</code>。但是不要直接使用方法改变原属性，应该用两个对象的属性创建一个新的对象，再赋值给原属性。</li>
+    </ul>
+    <h3>v-on</h3>
+    <ul>
+      <li><code>v-on</code> 缩写 <code>@</code>，监听 DOM 事件，并在触发时运行一些 JavaScript 代码。</li>
+      <li><code>v-on</code> 的预期值是需要调用的方法名称或者内联语句。</li>
+      <li>内联语句可以直接调用方法并传参，可以访问原始的 DOM 事件，用特殊变量 <code>$event</code> 把它传入方法。</li>
+      <li>当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。</li>
+    </ul>
+    <pre><code class="html">&lt;button v-on:click="counter += 1"&gt;Add 1&lt;/button&gt;
+&lt;button v-on:click="greet"&gt;Greet&lt;/button&gt;
+&lt;button v-on:click="say('hi')"&gt;Say hi&lt;/button&gt;
+&lt;button v-on:click="say('hi', $event)"&gt;Say hi&lt;/button&gt;</code></pre>
+    <h4>v-on 修饰符<a href="https://cn.vuejs.org/v2/guide/events.html#事件修饰符"></a></h4>
+    <ol>
+      <li>事件修饰符：处理 DOM 事件细节。</li>
+      <li>按键修饰符：检查详细的按键。</li>
+      <li>系统修饰键：实现仅在按下相应按键时才触发鼠标或键盘事件的监听器。</li>
+      <li><code>.exact</code> 修饰符：允许你控制由精确的系统修饰符组合触发的事件。</li>
+      <li>鼠标按钮修饰符：会限制处理函数仅响应特定的鼠标按钮。</li>
+    </ol>
+    <pre><code class="html">&lt;!-- 阻止单击事件继续传播 --&gt;
+&lt;a v-on:click.stop="doThis"&gt;&lt;/a&gt;
+&lt;!-- 只有在 `key` 是 `Enter` 时调用 `vm.submit()` --&gt;
+&lt;input v-on:keyup.enter="submit"&gt;
+&lt;!-- Alt + C --&gt;
+&lt;input @keyup.alt.67="clear"&gt;
+&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;
+&lt;button @click.ctrl.exact="onCtrlClick"&gt;A&lt;/button&gt;</code></pre>
+    <h3>v-model</h3>
+    <ul>
+      <li><code>v-model</code> 指令在表单 <code>&lt;input&gt;</code>、<code>&lt;textarea&gt;</code> 及 <code>&lt;select&gt;</code> 元素上创建双向数据绑定，原理是监听用户的输入事件以更新数据。</li>
+      <li><code>v-model</code> 会忽略所有表单元素的 <code>value</code>、<code>checked</code>、<code>selected</code> 特性的初始值，而总是将 Vue 实例的数据作为数据来源，所以为了实现响应式必须在 <code>data</code> 选项中声明初始值。</li>
+      <li>单个复选框绑定到布尔值，多个复选框绑定到同一个数组，如果不是数组会自动转换成布尔值并更新所有复选框的选中状态。</li>
+      <li>下拉选择框单选时绑定到一个字符串，多选时绑定到一个数组。</li>
+      <li>单选框、多选框、选择框绑定的值通常是静态字符串，用 <code>v-bind:value</code> 可以绑定一个动态属性，并且可以不是字符串。</li>
+    </ul>
+    <h4>v-model 修饰符</h4>
+    <ol>
+      <li><code>.lazy</code> 修饰符：将默认使用的 <code>input</code> 事件同步数据转变为 <code>change</code> 事件同步数据。</li>
+      <li><code>.number</code> 修饰符：自动将用户的输入值转为数值类型。如果这个值无法被 <code>parseFloat()</code> 解析，则会返回原始的值。</li>
+      <li><code>.trim</code> 修饰符：自动过滤用户输入的首尾空白字符。</li>
+    </ol>
+    <h3>指令参数</h3>
+    <ul>
+      <li>一些指令能够接收一个“参数”，在指令名称之后以冒号表示 <code>v-bind:href="url"</code>。</li>
+      <li>从 2.6.0 开始，可以用方括号括起来的 JavaScript 表达式作为一个指令的参数 <code>v-bind:[attributeName]="url"></code>。</li>
+      <li>动态参数会被作为一个 JavaScript 表达式进行动态求值，求得的值将会作为最终的参数来使用。预期会求出一个字符串，异常情况下值为 null 用于移除绑定，非字符串会触发一个警告。</li>
+      <li>动态参数表达式有一些语法约束，因为某些字符，例如空格和引号，放在 HTML 特性名里是无效的。可以使用没有空格或引号的表达式，或用计算属性替代这种复杂表达式。</li>
+      <li>动态参数需要回避大写键名，因为浏览器会把特性名全部强制转为小写。</li>
+    </ul>
+    <h1>组件</h1>
+    <h2>什么是组件</h2>
+    <ul>
+      <li>组件是可复用的 Vue 实例，可以在一个通过 <code>new Vue</code> 创建的 Vue 根实例中，作为自定义元素使用。为了能在模板中使用，组件必须先注册以便 Vue 能够识别。</li>
+      <li>组件必须带有一个名字。组件名不能与 HTML 元素或者 Vue 保留标签相同，必须以字母开头。如果直接在 DOM 中使用组件，推荐字母全小写且必须包含一个连字符。</li>
+      <li>组件与 <code>new Vue</code> 接收相同的选项。其中 <code>data</code> 选项必须是一个函数，这样每个实例就可以维护一份被返回对象的独立的拷贝，否则各个组件之间会相互影响。</li>
+      <li>组件可以复用任意次，每次复用就会创建一个新实例，每个组件都会各自独立维护。</li>
+      <li>每个组件必须只有一个根元素。你可以将模板的内容包裹在一个父元素内，来修复这个问题。</li>
+    </ul>
+    <h2>组件注册</h2>
+    <h3>全局注册</h3>
+    <pre><code class="javascript">Vue.component('my-component-name', {
+    // ... options ...
+})</code></pre>
+    <ul>
+      <li><code>Vue.component()</code> 第一个参数是组件名，第二个参数是设置的选项。</li>
+      <li>全局注册的组件可以用在其被注册之后的任何 (通过 <code>new Vue</code>) 新创建的 Vue 根实例，也包括其组件树中的所有子组件的模板中。</li>
+    </ul>
+    <h3>局部注册</h3>
+    <ul>
+      <li>局部注册</li>
+    </ul>
+    <h2>组件传值</h2>
+    <h3>Prop</h3>
+    <ul>
+      <li>Prop 是可以在组件上注册的自定义特性，父组件通过 Prop 向子组件传递数据。数据传递给 prop 特性时，这个特性就变成了子组件实例的一个属性。</li>
+      <li>子组件使用 <code>props</code> 选项接收数据，特性需要包含在该组件可接受的 prop 列表中，然后通过特性名就能够访问数据，就像处理 data 中的值一样。</li>
+      <li>一个组件默认可以拥有任意数量的 prop，任何值都可以传递给任何 prop。</li>
+    </ul>
+    <h3>$emit</h3>
+    <ul>
+      <li>父组件通过 <code>v-on</code> 监听子组件实例的任意自定义事件，就像处理 native DOM 事件一样。</li>
+      <li>子组件通过调用内建的 <code>$emit</code> 方法并传入事件名称来触发一个事件，父组件可以接收该事件，然后执行绑定的语句或方法。</li>
+      <li><code>$emit</code> 的第二个参数可以传递一个值，父组件监听时可以通过 <code>$event</code> 访问这个值，或者作为第一个参数传入事件绑定的方法。</li>
+    </ul>
+    <h2>插槽</h2>
+    <ul>
+      <li>slot</li>
+    </ul>
+    <h2>动态组件</h2>
+    <ul>
+      <li>在不同组件之间进行动态切换，可以通过 Vue 的 <code>&lt;component&gt;</code> 元素加一个特殊的 <code>is</code> 特性来实现。</li>
+      <li><code>is</code> 绑定的值可以是已注册组件的名字，或一个组件的选项对象。</li>
+    </ul>
+    <h3>注意事项</h3>
+    <ul>
+      <li>对于出现位置有严格限制的 HTML 元素，自定义组件可能会被作为无效的内容提升到外部，并导致最终渲染结果出错，可以使用 <code>is</code> 特性变通。</li>
+      <li>如果模板来源是字符串、单文件组件，就没有这条限制。</li>
+    </ul>
+    <h2>单文件组件</h2>
+    <h1>过度和动画</h1>
+    <h1>对比其他框架</h1>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+// VS Code Config
+// --------------------------
+
+{
+  // 是否在保存时格式化
+  "editor.formatOnSave": false,
+  // 是否在保存时修复错误
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  }
+}

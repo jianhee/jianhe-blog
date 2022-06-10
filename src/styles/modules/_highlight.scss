@@ -1,0 +1,109 @@
+// Highlight
+// --------------------------
+figure {
+  margin-bottom: $margin-base;
+  border: $border-light;
+  border-top-left-radius: $radius-base;
+  border-top-right-radius: $radius-base;
+  figcaption {
+    display: flex;
+    justify-content: space-between;
+    padding: calc($padding-base / 2) $padding-base;
+    line-height: $line-height-base;
+    white-space: nowrap;
+    background-color: $bg-deep;
+    border-bottom: $border-light;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    .fa {
+      &-times-circle {
+        margin-right: .5em;
+        color: $color-danger;
+      }
+      &-minus-circle {
+        margin-right: .5em;
+        color: $color-warning;
+      }
+      &-plus-circle {
+        color: $color-success;
+      }
+      &-code {
+        color: $color-gray;
+      }
+    }
+    .lang {
+      margin-right: 1em;
+      font-size: $font-size-min;
+      color: $color-brand;
+    }
+  }
+}
+code {
+  &:not(.hljs) {
+    padding: 2px 4px;
+    font-size: $font-size-min;
+    color: $color-code;
+    white-space: nowrap;
+    background-color: $bg-deep;
+    border-radius: $radius-base;
+  }
+  &.hljs {
+    padding: calc($padding-base / 2) $padding-base;
+    font-size: $font-size-small;
+    line-height: $line-height-docs;
+  }
+}
+.hljs {
+  display: block;
+  overflow-x: auto;
+  color: #969896;
+  background-color: $bg-light;
+  &-comment {
+    color: #57a64a;
+  }
+  &-meta {
+    color: #969896;
+  }
+  &-string,
+  &-variable,
+  &-template-variable,
+  &-strong,
+  &-emphasis,
+  &-quote {
+    color: #df5000;
+  }
+  &-keyword,
+  &-selector-tag,
+  &-type {
+    color: #a71d5d;
+  }
+  &-literal,
+  &-symbol,
+  &-bullet,
+  &-attribute {
+    color: #0086b3;
+  }
+  &-section,
+  &-name {
+    color: #63a35c;
+  }
+  &-title,
+  &-attr,
+  &-selector-id,
+  &-selector-class,
+  &-selector-attr,
+  &-selector-pseudo {
+    color: #795da3;
+  }
+  &-addition {
+    color: #55a532;
+    background-color: #eaffea;
+  }
+  &-deletion {
+    color: #bd2c00;
+    background-color: #ffecec;
+  }
+  &-link {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,54 @@
+// Button
+// --------------------------
+[class*="btn-"] {
+  @include user-select;
+
+  display: inline-block;
+  padding: calc($padding-base / 2) $padding-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  text-align: center;
+  text-shadow: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: $radius-base;
+  outline: none;
+  appearance: none;
+}
+[class*="btn-"]:hover {
+  opacity: .9;
+}
+.btn {
+  &-default {
+    color: $color-base;
+    background-color: $bg-white;
+    border: $border-deep;
+  }
+  &-default:hover {
+    color: $color-brand;
+    background-color: $bg-success;
+    border-color: $color-brand;
+  }
+  &-info {
+    color: $color-white;
+    background-color: $color-gray;
+    border-color: $color-gray;
+  }
+  &-success {
+    color: $color-white;
+    background-color: $color-success;
+    border-color: $color-success;
+  }
+  &-warning {
+    color: $color-white;
+    background-color: $color-warning;
+    border-color: $color-warning;
+  }
+  &-danger {
+    color: $color-white;
+    background-color: $color-danger;
+    border-color: $color-danger;
+  }
+}

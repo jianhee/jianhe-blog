@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>HTTP 代理</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/nginx.png" />HTTP 代理</h1>
+    <ul class="nav">
+      <li><a href="https://www.nginx.cn/doc/">nginx</a></li>
+      <li><a href="https://www.nssm.cc/">nssm</a></li>
+      <li><a href="https://www.telerik.com/fiddler">fiddler</a></li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>nginx</h1>
+    <p>nginx 是高性能、轻量级的 Web 服务器和反向代理服务器，可以处理静态文件，解决 http 请求访问本地站点的问题。</p>
+    <h2>安装</h2>
+    <ol>
+      <li>下载 windows 版本：<a href="https://nginx.org/en/download.html">nginx-1.14.1.zip</a>。</li>
+      <li>解压到任意目录，如：<code>D:\nginx-1.14.1</code>。</li>
+    </ol>
+    <h2>配置</h2>
+    <ul>
+      <li>配置文件路径：<code>D:\nginx-1.14.1\conf\nginx.conf</code>，只需修改 http.server 下的配置即可。</li>
+      <li>修改示例如下：</li>
+    </ul>
+    <pre><code class="nginx"># 在 mac 中获取权限
+# user root owner;
+# 指定进程数，通常设置成和 cpu 的数量相等
+worker_processes  1;
+events {
+    # 指定单个进程的最大并发链接数
+    worker_connections  1024;
+}
+http {
+    # 指定 mime 类型，由 mime.type 文件定义
+    include       mime.types;
+    # 指定默认的 mime 类型
+    default_type  application/octet-stream;
+    # 指定 nginx 是否调用 sendfile 函数（zero copy）来输出文件。普通应用必须设为 on，下载等磁盘IO重负载应用可设为 off，以平衡磁盘与网络I/O处理速度，降低系统的 uptime。
+    sendfile           on;
+    # 指定连接超时时间
+    keepalive_timeout  65;
+    # 开启 gzip 压缩服务
+    gzip               on;
+    server {
+        # 本地代理服务器的监听端口
+        listen      80;
+        # 本地访问域名
+        server_name http://web.framework.microservice.dev.fang.com/;
+        location / {
+            # 本地站点目录
+            root    F:/git/contractWeb;
+            # 本地访问默认加载的文件 依次选择
+            index   Index.html Default.html;
+        }
+    }
+}</code></pre>
+    <h2>访问站点</h2>
+    <ol>
+      <li>启动代理服务：<code>D:\nginx-1.14.1\nginx.exe</code>。</li>
+      <li>输入站点域名：<code>http://web.framework.microservice.dev.fang.com</code>，即可访问到本地文件 <code>F:/git/contractWeb/Default.html</code>。</li>
+      <li>如果需要硬解：<code>C:\Windows\System32\drivers\etc\hosts</code> 文件中直接添加。</li>
+    </ol>
+    <pre><code class="nginx">127.0.0.1 web.framework.microservice.dev.fang.com</code></pre>
+    <h2>命令</h2>
+    <p>在 nginx.exe 所在目录 <code>D:\nginx-1.14.1\nginx.exe</code> 运行:</p>
+    <ol>
+      <li><code>nginx -t</code> 验证配置是否正确</li>
+      <li><code>nginx -V</code> 查看版本号</li>
+      <li><code>start nginx</code> 启动服务</li>
+      <li><code>nginx -s stop</code> 快速停止</li>
+      <li><code>nginx -s quit</code> 正常停止</li>
+      <li><code>nginx -s reload</code> 重新启动</li>
+    </ol>
+    <h1>nssm</h1>
+    <p>nssm 是一个系统服务管理工具，可以将应用安装为 windows service 并实时监控和管理，让服务在开机时自动启动或者意外停止时重新启动。</p>
+    <h2>安装</h2>
+    <ol>
+      <li>下载 windows 版本：<a href="https://nssm.cc/download">nssm-2.24.zip</a>。</li>
+      <li>解压到任意目录，如：<code>D:\nssm-2.24</code>。</li>
+    </ol>
+    <h2>命令</h2>
+    <p>在 nssm.exe 所在目录 <code>D:\nssm-2.24\win64\nssm.exe</code> 运行：</p>
+    <ol>
+      <li><code>nssm install [servername]</code> 安装服务</li>
+      <li><code>nssm remove [servername]</code> 删除服务</li>
+      <li><code>nssm start [servername]</code> 启动服务</li>
+      <li><code>nssm stop [servername]</code> 暂停服务</li>
+      <li><code>nssm restart [servername]</code> 重新启动服务</li>
+    </ol>
+    <h1>使用 nssm 管理 nginx</h1>
+    <h2>安装服务</h2>
+    <ul>
+      <li>
+        <p>方法1：命令行启动安装程序后选择操作。</p>
+        <pre><code class="nginx">nssm install</code></pre>
+      </li>
+      <li>
+        <p>方法2：命令行指定服务名称和配置文件。</p>
+        <pre><code class="nginx">nssm install NginxService "D:\nginx-1.14.1\conf\nginx.conf"</code></pre>
+      </li>
+    </ul>
+    <h2>启动服务</h2>
+    <ul>
+      <li>方法1：开始输入“查看本地服务”，在服务列表找到 <code>NginxService</code>，点击启动。</li>
+      <li>
+        <p>方法2：命令行启动。</p>
+        <pre><code class="nginx">nssm start NginxService</code></pre>
+      </li>
+    </ul>
+    <h1>fiddler</h1>
+    <p>fiddler 是一个 HTTP 代理、抓包、调试工具，它能够记录和检查所有的 HTTP 请求，可以设置断点，修改请求和响应，查看所有进出数据。</p>
+    <h2>安装</h2>
+    <ul>
+      <li>官网下载：<a href="https://www.telerik.com/download/fiddler">FiddlerSetup</a></li>
+      <li>腾讯下载：<a href="https://sm.myapp.com/original/Development/FiddlerSetup-5.0.20173.50948.exe">FiddlerSetup-5.0.20173.50948.exe</a></li>
+    </ul>
+    <h2>代理</h2>
+    <ul>
+      <li>在客户端中添加规则后，可以将指定的 Request URL 映射到另一个指定的 URL，解决前端开发中跨域和访问本地站点的问题。</li>
+      <li>示例中请求 <code>//abc.com</code> 会重定向到本地文件 <code>D:\abc.html</code>，方便调试本地项目。</li>
+    </ul>
+    <img data-src="../images/article/fiddler-1.png" />
+    <img data-src="../images/article/fiddler-2.png" />
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

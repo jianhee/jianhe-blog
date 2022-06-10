@@ -1,0 +1,59 @@
+// Table
+// --------------------------
+table {
+  width: 100%;
+  border-spacing: 0;
+}
+thead {
+  background-color: $bg-deep;
+}
+th {
+  white-space: nowrap;
+}
+th,
+td {
+  padding: .6em .8em;
+  font-size: $font-size-small;
+  line-height: $line-height-docs;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: $border-light;
+}
+.table {
+  &-scrollable {
+    position: relative;
+    margin-bottom: $margin-base;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  &-loadmore {
+    @include position-absolute(auto, 0, 0, 0);
+
+    height: 100px;
+    padding-top: 60px;
+    text-align: center;
+    cursor: pointer;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(255 255 255 / 0%)), color-stop(50%, #fff));
+    background: linear-gradient(-180deg, rgb(255 255 255 / 0%) 0, #fff 50%);
+    &::before {
+      font-family: FontAwesome;
+      font-size: $font-size-h2;
+      color: $color-brand;
+      content: "\f103";
+    }
+  }
+  &-border {
+    border-top: $border-light;
+    border-left: $border-light;
+    th,
+    td {
+      border-right: $border-light;
+    }
+  }
+  &-striped tr:nth-child(2n) {
+    background-color: $bg-light;
+  }
+  &-hover tbody tr:hover {
+    background-color: $bg-deep;
+  }
+}
