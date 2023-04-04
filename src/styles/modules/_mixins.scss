@@ -1,0 +1,54 @@
+// Mixins
+// --------------------------
+
+@mixin position-fixed($top: auto, $right: auto, $bottom: auto, $left: auto, $index: 99) {
+  position: fixed;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  z-index: $index;
+}
+
+@mixin position-absolute($top: auto, $right: auto, $bottom: auto, $left: auto, $index: 99) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  z-index: $index;
+}
+
+@mixin box-shadow-deep($x: 0, $y: 2px, $blur: 12px, $color: $rgb-10) {
+  box-shadow: $x $y $blur $color;
+}
+
+@mixin box-shadow-light($x: 0, $y: 1px, $blur: 5px, $color: $bg-deep) {
+  box-shadow: $x $y $blur $color;
+}
+
+@mixin title-style($font-size: auto, $font-weight: normal, $margin: $margin-base * 2 0 $margin-base) {
+  margin: $margin;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height-base;
+  cursor: pointer;
+}
+
+@mixin text-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin user-select() {
+  user-select: none;
+}
+
+@mixin animate-spinner {
+  animation: fa-spin 2s infinite linear;
+}
+
+@mixin transition {
+  transition: all .2s ease;
+}

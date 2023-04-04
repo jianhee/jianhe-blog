@@ -1,0 +1,23 @@
+# Editor Config
+# https://editorconfig.org/
+
+# 是否是顶级目录
+root = true
+
+# 匹配的文件类型
+[*]
+
+# 字符编码
+charset = utf-8
+# 缩进方式
+indent_style = space
+# 缩进大小
+indent_size = 2
+# 制表符宽度
+tab_width = 2
+# 换行方式
+end_of_line = lf
+# 是否以换行符结尾
+insert_final_newline = true
+# 是否删除行尾空白字符
+trim_trailing_whitespace = true

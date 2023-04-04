@@ -1,0 +1,36 @@
+// Global
+// --------------------------
+.hide {
+  display: none;
+}
+.mt {
+  &-10 {
+    margin-top: 10px;
+  }
+}
+.mb {
+  &-10 {
+    margin-bottom: 10px;
+  }
+}
+.text {
+  &-nowrap {
+    white-space: nowrap;
+  }
+}
+.color {
+  &-dark {
+    color: $color-dark !important;
+  }
+  &-gray {
+    color: $color-gray;
+  }
+}
+.required::before {
+  color: $color-danger;
+  content: "* ";
+}
+.no-scroll-y {
+  height: 100vh;
+  overflow-y: hidden;
+}

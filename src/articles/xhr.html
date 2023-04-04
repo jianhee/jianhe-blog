@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>XMLHttpRequest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/js.png" />XMLHttpRequest</h1>
+    <ul class="nav">
+      <li>
+        <a>参考资料</a>
+        <ul class="dropdown">
+          <li>
+            <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest">XMLHttpRequest <small>MDN</small></a>
+          </li>
+          <li>
+            <a href="http://wangdoc.com/javascript/bom/xmlhttprequest.html">XMLHttpRequest 对象 <small>阮一峰</small></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>XMLHttpRequest</h1>
+    <h2>XHR 简介</h2>
+    <ul>
+      <li>XMLHttpRequest 是一个 Web API，使用 XHR 对象与服务器交互。</li>
+      <li>它在获取数据时，不用刷新整个页面，只需更新页面的局部，所以不影响用户的操作。</li>
+      <li>它可以获取任何类型的数据，而不仅仅是 XML。它还支持 HTTP 以外的协议，比如 FTP 等。</li>
+    </ul>
+    <h2>XHR 对象</h2>
+    <ul>
+      <li>使用 <code>XMLHttpRequest()</code> 构造函数初始化一个 XHR 对象。</li>
+      <li>使用 <code>ActiveXObject()</code> 构造函数在 IE6 及更低版本浏览器中初始化 XHR 对象。</li>
+      <li>必须在调用其他方法前调用构造函数。</li>
+    </ul>
+    <pre><code class="javascript">var xhr;
+if (window.XMLHttpRequest) {
+    xhr = new XMLHttpRequest();
+} else {
+    xhr = new ActiveXObject('Microsoft.XMLHTTP');
+}</code></pre>
+    <h2>XHR 属性</h2>
+    <p>以下三个属性可以在 <code>open()</code> 之后 <code>send()</code> 之前手动设置，其它所有属性都是只读的。</p>
+    <pre><code class="javascript">xhr.responseType = 'document';
+xhr.timeout = 2000;
+xhr.withCredentials = true;</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>属性</th>
+          <th>返回值</th>
+          <th>数据类型</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>readyState</code></td>
+          <td>返回请求当前所处的状态。</td>
+          <td>整数</td>
+          <td>
+            <ul>
+              <li>会依次返回 0 1 2 3 4 五种状态，其中 4 表示请求已经完成<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/readyState"></a>。</li>
+              <li>每次状态改变时，都会触发 <code>readystatechange</code> 事件。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>status</code></td>
+          <td>返回响应的数字状态码。</td>
+          <td>整数</td>
+          <td>
+            <ul>
+              <li>例如 200 或 404<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status"></a>。</li>
+              <li>如果请求出错或尚未完成，则返回 0。</li>
+              <li>如果服务器没有指定状态码，则默认返回 200。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>statusText</code></td>
+          <td>返回响应的文本信息。</td>
+          <td>字符串</td>
+          <td>
+            <ul>
+              <li>例如 OK 或 Not Found<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status"></a>。</li>
+              <li>如果 <code>readyState</code> 是 0 或 1，则返回空字符串。</li>
+              <li>如果服务器没有指定状态文本信息，则默认返回 OK。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>response</code></td>
+          <td>返回响应的正文。</td>
+          <td></td>
+          <td>
+            <ul>
+              <li>返回的类型取决于 <code>responseType</code> 属性的值 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/response#取值"></a>。</li>
+              <li>如果请求出错或尚未完成，则返回 null。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>responseText</code></td>
+          <td>返回文本类型的响应。</td>
+          <td>字符串</td>
+          <td>
+            <ul>
+              <li>如果请求出错或尚未完成，则返回 null。</li>
+              <li>如果 <code>responseType</code> 的值不是 text 或者空字符串，则抛出 <code>InvalidStateError</code> 异常。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>responseXML</code></td>
+          <td>返回 document 类型的响应。</td>
+          <td>XML/HTML</td>
+          <td>
+            <ul>
+              <li>如果请求出错或尚未发送，或者检索的数据无法正确解析为 XML 或 HTML，则返回 null。</li>
+              <li>如果 <code>responseType</code> 的值不是 <code>document</code> 或者空字符串，则抛出 <code>InvalidStateError</code> 异常。</li>
+              <li>默认情况下，响应被当作 <code>text/xml</code> 来解析。当 <code>responseType</code> 设置为 <code>document</code> 并且请求已异步执行时，响应将被当作 <code>text/html</code> 来解析。</li>
+              <li>如果服务器没有明确指出 <code>Content-Type</code> 头是 <code>text/xml</code> 还是 <code>application/xml</code>, 可以使用 <code>overrideMimeType()</code> 方法强制解析为 XML。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>responseURL</code></td>
+          <td>返回响应的序列化 URL。</td>
+          <td>字符串</td>
+          <td>
+            <ul>
+              <li>如果 URL 为空，则返回空字符串。</li>
+              <li>如果 URL 有锚点，则删除位于 URL # 后面的内容。</li>
+              <li>如果 URL 有重定向，则返回经过多次重定向后的最终 URL。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="required"><code>responseType</code></td>
+          <td>返回响应数据的类型。</td>
+          <td>字符串</td>
+          <td>
+            <ul>
+              <li>默认为 text，可以手动设置为其他值<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/responseType"></a>。</li>
+              <li>如果设置为空字符串，则使用默认值 text。</li>
+              <li>如果设置的类型和服务器返回的类型不兼容，则返回的响应数据会变成 null。</li>
+              <li>如果请求是同步的，设置后会抛出 <code>InvalidAccessError</code> 异常。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="required"><code>timeout</code></td>
+          <td>表示超时时间。</td>
+          <td>整数</td>
+          <td>
+            <ul>
+              <li>默认为 0，表示没有超时。</li>
+              <li>设置一个毫秒数，请求会在时间超出后自动终止。</li>
+              <li>超时发生时，就会触发 <code>timeout</code> 事件。</li>
+              <li>超时不能用在同步请求中，否则会抛出 <code>InvalidAccessError</code> 异常。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="required text-nowrap"><code>withCredentials</code></td>
+          <td>表示是否允许跨域请求。</td>
+          <td>布尔值</td>
+          <td>
+            <ul>
+              <li>默认为 false。</li>
+              <li>设置为 true，可以在跨域请求中读取第三方 cookies，并为自身站点设置 cookie 值。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>upload</code></td>
+          <td class="text-nowrap">返回 <code>XMLHttpRequestUpload</code> 对象。</td>
+          <td>对象</td>
+          <td>
+            <ul>
+              <li>表示上传的进度。</li>
+              <li>可以通过对其绑定事件来追踪它的进度，事件名与 XHR 对象的事件名相同<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/upload"></a> 。</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>XHR 事件</h2>
+    <pre><code class="javascript">xhr.onreadystatechange = function () {
+    if(xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.response);
+    }
+}</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>事件</th>
+          <th>何时触发</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-nowrap"><code>onreadystatechange</code></td>
+          <td>每次 <code>readyState</code> 属性变化时。请求被 <code>abort()</code> 方法取消时不会触发。</td>
+        </tr>
+        <tr>
+          <td><code>onloadstart</code></td>
+          <td>请求开始时。</td>
+        </tr>
+        <tr>
+          <td><code>onprogress</code></td>
+          <td>请求进行中。可以用来获取请求过程中的信息。</td>
+        </tr>
+        <tr>
+          <td><code>onabort</code></td>
+          <td>请求终止时。比如调用 <code>abort()</code> 方法时。</td>
+        </tr>
+        <tr>
+          <td><code>onload</code></td>
+          <td>请求成功时。</td>
+        </tr>
+        <tr>
+          <td><code>onerror</code></td>
+          <td>请求出错时。</td>
+        </tr>
+        <tr>
+          <td><code>ontimeout</code></td>
+          <td>请求超时时。</td>
+        </tr>
+        <tr>
+          <td><code>onloadend</code></td>
+          <td>请求完成时。比如已经触发 <code>error</code> <code>abort</code> <code>load</code> 之后，不论成功与否都会触发。</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>XHR 方法</h2>
+    <pre><code class="javascript">xhr.open('GET', '/server', true);
+xhr.send();
+xhr.abort();
+xhr.overrideMimeType('text/xml')
+xhr.setRequestHeader('Content-type', 'application/xml');
+xhr.getResponseHeader("Content-Type");
+xhr.getAllResponseHeaders();</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>open()</code></td>
+          <td>
+            <ul>
+              <li>初始化请求。</li>
+              <li>为已激活的请求调用此方法相当于调用 <code>abort()</code> 方法。</li>
+            </ul>
+          </td>
+          <td class="text-nowrap">
+            <ol>
+              <li class="required">method：请求方法。</li>
+              <li class="required">url：请求地址。</li>
+              <li>async：请求是否异步，默认 true。</li>
+              <li>user：用于认证用途的用户名，默认 null。</li>
+              <li>password：用于认证用途的密码，默认 null。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>send()</code></td>
+          <td>
+            <ul>
+              <li>发送请求。</li>
+              <li>异步请求会在请求发送后立即返回，同步请求直到响应到达会才会返回。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li>params：请求数据主体。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>abort()</code></td>
+          <td>
+            <ul>
+              <li>在请求发出后，终止该请求。</li>
+              <li>该方法调用后 <code>readyState</code> 属性将被置为 0。</li>
+            </ul>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>overrideMimeType()</code></td>
+          <td>
+            <ul>
+              <li>指定一个 MIME 类型用于替代服务器指定的类型，使服务端响应信息中传输的数据按照该指定 MIME 类型处理。</li>
+              <li>此方法必须在 <code>send()</code> 之前调用。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li class="required">mimeType：MIME 类型。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>setRequestHeader()</code></td>
+          <td>
+            <ul>
+              <li>设置请求头。</li>
+              <li>如果多次对同一个请求头赋值，只会生成一个合并了多个值的请求头。</li>
+              <li>此方法必须在 <code>open()</code> 和 <code>send()</code> 之间调用。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li class="required">header：请求头的名称。</li>
+              <li class="required">value：请求头的值。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>getResponseHeader()</code></td>
+          <td>
+            <ul>
+              <li>返回指定的响应头。</li>
+              <li>如果响应头未收到或不存在，则返回 null。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li class="required">name：响应头的名称。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap"><code>getAllResponseHeaders()</code></td>
+          <td>
+            <ul>
+              <li>返回所有的响应头。</li>
+            </ul>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>XHR 实例</h2>
+    <pre><code class="javascript">// 构建对象
+var xhr= new XMLHttpRequest();
+
+// 初始化请求
+xhr.open('GET', '/server', true);
+
+// 设置属性
+xhr.responseType = 'document';
+xhr.timeout = 2000;
+xhr.withCredentials = true;
+
+// 强制解析 response 为 XML
+xhr.overrideMimeType('text/xml')
+
+// 设置请求头
+xhr.setRequestHeader('Content-type', 'application/xml');
+
+// 请求状态改变时，触发事件，执行回调函数
+xhr.onreadystatechange = function () {
+    if(xhr.readyState === 4 && xhr.status === 200) {
+        // 读取响应
+        console.log(xhr.response);
+        // 获取指定的响应头
+        console.log(xhr.getResponseHeader("Content-Type"));
+        // 获取所有的响应头
+        console.log(xhr.getAllResponseHeaders())
+    }
+}
+
+// 发送请求
+xhr.send();
+
+// 终止请求
+xhr.abort();
+</code></pre>
+    <h2>FormData</h2>
+    <ul>
+      <li>此接口提供了一种构造方式，可以构造键值对，用来表示表单数据。</li>
+      <li>经过它的数据可以使用 <code>XMLHttpRequest.send()</code> 方法送出，如果送出时的编码类型被设为 <code>"multipart/form-data"</code>，它会使用和表单一样的格式。</li>
+    </ul>
+    <pre><code class="html">&lt;form id="form"&gt;
+    &lt;input type="text" name="key1" value="1"&gt;
+    &lt;input type="text" name="key1" value="2"&gt;
+    &lt;input type="text" name="key2" value="1"&gt;
+    &lt;input type="text" name="key2" value="2"&gt;
+    &lt;input type="text" name="key3" value="3" disabled&gt;
+&lt;/form&gt;</code></pre>
+    <pre><code class="javascript">var formData = new FormData(document.getElementById('form'));
+formData.append('key1', '0');
+console.log(formData.getAll('key1'));   // ["1","2","0"]
+formData.set('key1', '0');
+console.log(formData.getAll('key1'));   // ["0"]
+formData.delete('key1');
+console.log(formData.has('key1'));      // false
+console.log(formData.has('key2'));      // true
+console.log(formData.get('key2'));      // 1
+console.log(formData.getAll('key2'));   // ["1","2"]
+for (var pair of formData.entries()) {
+    console.log(pair);      // ["key2", "1"] ["key2", "2"]
+}
+for (var key of formData.keys()) {
+    console.log(key);       // key2 key2
+}
+for (var value of formData.values()) {
+    console.log(value);     // 1 2
+}</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-nowrap">
+          <td><code>new FormData()</code></td>
+          <td>
+            <ul>
+              <li>构造函数，用于创建一个新的 FormData 对象。</li>
+              <li>
+                <p>如果以 form 表单作为参数创建的 FormData 对象：</p>
+                <ol>
+                  <li>form 中的表单值会自动包含进去。</li>
+                  <li>form 中的文件内容也会被编码之后包含进去。</li>
+                  <li>form 中的元素必须含有 name 属性，不能含有 disabled 属性。</li>
+                </ol>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li>form：一个 HTML 上的 form 表单元素。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>append()</code></td>
+          <td>
+            <ul>
+              <li>给 FormData 对象中的某个键设置一个新值。</li>
+              <li>如果 key 不存在，则添加该 key。</li>
+              <li>如果 key 已存在，则会在该 key 的最后位置再追加一个值。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li class="required">name：键的名称。</li>
+              <li class="required">value：键的值。</li>
+              <li>filename：传给服务器的文件名称。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>set()</code></td>
+          <td>
+            <ul>
+              <li>给 FormData 对象中的某个键设置一个新值。</li>
+              <li>如果 key 不存在，则添加该 key。</li>
+              <li>如果 key 已存在，则覆盖该 key 所有对应的的值。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li class="required">name：键的名称。</li>
+              <li class="required">value：键的值。</li>
+              <li>filename：传给服务器的文件名称。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>delete()</code></td>
+          <td>从 FormData 对象中删除指定键名的所有键和它对应的值。</td>
+          <td>
+            <ol>
+              <li class="required">name：要删除的键名。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>has()</code></td>
+          <td>返回一个布尔值，表示 FormData 对象中是否含有某个键。</td>
+          <td>
+            <ol>
+              <li class="required">name：要查询的键名。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>get()</code></td>
+          <td>返回 FormData 对象中指定键的第一个值。</td>
+          <td>
+            <ol>
+              <li class="required">name：要获取值的键名。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>getAll()</code></td>
+          <td>返回 FormData 对象中指定键的所有的值，是一个数组。</td>
+          <td>
+            <ol>
+              <li class="required">name：要获取值的键名。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>entries()</code></td>
+          <td>返回一个迭代器 iterator 对象，此对象可以遍历访问 FormData 中所有的键值对。</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>keys()</code></td>
+          <td>返回一个迭代器 iterator 对象，此对象可以遍历访问 FormData 中所有的 key。</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>values()</code></td>
+          <td>返回一个迭代器 iterator 对象，此对象可以遍历访问 FormData 中所有的 value。</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+// Alert
+// --------------------------
+[class*="alert-"] {
+  padding: calc($padding-base / 2) $padding-base;
+  margin-bottom: $margin-base;
+  line-height: $line-height-docs;
+  border-radius: $radius-base;
+}
+.alert {
+  &-info {
+    color: $color-gray;
+    background-color: $bg-deep;
+  }
+  &-success {
+    color: $color-success;
+    background-color: $bg-success;
+  }
+  &-warning {
+    color: $color-warning;
+    background-color: $bg-warning;
+  }
+  &-error {
+    color: $color-danger;
+    background-color: $bg-danger;
+  }
+}

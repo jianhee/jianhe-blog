@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>IDE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/vscode.png" />IDE</h1>
+    <ul class="nav"></ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>编辑器配置</h1>
+    <h2>Sublime Text<a href="https://sublimetext.com/"></a></h2>
+    <h3>配置项</h3>
+    <table class="table-border text-nowrap">
+      <thead>
+        <tr>
+          <th width="150">配置项</th>
+          <th>配置示例</th>
+          <th>在菜单栏中的位置</th>
+          <th>在本地磁盘中的位置</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>用户设置</th>
+          <td>配置文件<a href="../.vscode/sublime.settings.user.js"></a></td>
+          <td><code>Preferences > Settings</code></td>
+          <td><code>%APPDATA%\Sublime Text 3\Packages\User\Preferences.sublime-settings</code></td>
+        </tr>
+        <tr>
+          <th>插件设置</th>
+          <td></td>
+          <td><code>Preferences > Package Settings</code></td>
+          <td><code>%APPDATA%\Sublime Text 3\Packages\User\Package Control.sublime-settings</code></td>
+        </tr>
+        <tr>
+          <th>快捷键设置</th>
+          <td></td>
+          <td><code>Preferences > Key Bindings</code></td>
+          <td><code>%APPDATA%\Sublime Text 3\Packages\User\Default (Windows).sublime-keymap</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>管理插件</h3>
+    <ol>
+      <li>快捷键 <code>ctrl+`</code> 打开控制台，复制粘贴以下代码，安装 PackageControl。</li>
+      <li>快捷键 <code>ctrl+shift+p</code> 打开命令面板，选择安装或卸载插件。</li>
+    </ol>
+    <pre><code class="shell">import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)</code></pre>
+    <h3>常用插件<a href="https://packagecontrol.io/"></a></h3>
+    <table class="table-border">
+      <thead>
+        <th width="150">分类</th>
+        <th width="180">名称</th>
+        <th>说明</th>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="2">编辑器支持</th>
+          <td>Chinese​Localizations</td>
+          <td>中文（简体）语言包。</td>
+        </tr>
+        <tr>
+          <td>Side​Bar​Enhancements</td>
+          <td>侧边栏工具，提供更多的右键菜单选项。</td>
+        </tr>
+        <tr>
+          <th rowspan="1">开发调试</th>
+          <td>Sublime​Server</td>
+          <td>为静态和动态页面启动本地开发服务器。</td>
+        </tr>
+        <tr>
+          <th rowspan="2">文件管理</th>
+          <td>Convert​To​UTF8</td>
+          <td>编辑器不支持 GBK 等中文用户使用的编码格式，打开文件时会显示乱码。安装插件后，可以正常显示和编辑保存这类文件。</td>
+        </tr>
+        <tr>
+          <td>FileDiffs</td>
+          <td>比较当前文件和其它文件的差异。</td>
+        </tr>
+        <tr>
+          <th rowspan="3">语法高亮</th>
+          <td>Trailing​Spaces</td>
+          <td>高亮标记尾随空格。</td>
+        </tr>
+        <tr>
+          <td>BracketHighlighter</td>
+          <td>高亮标记配对的标签。</td>
+        </tr>
+        <tr>
+          <td>GitGutter</td>
+          <td>高亮标记 Git 仓库中已修改未提交的行。</td>
+        </tr>
+        <tr>
+          <th rowspan="6">代码提示</th>
+          <td>Emmet</td>
+          <td>快速生成 HTML 和 CSS 代码块。</td>
+        </tr>
+        <tr>
+          <td>HTML5</td>
+          <td>快速生成 HTML5 代码块，与 Emmet 插件配合使用，效果更好。</td>
+        </tr>
+        <tr>
+          <td>jQuery</td>
+          <td>快速生成 jQuery 代码块。</td>
+        </tr>
+        <tr>
+          <td>DocBlockr</td>
+          <td>
+            <ul>
+              <li>快速生成 JS 标准注释。</li>
+              <li>快捷键：输入 <code>/**</code> 后按 <code>Tab</code> 键。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Quote​HTML</td>
+          <td>快速拼接 HTML 片段生成 JS 字符串。</td>
+        </tr>
+        <tr>
+          <td>AutoFileName</td>
+          <td>自动补全文件路径。</td>
+        </tr>
+        <tr>
+          <th rowspan="1">代码格式化</th>
+          <td>HTML-CSS-JS Prettify</td>
+          <td>
+            <ul>
+              <li>格式化 HTML, CSS, JavaScript, JSON 文件。</li>
+              <li>快捷键：<code>ctrl+shift+h</code></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="1">代码检查</th>
+          <td>SublimeLinter</td>
+          <td>
+            <ul>
+              <li>代码检查工具，本身没有检查功能，需要针对不同的语言安装额外的插件。</li>
+              <li>快捷键：<code>ctrl+k,a</code> 列出所有错误。</li>
+              <li>用户设置：</li>
+            </ul>
+            <pre><code class="json">{
+    // SublimeLinter：错误提示的主题。
+    "gutter_theme": "Blueberry Round",
+    // SublimeLinter：保存文件时自动检查。
+    "lint_mode": "load_save",
+}</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>常用快捷键</h3>
+    <table class="table-border text-nowrap">
+      <thead>
+        <tr>
+          <th width="150">分类</th>
+          <th>快捷键</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="4">视图</th>
+          <td><code>f11</code></td>
+          <td>全屏模式</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+`</code></td>
+          <td>打开控制台</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+p</code></td>
+          <td>打开命令面板</td>
+        </tr>
+        <tr>
+          <td><code>alt+shift+数字</code></td>
+          <td>窗口等分</td>
+        </tr>
+        <tr>
+          <th rowspan="5">文件</th>
+          <td><code>ctrl+s</code>, <code>ctrl+shift+s</code></td>
+          <td>保存/另存为</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+n</code>, <code>ctrl+shift+n</code></td>
+          <td>新建文件/新建窗口</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+o</code>, <code>ctrl+k,ctrl+o</code></td>
+          <td>打开文件/打开文件所在的文件夹</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+w</code>, <code>ctrl+shift+w</code></td>
+          <td>关闭文件/关闭窗口</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+t</code></td>
+          <td>重新打开已关闭的文件</td>
+        </tr>
+        <tr>
+          <th rowspan="9">编辑</th>
+          <td><code>ctrl+z</code>, <code>ctrl+shift+z</code></td>
+          <td>撤销/恢复</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+x</code></td>
+          <td>剪切</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+c</code></td>
+          <td>复制</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+v</code>, <code>ctrl+shift+v</code></td>
+          <td>粘贴/粘贴并缩进</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+d</code></td>
+          <td>插入当前行</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+上下</code></td>
+          <td>向上下移动当前行</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+j</code></td>
+          <td>合并当前行</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+enter</code>, <code>ctrl+shift+enter</code></td>
+          <td>在此后插入新行/在此前插入新行</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+删除</code>, <code>shift+删除</code>, <code>ctrl+shift+删除</code></td>
+          <td>删除到上下节点/删除行/删除到行首尾</td>
+        </tr>
+        <tr>
+          <th rowspan="9">选择</th>
+          <td><code>ctrl+a</code></td>
+          <td>全选</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+d</code></td>
+          <td>选择至文本，继续操作选择至下一个相同的文本</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+左右</code></td>
+          <td>将光标移动到左右节点</td>
+        </tr>
+        <tr>
+          <td><code>shift+方向</code></td>
+          <td>选择至光标所在位置的文本</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+左右</code></td>
+          <td>选择至左右节点，继续操作选择至下一节点</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+space</code></td>
+          <td>选择至当前节点，继续操作选择至父节点</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+a</code></td>
+          <td>选择至标签，继续操作选择至父级标签</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+l</code></td>
+          <td>选择至整行，继续操作选择至下一行</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+shift+l</code></td>
+          <td>在选中的每一行行尾添加光标</td>
+        </tr>
+        <tr>
+          <th rowspan="3">查找</th>
+          <td><code>ctrl+f</code>, <code>ctrl+shift+f</code></td>
+          <td>在当前文件中查找/在当前项目所有文件中查找</td>
+        </tr>
+        <tr>
+          <td><code>f3</code>, <code>shift+f3</code>, <code>alt+f3</code></td>
+          <td>在当前文件中查找下一个/上一个/全部并选中</td>
+        </tr>
+        <tr>
+          <td><code>f4</code>, <code>shift+f4</code></td>
+          <td>在当前项目打开下一个/上一个结果所在文件</td>
+        </tr>
+        <tr>
+          <th rowspan="3">其它</th>
+          <td><code>tab</code>, <code>shift+tab</code></td>
+          <td>增加缩进/减少缩进</td>
+        </tr>
+        <tr>
+          <td><code>ctrl+/</code>, <code>ctrl+shift+/</code></td>
+          <td>单行注释/多行注释</td>
+        </tr>
+        <tr>
+          <td>输入 <code>/**</code> 后按 <code>enter</code></td>
+          <td>快速生成 JS 多行注释。Sublime 需要安装插件，VSCode 已集成。</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>VS Code<a href="https://code.visualstudio.com/"></a></h2>
+    <h3>配置项</h3>
+    <table class="table-border text-nowrap">
+      <thead>
+        <tr>
+          <th width="150">配置项</th>
+          <th>配置示例</th>
+          <th>在菜单栏中的位置</th>
+          <th>在本地磁盘中的位置</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>用户设置</th>
+          <td>配置文件<a href="../.vscode/settings.user.js"></a></td>
+          <td><code>File > Preferences > Settings > User Settings</code></td>
+          <td><code>%APPDATA%\Code\User\settings.json</code></td>
+        </tr>
+        <tr>
+          <th>文件夹设置</th>
+          <td>配置文件<a href="../.vscode/settings.json"></a></td>
+          <td><code>File > Preferences > Settings > Folder Settings</code></td>
+          <td><code>FolderName\.vscode\settings.json</code></td>
+        </tr>
+        <tr>
+          <th>插件设置</th>
+          <td></td>
+          <td><code>File > Preferences > extensions</code></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>快捷键设置</th>
+          <td>使用 Sublime Text 映射</td>
+          <td><code>File > Preferences > Keyboard Shortcuts</code></td>
+          <td><code>%APPDATA%\Code\User\keybindings.json</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>常用插件</h3>
+    <table class="table-border">
+      <thead>
+        <th width="150">分类</th>
+        <th width="240">名称</th>
+        <th>说明</th>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="3">编辑器支持</th>
+          <td>Chinese (Simplified)</td>
+          <td>中文（简体）语言包。</td>
+        </tr>
+        <tr>
+          <td>Sublime Text Keymap and Settings Importer</td>
+          <td>Sublime Text 的快捷键和设置映射。</td>
+        </tr>
+        <tr>
+          <td>filesize</td>
+          <td>在状态栏中显示当前文件大小，点击可以显示更多信息。</td>
+        </tr>
+        <tr>
+          <th rowspan="5">开发调试</th>
+          <td>Live Server</td>
+          <td>
+            <ul>
+              <li>为静态和动态页面启动本地开发服务器，并在浏览器中实时预览和刷新。</li>
+              <li>启动服务：在命令面板、状态栏右下角、右键选择 <code>Live Server</code> 相关操作。</li>
+              <li>用户设置：<a href="../.vscode/settings.user.js"></a></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Live Sass Compiler</td>
+          <td>
+            <ul>
+              <li>实时编译 SCSS, Sass 文件，支持自定义输出格式、文件名称、保存目录。</li>
+              <li>启动服务：在命令面板、状态栏右下角选择 <code>Live Sass</code> 相关操作。</li>
+              <li>用户设置：<a href="../.vscode/settings.user.js"></a></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Minify</td>
+          <td>
+            <ul>
+              <li>压缩 JS, CSS, HTML 文件。</li>
+              <li>运行方法：在命令面板选择 <code>Minify</code> 压缩当前文件。当存在匹配的压缩文件时，可选择在保存文件时自动压缩。</li>
+              <li>用户设置：<a href="../.vscode/settings.user.js"></a></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Quokka.js</td>
+          <td>
+            <ul>
+              <li>运行代码并显示执行结果。每次输入代码后就会立即自动运行。</li>
+              <li>运行方法：在命令面板中选择 <code>Start</code> 运行当前文件，或者 <code>New File</code> 新建文件。付费版本可以在保存时自动运行，不用每次重新选择。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Code Runner</td>
+          <td>
+            <ul>
+              <li>运行代码并显示执行结果。每次输入代码后都要手动选择运行。</li>
+              <li>运行方法：在命令面板、菜单栏右上角、右键选择 <code>Run Code</code>。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="2">语法高亮</th>
+          <td>Trailing Spaces</td>
+          <td>高亮标记尾随空格。</td>
+        </tr>
+        <tr>
+          <td>Bracket Pair Colorizer 2</td>
+          <td>高亮标记配对的括号。</td>
+        </tr>
+        <tr>
+          <th rowspan="3">代码提示</th>
+          <td>JavaScript (ES6) code snippets</td>
+          <td>
+            <ul>
+              <li>快速生成 JavaScript 代码块。</li>
+              <li>快捷键：输入关键字后按 <code>tab</code> 键或者 <code>enter</code> 键。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>jQuery Code Snippets</td>
+          <td>
+            <ul>
+              <li>快速生成 jQuery 代码块。</li>
+              <li>快捷键：输入关键字后按 <code>tab</code> 键或者 <code>enter</code> 键。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Auto Rename Tag</td>
+          <td>自动重命名配对的 HTML/XML 标签。</td>
+        </tr>
+        <tr>
+          <th rowspan="3">语言支持</th>
+          <td>GitLens</td>
+          <td>增强编辑器内置的 Git 功能。</td>
+        </tr>
+        <tr>
+          <td>Vetur</td>
+          <td>
+            <ul>
+              <li>提供 vue 语法高亮、代码提示、代码检查、代码格式化等功能。</li>
+              <li>用户设置：<a href="../.vscode/settings.user.js"></a></li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>构建检查</h1>
+    <h2>EditorConfig<a href="https://editorconfig.org/"></a></h2>
+    <p>EditorConfig 用于在同一项目不同的开发人员和编辑器之间维护一致的编码风格。它的配置要高于编辑器的默认配置。</p>
+    <h3>配置和使用</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">类型</th>
+          <th>配置和使用</th>
+          <th>配置示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>EditorConfig 配置</th>
+          <td>
+            <ol>
+              <li>创建 <code>.editorconfig</code> 格式的配置文件，放在项目根目录中。</li>
+            </ol>
+          </td>
+          <td>
+            <ol>
+              <li>官网提供的示例文件<a href="https://editorconfig.org/#example-file"></a></li>
+              <li>官网推荐的项目示例<a href="https://github.com/editorconfig/editorconfig/wiki/Projects-Using-EditorConfig"></a></li>
+              <li>腾讯 @AlloyTeam 配置文件<a href="https://alloyteam.github.io/CodeGuide/.editorconfig"></a></li>
+              <li>本项目中使用的配置文件<a href="../.editorconfig"></a></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>Sublime</th>
+          <td>
+            <ol>
+              <li>安装插件 EditorConfig。</li>
+            </ol>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>VS Code<a href="https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig"></a></th>
+          <td>
+            <ol>
+              <li>安装插件 EditorConfig。</li>
+            </ol>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>换行风格</h3>
+    <table class="table-scrollbale table-border">
+      <thead>
+        <tr>
+          <th width="150">操作系统</th>
+          <th>换行方式</th>
+          <th>对应符号</th>
+          <th>对应字符</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>MacOS</th>
+          <td>回车符</td>
+          <td><code>CR</code></td>
+          <td><code>\r</code></td>
+        </tr>
+        <tr>
+          <th>Linux/Unix</th>
+          <td>换行符</td>
+          <td><code>LF</code></td>
+          <td><code>\n</code></td>
+        </tr>
+        <tr>
+          <th>Windows/Dos</th>
+          <td>回车符+换行符</td>
+          <td><code>CRLF</code></td>
+          <td><code>\r\n</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>ESLint<a href="https://cn.eslint.org/"></a></h2>
+    <p>ESLint 是一个开源的 JavaScript 代码检查工具。</p>
+    <h3>npm 安装</h3>
+    <pre><code class="shell">$ npm install --save-dev eslint                  # 本地安装
+$ npm install --save-dev eslint-plugin-html      # 安装 .html 插件
+$ npm install --save-dev eslint-plugin-vue       # 安装 .vue 插件，不能和 .html 插件同时使用。
+$ npm install --save-dev babel-eslint            # 安装第三方解析器
+$ npm install --save-dev eslint-config-standard
+$ npm install --save-dev eslint-plugin-standard
+$ npm install --save-dev eslint-plugin-import
+$ npm install --save-dev eslint-plugin-node
+$ npm install --save-dev eslint-plugin-promise   # 安装第三方规则</code></pre>
+    <h3>安装说明</h3>
+    <ul>
+      <li>不论是在编辑器中通过插件使用还是在命令行中运行命令使用，都需要安装 npm 包。</li>
+      <li>如果全局安装 ESLint，必须全局安装插件和解析器。本地安装同理。</li>
+      <li>如果是全局安装，可以使用编辑器插件自动检查文件，可以在项目目录下直接运行命令行选项。</li>
+      <li>如果是本地安装，只有在运行项目时才会检查文件，必须进入 <code>./node_modules/.bin/</code> 目录下运行命令行选项。</li>
+    </ul>
+    <h3>配置说明</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">类型</th>
+          <th>配置说明</th>
+          <th width="240">配置示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>ESLint 配置<a href="https://cn.eslint.org/docs/user-guide/configuring"></a></th>
+          <td>
+            <ol>
+              <li>使用 JavaScript 注释把配置信息直接嵌入到一个代码源文件中。</li>
+              <li>使用命令行选项指定某个配置。</li>
+              <li>创建 <code>.eslintrc.js</code> 格式的配置文件，放在项目根目录中。<br />另外还支持 <code>.eslintrc.json</code> 等格式。</li>
+              <li>在 <code>package.json</code> 文件里的 <code>eslintConfig</code> 字段中指定配置对象。</li>
+            </ol>
+          </td>
+          <td>
+            <ol>
+              <li>配置向导 <code>eslint --init</code></li>
+              <li>本项目中使用的配置文件<a href="../.eslintrc.js"></a></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>ESLint 规则<a href="https://cn.eslint.org/docs/rules/"></a></th>
+          <td colspan="2">
+            <p>所有的规则默认都是禁用的，可在配置文件中开启。</p>
+            <ol>
+              <li>使用 <code>"extends": "eslint:recommended"</code> 字段启用推荐的规则。</li>
+              <li>使用 <code>"extends": "standard"</code> 字段启用第三方规则，需要安装 npm 包。</li>
+              <li>使用 <code>"rules"</code> 字段启用额外的规则。<code>"off"</code> 关闭规则，<code>"warn"</code> 开启警告，<code>"error"</code> 开启报错。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>ESLint 忽略<a href="https://cn.eslint.org/docs/user-guide/configuring#ignoring-files-and-directories"></a></th>
+          <td>
+            <ol>
+              <li>创建 <code>.eslintignore</code> 格式的配置文件，放在项目根目录中。</li>
+              <li>在 <code>package.json</code> 文件里的 <code>eslintIgnore</code> 字段中指定文件和目录。</li>
+            </ol>
+          </td>
+          <td>
+            <ol>
+              <li>本项目中使用的忽略文件<a href="../.eslintignore"></a></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>检查 Vue<a href="https://eslint.vuejs.org/user-guide/#installation"></a></th>
+          <td>
+            <ol>
+              <li>安装插件：eslint-plugin-vue。</li>
+              <li>启用插件：在 <code>plugins</code> 字段中添加 <code>"vue"</code>，关闭 <code>"html"</code>。</li>
+              <li>启用规则：在 <code>extends</code> 字段中添加 <code>"plugin:vue/essential"</code>。</li>
+              <li>启用解析器：将 <code>"parser": "babel-eslint"</code> 移入 <code>parserOptions</code> 字段中。因为 eslint-plugin-vue 插件使用 vue-eslint-parser 解析器，添加其他解析器会覆盖默认设置，导致插件不起作用。</li>
+            </ol>
+          </td>
+          <td>
+            <ol>
+              <li>vue 项目中使用的配置文件<a href="../eslintrc.js"></a></li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>使用方法</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">平台</th>
+          <th>使用方法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Sublime</th>
+          <td>
+            <ol>
+              <li>安装插件 SublimeLinter。</li>
+              <li>安装插件 SublimeLinter-eslint。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>VS Code<a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"></a></th>
+          <td>
+            <ol>
+              <li>安装插件 ESLint。</li>
+              <li>在用户设置中添加以下配置<a href="../.vscode/settings.json"></a>。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>命令行<a href="https://cn.eslint.org/docs/user-guide/command-line-interface"></a></th>
+          <td>
+            <pre><code class="shell">$ eslint -h                     # 查看所有选项
+$ eslint --init                 # 初始化向导，生成配置文件
+$ eslint -c file.js             # 指定其它配置文件
+$ eslint --ignore-path file.js  # 指定其它忽略配置文件
+$ eslint file.js                # 检查文件
+$ eslint --fix file.js          # 修复文件，但大部分是对空白的修复。</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>stylelint<a href="https://stylelint.io/"></a></h2>
+    <p>stylelint 是一个的 CSS, SCSS, Sass, Less 代码检查工具，并且支持检查 HTML, JS 等文件内嵌的样式。</p>
+    <h3>npm 安装</h3>
+    <p>安装说明与 ESLint 相同。</p>
+    <pre><code class="shell">$ npm install --save-devs stylelint                    # 本地安装
+$ npm install --save-devs stylelint-config-standard    # 安装第三方规则</code></pre>
+    <h3>配置说明</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">类型</th>
+          <th>配置说明</th>
+          <th width="240">配置示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>stylelint 配置<a href="https://stylelint.io/user-guide/configuration/"></a></th>
+          <td>
+            <ol>
+              <li>使用 CSS 注释把配置信息直接嵌入到一个代码源文件中。</li>
+              <li>在 <code>package.json</code> 文件里的 <code>stylelint</code> 字段中指定配置对象。</li>
+              <li>创建 <code>.stylelintrc</code>格式的配置文件，放在项目根目录中。<br />另外还支持 <code>.stylelintrc.json</code>, <code>.stylelintrc.js</code> 等格式。</li>
+            </ol>
+          </td>
+          <td>
+            <ol>
+              <li>官网提供的示例文件<a href="https://stylelint.io/user-guide/example-config/"></a></li>
+              <li>本项目中使用的配置文件<a href="../.stylelintrc.js"></a></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>stylelint 规则<a href="https://stylelint.io/user-guide/rules/"></a></th>
+          <td colspan="2">
+            <p>所有的规则默认都是禁用的，可在配置文件中开启。</p>
+            <ol>
+              <li>使用 <code>"extends": "stylelint-config-recommended"</code> 字段启用推荐的规则。</li>
+              <li>使用 <code>"extends": "stylelint-config-standard"</code> 字段启用第三方规则，需要安装 npm 包。</li>
+              <li>使用 <code>"rules"</code> 字段启用额外的规则。单个值指定主要选项，多个值指定辅助选项，<code>null</code> 关闭规则，<code>"warn"</code> 开启警告，<code>"error"</code> 开启报错。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>stylelint 忽略<a href="https://stylelint.io/user-guide/configuration/#ignorefiles"></a></th>
+          <td>
+            <ol>
+              <li>创建 <code>.stylelintignore</code> 格式的配置文件，放在项目根目录中。</li>
+            </ol>
+          </td>
+          <td>
+            <ol>
+              <li>本项目中使用的忽略文件<a href="../.stylelintignore"></a></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>检查 Sass</th>
+          <td>对 <code>.sass</code> 和 <code>.scss</code> 文件校验未知的规则，需要忽略 Sass 关键字。</td>
+          <td>
+            <ol>
+              <li>本项目中使用的配置文件<a href="../.stylelintrc.js"></a></li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>使用方法</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">平台</th>
+          <th>使用方法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Sublime</th>
+          <td>
+            <ol>
+              <li>安装插件 SublimeLinter。</li>
+              <li>安装插件 SublimeLinter-stylelint。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>VS Code<a href="https://marketplace.visualstudio.com/items?itemName=shinnn.stylelint"></a></th>
+          <td>
+            <ol>
+              <li>安装插件 stylelint。</li>
+              <li>在用户设置中添加以下配置<a href="../.vscode/settings.json"></a>。</li>
+              <li>在 <code>stylelint.config</code> 字段中指定配置对象，可以取代配置文件。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>命令行<a href="https://stylelint.io/user-guide/cli/"></a></th>
+          <td>
+            <pre><code class="shell">$ stylelint --help            # 查看帮助
+$ stylelint "file.css"        # 检查文件。所有命令行选项中的文件名都必须放在引号中。
+$ stylelint "file.css" --fix  # 修复文件</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>CSScomb<a href="https://csscomb.com/"></a></h2>
+    <p>CSScomb 是一个 CSS, SCSS, Sass, Less 代码格式化工具，支持自定义编码风格和属性排序。</p>
+    <h3>配置说明</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">类型</th>
+          <th>配置说明</th>
+          <th width="240">配置示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>CSScomb 配置<a href="https://github.com/csscomb/csscomb.js/blob/dev/doc/options.md"></a></th>
+          <td>
+            <ol>
+              <li>创建 <code>.csscomb.json</code> 格式的配置文件放在项目根目录中。</li>
+              <li>在配置文件里的 <code>sort-order</code> 字段中指定属性排序。</li>
+            </ol>
+          </td>
+          <td rowspan="3">
+            <ol>
+              <li>配置向导<a href="https://csscomb.com/config"></a></li>
+              <li>官网提供的三种默认配置文件<a href="https://github.com/csscomb/csscomb.js/tree/dev/config"></a></li>
+              <li>腾讯 @AlloyTeam 配置文件<a href="https://alloyteam.github.io/CodeGuide/csscomb_setting_user.json"></a></li>
+              <li>本项目中使用的配置文件<a href="../.csscomb.json"></a></li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>CSScomb 忽略<a href="https://github.com/csscomb/csscomb.js/blob/dev/doc/options.md#exclude"></a></th>
+          <td>
+            <ol>
+              <li>在配置文件里的 <code>exclude</code> 字段中指定文件和目录。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>格式化 Sass<a href="https://github.com/csscomb/csscomb.js/blob/dev/doc/options.md#sort-order-vs-preprocessors"></a></th>
+          <td>对 <code>.sass</code> 和 <code>.scss</code> 文件中的属性进行排序，需要添加 Sass 关键字。</td>
+        </tr>
+        <tr>
+          <th>已知的 Bug<a href="https://github.com/csscomb/csscomb.js/issues/593"></a></th>
+          <td colspan="2">使用 <code>CRLF</code> 换行的文件，使用 CSScomb 格式化时出错。比如格式化 Sass 文件时，如果在一个选择器中使用多个@规则，无法正确缩进和换行。在 HTML 文件中使用 style 标签，还会重复添加末尾空行。仅在使用 <code>LF</code> 换行时不会出错。</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>使用方法</h3>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">平台</th>
+          <th>使用方法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Sublime</th>
+          <td>
+            <ol>
+              <li>无需 npm 包，安装插件 CSScomb。</li>
+              <li>无需配置文件，在用户设置的 <code>config</code> 字段中指定配置对象。</li>
+              <li>使用快捷键 <code>ctrl+shift+c</code> 或者右键选择 <code>Run CSScomb</code> 格式化文件。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>VS Code<a href="https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-csscomb"></a></th>
+          <td>
+            <ol>
+              <li>无需 npm 包，安装插件 CSScomb。</li>
+              <li>在用户设置中添加以下配置<a href="../.vscode/settings.json"></a>。</li>
+              <li>在 <code>csscomb.preset</code> 字段中指定默认配置或者配置对象，可以取代配置文件。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>命令行<a href="https://csscomb.com/docs"></a></th>
+          <td>
+            <pre><code class="shell">$ npm install --save-dev csscomb  # 本地安装
+$ csscomb file.css                # 格式化文件</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Autoprefixer<a href="https://autoprefixer.github.io/"></a></h2>
+    <p>Autoprefixer 可以解析 CSS, SCSS, Sass, Less 文件，使用 Can I Use 资料库为 CSS 属性添加或删除浏览器私有前缀。</p>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th width="150">平台</th>
+          <th>使用方法</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Sublime</th>
+          <td>
+            <ol>
+              <li>安装插件 Autoprefixer。</li>
+              <li>输入 CSS 属性后按 <code>Tab</code> 键自动添加前缀。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <th>VS Code<a href="https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-autoprefixer"></a></th>
+          <td>
+            <ol>
+              <li>安装插件 Autoprefixer。</li>
+              <li>在用户设置中添加以下配置<a href="../.vscode/settings.user.js"></a>。</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

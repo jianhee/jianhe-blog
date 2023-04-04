@@ -1,0 +1,183 @@
+// Index
+// --------------------------
+
+@charset "utf-8";
+@import "./modules/variables";
+@import "./modules/mixins";
+@import "./modules/reset";
+@import "./modules/scrollbar";
+@import "./modules/global";
+
+$header-height: 50px;
+$sidebar-width: 240px;
+
+// sidebar
+.page-sidebar {
+  @include position-fixed(0, auto, 0, 0);
+  @include user-select;
+
+  width: $sidebar-width;
+  background-color: $index-menu-bg;
+  .title {
+    height: $header-height;
+    margin: 0 20px;
+    font-size: $font-size-base;
+    font-weight: normal;
+    line-height: $header-height - 4px;
+    color: $color-white;
+    cursor: pointer;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid hsl(0deg 0% 100% / 4%);
+  }
+  .menu {
+    @include position-absolute($header-height + $padding-base, 0, $padding-base, 0);
+
+    overflow-y: overlay;
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: $index-menu-color;
+    }
+    li {
+      @include text-ellipsis;
+
+      padding: 0 40px;
+      font-size: $font-size-small;
+      line-height: 2.6em;
+      color: $index-menu-color;
+      list-style: none;
+      cursor: pointer;
+      &:hover,
+      &.active {
+        color: $color-white;
+      }
+    }
+  }
+  .fa {
+    width: 1.4em;
+    margin-right: .6em;
+    text-align: center;
+  }
+}
+
+// container
+.page-container {
+  padding: 40px;
+  margin-left: $sidebar-width;
+  .content {
+    margin-bottom: 20px;
+    background-color: $bg-white;
+    border: $border-light;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .title {
+    @include user-select;
+
+    padding: 20px;
+    font-size: $font-size-h3;
+    font-weight: normal;
+    line-height: $line-height-base;
+    cursor: pointer;
+    &.active {
+      color: $color-brand;
+    }
+    .fa {
+      width: 1.2em;
+      margin-right: .6em;
+      text-align: center;
+    }
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  }
+  .item {
+    @include box-shadow-light(1px, 2px, 3px);
+
+    position: relative;
+    width: 23%;
+    padding: 10px;
+    margin: 0 1% $padding-base;
+    list-style: none;
+    background-color: $bg-white;
+    border: $border-light;
+    border-radius: $radius-base;
+    &:hover {
+      @include transition;
+
+      transform: translateY(-5px);
+      transform: translateY(-5px);
+    }
+  }
+  [data-status]::after {
+    @include position-absolute(10px, 10px);
+
+    font-family: FontAwesome;
+  }
+  [data-status="finish"]::after {
+    color: $color-brand;
+    content: "\f00c"; // fa-check
+  }
+  [data-status="external"]::after {
+    color: $color-brand;
+    content: "\f08e"; // fa-external-link
+  }
+  [data-status="learning"]::after {
+    @include animate-spinner;
+
+    color: $color-brand;
+    content: "\f110"; // fa-spinner
+  }
+  [data-status="planing"]::after {
+    color: $color-warning;
+    content: "\f251"; // fa-hourglass-start
+  }
+  [data-status="mark"]::after {
+    color: $color-danger;
+    content: "\f02e"; // fa-bookmark
+  }
+  .logo {
+    @include text-ellipsis;
+
+    display: block;
+    height: 40px;
+    margin-bottom: 10px;
+    font-size: $font-size-h4;
+    font-weight: normal;
+    line-height: 40px;
+    color: $color-link;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    span {
+      display: inline-block;
+      width: 40px;
+      margin-right: .4em;
+      font-size: $font-size-h2;
+      color: $color-base;
+      text-align: center;
+      background-color: $bg-deep;
+      border-radius: 100%;
+    }
+    img {
+      width: auto;
+      height: 100%;
+      margin-right: .6em;
+      border-radius: $radius-base;
+    }
+  }
+  .desc,
+  .link {
+    font-size: $font-size-min;
+    line-height: $line-height-docs;
+    color: $color-gray;
+  }
+  .desc {
+    @include text-ellipsis;
+  }
+  .link a {
+    color: $color-link;
+  }
+}

@@ -1,0 +1,10 @@
+// Blockquote
+// --------------------------
+blockquote {
+  padding: 0 $padding-base;
+  margin-bottom: $margin-base;
+  line-height: $line-height-docs;
+  color: $color-gray;
+  border-left: $border-deep;
+  border-left-width: 4px;
+}

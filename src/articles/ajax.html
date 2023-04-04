@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>jQuery Ajax</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/jquery.png" />jQuery Ajax</h1>
+    <ul class="nav">
+      <li>
+        <a>参考资料</a>
+        <ul class="dropdown">
+          <li><a href="https://www.jquery123.com/category/ajax/">jQuery 中文网</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>jQuery Ajax</h1>
+    <h2>请求方法</h2>
+    <pre><code class="javascript">let data = { name: '1'};
+$('#a').load('ajax/test.html #b');
+$.get('ajax/test.html', data, function(data) {
+    // do
+});
+$.ajax({
+    type: 'GET',
+    url: '/server',
+    data: data,
+});
+</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>$.ajax()</code></td>
+          <td>发起一个 Ajax 请求。</td>
+          <td>
+            <ol>
+              <li>options：请求配置。也可以在 <code>$.ajaxSetup()</code> 中全局设置。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>$.post()</code></td>
+          <td>使用一个 HTTP POST 请求从服务器加载数据。</td>
+          <td class="text-nowrap" rowspan="2">
+            <ol>
+              <li>url：请求地址。</li>
+              <li>data：发送给服务器的数据。</li>
+              <li>success(data, textStatus, jqXHR) 请求成功后执行的回调函数。</li>
+              <li>dataType：客户端预期服务器返回的数据类型。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>$.get()</code></td>
+          <td>使用一个 HTTP GET 请求从服务器加载数据。</td>
+        </tr>
+        <tr>
+          <td><code>$.getJSON()</code></td>
+          <td>使用一个 HTTP GET 请求从服务器加载 JSON 类型的数据。</td>
+          <td>
+            <ol>
+              <li>url</li>
+              <li>data</li>
+              <li>success(data, textStatus, jqXHR)</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>$.getScript()</code></td>
+          <td>使用一个 HTTP GET 请求从服务器加载并全局执行一个 JavaScript 文件。</td>
+          <td>
+            <ol>
+              <li>url</li>
+              <li>success(script, textStatus, jqXHR)</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.load()</code></td>
+          <td>
+            <p>从服务器加载数据，然后将返回的 HTML 代码插入至匹配的元素中。<a data-block="#load">查看更多</a></p>
+            <ul class="hide" id="load">
+              <li>如果返回的 HTML 代码中含有 JavaScript 脚本，那么脚本也会被执行。</li>
+              <li>如果 url 参数中含有空格，那么第一个空格后面的内容会被当成选择器，返回的结果中只有匹配该选择器的内容才会被载入到页面中，该选择器外的脚本也不会被执行。</li>
+              <li>请求必须结合元素使用，如果选择器没有匹配的元素，请求不会执行。</li>
+              <li>请求默认使用 GET 方式 ， 如果 data 参数提供一个对象，那么使用 POST 方式。</li>
+            </ul>
+          </td>
+          <td>
+            <ol>
+              <li>url</li>
+              <li>data</li>
+              <li>complete(responseText, textStatus, jqXHR)</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>请求配置-常用</h2>
+    <pre><code class="javascript">$.ajax({
+    type: 'GET',
+    url: '/server',
+    async: true,
+    cache: true,
+    data: {
+        ID: 1
+    },
+    contentType: 'application/json; charset=UTF-8',
+    dataType: 'json',
+    crossDomain: !(document.all) === true,
+    xhrFields: {
+        withCredentials: true
+    }
+});</code></pre>
+    <table class="table-border">
+      <thead>
+        <th>选项</th>
+        <th>类型</th>
+        <th>定义</th>
+        <th>说明</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>type</code></td>
+          <td>字符串</td>
+          <td>请求方式。</td>
+          <td>默认为 GET。</td>
+        </tr>
+        <tr>
+          <td><code>url</code></td>
+          <td>字符串</td>
+          <td>请求地址。</td>
+          <td>默认为当前页地址。</td>
+        </tr>
+        <tr>
+          <td><code>async</code></td>
+          <td>布尔值</td>
+          <td>请求是否异步处理。</td>
+          <td>
+            <ul>
+              <li>默认为 true，所有请求均为异步请求。</li>
+              <li>设置为 false，发送同步请求，但这会锁住浏览器，必须等待请求完成才可以执行其他操作。</li>
+              <li>在跨域请求中，或者 <code>dataType</code> 为 <code>jsonp</code> 时，不支持同步操作。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>cache</code></td>
+          <td>布尔值</td>
+          <td>请求是否使用缓存。</td>
+          <td>
+            <ul>
+              <li>默认为 true，在第一次请求完成后，浏览器会缓存此页面，在之后的请求中，如果地址和参数没有变化，直接从缓存中读取数据。</li>
+              <li>设置为 false，不缓存页面，也不使用缓存的结果，每次请求都从服务器加载最新数据。它的工作原理是在 URL 中添加一个查询字符串 <code>_=[TIMESTAMP]</code>。</li>
+              <li><code>dataType</code> 为 <code>script</code> 或 <code>jsonp</code>时，默认为 false，但是也可以手动设置为 true。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>data</code></td>
+          <td class="text-nowrap">对象/字符串</td>
+          <td>发送给服务器的数据。</td>
+          <td>
+            <ul>
+              <li>JSON 对象和数组会使用 <code>$.params()</code> 方法自动转换为查询字符串，详见辅助函数和请求数据中的示例。</li>
+              <li>可以将 <code>processData</code> 选项设置为 <code>false</code> 禁止自动转换。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>contentType</code></td>
+          <td>字符串</td>
+          <td>告诉服务器客户端发送的请求数据的 MIME 类型。</td>
+          <td>
+            <ul>
+              <li>默认为 <code>application/x-www-form-urlencoded; charset=UTF-8</code>。</li>
+              <li>发送 JSON 数据时常设置为 <code>application/json; charset=UTF-8</code>。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>accepts</code></td>
+          <td>对象</td>
+          <td class="text-nowrap">告诉服务器客户端希望接收的响应数据的 MIME 类型。</td>
+          <td>
+            <ul>
+              <li>默认值取决于 <code>dataType</code> 的值，比如 <code>text/xml</code>。</li>
+              <li>如果需要修改，推荐在 <code>$.ajaxSetup()</code> 方法中设置一次。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>dataType</code></td>
+          <td>字符串</td>
+          <td>客户端预期服务器返回的数据类型。</td>
+          <td>
+            <ul>
+              <li>如果不指定，jQuery 将自动根据 HTTP 包 MIME 信息来智能判断。</li>
+              <li>
+                <p>可以指定 6 种值，<a data-block="#dataType">查看更多</a>。</p>
+                <ol class="hide" id="dataType">
+                  <li>text：返回纯文本字符串。</li>
+                  <li>xml： 返回 XML 文档。这两种数据不会经过处理，直接把 <code>responseText</code> 或 <code>responseHTML</code> 传递给 success 函数。</li>
+                  <li>html：先执行内嵌的 JavaScript，再把 HTML 当做纯文本返回。</li>
+                  <li>script：先把响应的结果当作 JavaScript 执行，再把脚本当做纯文本返回。</li>
+                  <li>json：会把响应数据当做 JSON 对象，使用 <code>jQuery.parseJSON()</code> 来解析，返回解析后的对象。如果浏览器不支持，则使用一个构建函数。如果无法解析，则抛出错误。</li>
+                  <li>jsonp：在跨域请求中使用，会给请求添加一个查询字符串参数 <code>callback=?</code>。服务器端应当在 JSON 数据前加上回调函数名，以便完成一个有效的 jsonp 请求。</li>
+                  <li>script 和 jsonp 类型默认不使用缓存，使用 <code>&lt;script&gt;</code> 标签接收数据，不使用 XHR 对象，不会触发全局事件。</li>
+                </ol>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>crossDomain</code></td>
+          <td>布尔值</td>
+          <td>是否进行跨域请求。</td>
+          <td>
+            <ul>
+              <li>默认为 false，用于同域请求。示例为兼容ie写法。</li>
+              <li>设置为 true，用于跨域请求。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>xhrFields</code></td>
+          <td>对象</td>
+          <td>使用键值对设置原生的 XHR 对象。</td>
+          <td>
+            <ul>
+              <li>默认为空。</li>
+              <li>在跨域请求中可以设置 <code>withCredentials: true</code>。</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>请求配置-其它</h2>
+    <table class="table-border">
+      <thead>
+        <th>选项</th>
+        <th>类型</th>
+        <th>定义</th>
+        <th>说明</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>timeout</code></td>
+          <td>整数</td>
+          <td>设置请求超时的毫秒数。</td>
+          <td>
+            <ul>
+              <li>此参数通常保留其默认值，或者通过 <code>$.ajaxSetup()</code> 方法全局设置，很少为特定的请求重新设置，并且这里的设置会被全局设置覆盖。</li>
+              <li>超时周期开始于 <code>$.ajax()</code> 访问成功的那个时间点，如果几个其他请求都在进步并且浏览器没有可用的连接，它有可能在被发送前就超时了。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>processData</code></td>
+          <td>布尔值</td>
+          <td class="text-nowrap">是否将 data 选项传递的数据自动转换为查询字符串。</td>
+          <td>
+            <ul>
+              <li>默认为 true，如果数据是一个对象(技术上讲只要不是字符串)，都会转换，以配合默认的 <code>contentType</code> 的值。</li>
+              <li>设置为 false，可以发送 DOM 树信息或其它不希望转换的信息，同时需要将 <code>contentType</code> 选项设置为合适的值。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>traditional</code></td>
+          <td>布尔值</td>
+          <td>是否使用传统方式序列化数据。</td>
+          <td>
+            <ul>
+              <li>默认为 false，深度递归序列化，是 jQuery 1.4 中的行为。</li>
+              <li>设置为 true，浅层序列化，可模拟 jQuery 1.3 中的行为。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>jsonp</code></td>
+          <td>字符串</td>
+          <td>设置回调函数的参数名。</td>
+          <td rowspan="2">
+            <ul>
+              <li>在 jsonp 请求中，jQuery 会自动生成一个随机的回调函数名，通过一个查询字符串参数 <code>callback=随机函数名</code> 发送给服务器。</li>
+              <li><code>jsonp</code> 选项可以重写参数名，替换 <code>callback</code> 的部分。</li>
+              <li><code>jsonpCallback</code> 选项可以指定回调函数的名称，即参数值，替代 <code>随机函数名</code> 的部分。</li>
+              <li><code>jsonpCallback</code> 选项还可以设置为一个函数，该函数的返回值就是 <code>jsonpCallback</code> 的结果。</li>
+              <li>比如 <code>{jsonp:'onJsonPLoad', jsonpCallback:'callbackName'}</code> 会将 <code>onJsonPLoad=callbackName</code> 发送给给服务器。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-nowrap"><code>jsonpCallback</code></td>
+          <td class="text-nowrap">字符串/函数</td>
+          <td>设置回调函数的函数名。</td>
+        </tr>
+        <tr>
+          <td><code>scriptCharset</code></td>
+          <td>字符串</td>
+          <td>用于给 <code>&lt;script&gt;</code> 标签设置 <code>charset</code> 属性。</td>
+          <td>
+            <ul>
+              <li>仅适用于 <code>script</code> 类型的数据，比如 <code>dataType</code> 为 <code>script</code> 或 <code>jsonp</code> 且 <code>type</code> 为 <code>GET</code> 时。</li>
+              <li>通常当脚本和页面内容编码不同时，脚本会出现乱码，可用来设置脚本编码与页面一致。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>ifModified</code></td>
+          <td>布尔值</td>
+          <td>是否只在响应数据改变时才允许请求成功。</td>
+          <td>
+            <ul>
+              <li>默认为 false，忽略 HTTP 头信息，每次都正常请求。</li>
+              <li>设置为 true，会根据 HTTP 包 Last-Modified 头信息判断，如果在上次请求后响应数据发生过改变，请求才会成功，如果未改变，请求报错。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>isLocal</code></td>
+          <td>布尔值</td>
+          <td>是否允许当前环境被认定为“本地”。</td>
+          <td>
+            <ul>
+              <li>默认值取决于当前的位置协议。</li>
+              <li>以下协议目前公认为本地：<code>file</code> <code>*-extension</code> <code>widget</code></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>global</code></td>
+          <td>布尔值</td>
+          <td>是否为请求触发全局 Ajax 事件。</td>
+          <td>
+            <ul>
+              <li>默认为 true。</li>
+              <li>设置为 false，将不会触发全局 Ajax 事件。</li>
+              <li>在跨域请求中，或者 <code>dataType</code> 为 <code>jsonp</code> 时，默认为 false。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>username</code></td>
+          <td>字符串</td>
+          <td>设置在 HTTP 访问认证请求中使用的用户名。</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>password</code></td>
+          <td>字符串</td>
+          <td>设置在 HTTP 访问认证请求中使用的密码。</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>mimeType</code></td>
+          <td>字符串</td>
+          <td>指定一个 MIME 类型用来覆盖 XHR 的 MIME 类型。</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>xhr</code></td>
+          <td>函数</td>
+          <td>创建 <code>$.ajax()</code> 函数返回的 XHR 对象。</td>
+          <td>
+            <ul>
+              <li>通常 jQuery 在内部处理并创建这个对象，默认为 <code>XMLHttpRequest</code> 或 <code>ActiveXObject</code>。</li>
+              <li>可以传递一个自己创建的 XHR 对象，用于重写或者提供一个增强的 XHR 对象。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>headers</code></td>
+          <td>对象</td>
+          <td>使用键值对添加额外的请求头。</td>
+          <td>
+            <ul>
+              <li>默认为空。</li>
+              <li>该设置会在 <code>beforeSend</code> 函数之前执行，所以这里的设置会被函数中的设置覆盖。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>context</code></td>
+          <td>对象</td>
+          <td>用于设置 Ajax 相关回调函数的上下文，即回调函数中 this 的指向对象。</td>
+          <td>
+            <ul>
+              <li>默认情况下，this 指向 Ajax 请求使用的设置参数。</li>
+              <li>可以指定一个 DOM 元素作为 context 参数，比如 <code>context: document.body</code>，这样回调函数的 this 就指向这个 DOM 元素。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>contents</code></td>
+          <td>对象</td>
+          <td>使用 <code>字符串/正则表达式</code> 作为键值对的对象，按照指定的 MIME 类型解析响应数据。</td>
+          <td rowspan="2">
+            <pre><code class="javascript">$.ajaxSetup({
+    contents: {
+        mycustomtype: /mycustomtype/
+    },
+    converters: {
+        // 默认值：几种已知类型使用默认的转换方法
+        '* text': window.String,
+        'text html': true,
+        'text json': jQuery.parseJSON,
+        'text xml': jQuery.parseXML,
+        // 已知类型 => 自定义类型 此时不需要设置 contents
+        'text mycustomtype': true,
+        // 自定义类型 => 已知类型 此时需要设置 contents
+        'mycustomtype json': function(result) {
+            // do stuff
+            return newresult;
+        }
+    }
+});</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td><code>converters</code></td>
+          <td>对象</td>
+          <td>使用 <code>数据类型/转换函数</code> 作为键值对的转换器对象，将一种数据类型映射到其它数据类型。</td>
+        </tr>
+        <tr>
+          <td><code>statusCode</code></td>
+          <td>对象</td>
+          <td>使用 <code>状态码/回调函数</code> 作为键值对的对象，当响应时就会调用相应的函数。</td>
+          <td>
+            <pre><code class="javascript">$.ajax({
+    statusCode: {
+        // 响应状态码为 404 时执行
+        404: function() {
+            alert('page not found');
+        }
+    }
+});</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>请求配置-本地事件</h2>
+    <p>本地事件只会在某一个 <code>$.ajax()</code> 方法发起的 Ajax 请求中触发。</p>
+    <pre><code class="javascript">$.ajax({
+    url: '/server/',
+    beforeSend: function(jqXHR, options) {
+        jqXHR.overrideMimeType('text/plain; charset=x-user-defined');
+    },
+    success: function(data, textStatus, jqXHR) {
+        // do
+    }
+});</code></pre>
+    <table class="table-border">
+      <thead>
+        <th>选项</th>
+        <th>何时触发</th>
+        <th>回调函数的参数</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>beforeSend</code></td>
+          <td>请求发送前调用。可以在此修改 jqXHR 对象，或者返回 false 取消这个请求。</td>
+          <td>
+            <ol>
+              <li>jqXHR：jqXHR 对象。</li>
+              <li>options：Ajax 请求中设置的所有选项。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>dataFilter</code></td>
+          <td>请求成功后调用。用于处理原始响应数据，然后传递给 success 回调函数。</td>
+          <td>
+            <ol>
+              <li>data：服务器返回的原始响应数据。</li>
+              <li>dataType：Ajax 请求中设置的 dataType 选项的值。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>success</code></td>
+          <td>请求成功并接收到返回数据后调用。</td>
+          <td class="text-nowrap">
+            <ol>
+              <li>data：服务器返回并根据 dataType 的值进行处理后的数据。</li>
+              <li>textStatus：描述请求状态的字符串，如 success。</li>
+              <li>jqXHR</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>error</code></td>
+          <td>请求出错时调用。</td>
+          <td>
+            <ol>
+              <li>jqXHR</li>
+              <li>textStatus</li>
+              <li>thrownError：描述错误信息的文字。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>complete</code></td>
+          <td>请求完成后调用，不论成功或失败。</td>
+          <td>
+            <ol>
+              <li>jqXHR</li>
+              <li>textStatus</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>全局事件</h2>
+    <ul>
+      <li>从 jQuery 1.8 开始，全局事件处理器只能绑定到 document 元素上。</li>
+      <li>每一个 Ajax 请求都会触发全局事件，所以必须通过参数来区分不同的请求。</li>
+      <li>在全局设置或者某一个请求中设置 <code>global</code> 为 <code>false</code>，会导致所有的请求或者某一个请求不会触发全局事件。</li>
+      <li>在跨域请求中，或者 <code>dataType</code> 为 <code>jsonp</code> 时，不会触发全局事件。</li>
+      <li><code>.ajaxStart()</code> 和 <code>.ajaxStop()</code> 事件只会被第一个请求和最后一个请求触发。</li>
+    </ul>
+    <pre><code class="javascript">$(document).ajaxComplete(function(event, jqXHR, options){
+    if(options.url === 'test.html'){
+        // do
+    }
+});</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>事件</th>
+          <th>何时触发</th>
+          <th>回调函数的参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>.ajaxStart()</code></td>
+          <td>第一个请求开始时调用。</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><code>.ajaxSend()</code></td>
+          <td>请求发送前调用。</td>
+          <td>
+            <ol>
+              <li>event：event 对象。</li>
+              <li>jqXHR：jqXHR 对象。</li>
+              <li>options：Ajax 请求中设置的所有选项。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.ajaxSuccess()</code></td>
+          <td>请求成功后调用。</td>
+          <td>
+            <ol>
+              <li>event</li>
+              <li>jqXHR</li>
+              <li>options</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.ajaxError()</code></td>
+          <td>请求出错时调用。</td>
+          <td>
+            <ol>
+              <li>event</li>
+              <li>jqXHR</li>
+              <li>options</li>
+              <li>thrownError：描述错误信息的文字。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.ajaxComplete()</code></td>
+          <td>请求完成后调用，不论请求成功或失败都会触发。</td>
+          <td>
+            <ol>
+              <li>event</li>
+              <li>jqXHR</li>
+              <li>options</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.ajaxStop()</code></td>
+          <td>所有的请求结束时调用。</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>回调方法</h2>
+    <p>每个方法都带有一个回调函数作为参数，回调函数的参数与 <code>$.ajax()</code> 方法中本地事件的回调函数的参数一致。</p>
+    <pre><code class="javascript">$.ajax({
+    type: 'get'
+}).done(function(data, textStatus, xhr) {
+    // do
+});
+                    </code></pre>
+    <table class="table-border">
+      <thead>
+        <th>新的方法</th>
+        <th>废弃的方法</th>
+        <th>方法</th>
+        <th>回调函数的参数</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>.done()</code></td>
+          <td><code>.success()</code></td>
+          <td>请求成功后执行。</td>
+          <td>
+            <ol>
+              <li>data</li>
+              <li>textStatus</li>
+              <li>jqXHR</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.fail()</code></td>
+          <td><code>.error()</code></td>
+          <td>请求出错时执行。</td>
+          <td>
+            <ol>
+              <li>jqXHR</li>
+              <li>textStatus</li>
+              <li>thrownError</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.always()</code></td>
+          <td><code>.complete()</code></td>
+          <td>请求完成后执行。</td>
+          <td>
+            <ol>
+              <li>请求成功时和 <code>.done()</code> 相同。</li>
+              <li>请求出错时和 <code>.fail()</code> 相同。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.then()</code></td>
+          <td></td>
+          <td>包含了<code>.done()</code> 和 <code>.fail()</code> 方法的功能。</td>
+          <td>
+            <ol>
+              <li>第一个参数和 <code>.done()</code> 相同。</li>
+              <li>第二个参数和 <code>.fail()</code> 相同。</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>全局方法</h2>
+    <pre><code class="javascript">$.ajaxSetup({
+    url: '/xmlhttp/',
+    type: 'POST',
+    global: false
+});</code></pre>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>说明</th>
+          <th>参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>$.ajaxSetup()</code></td>
+          <td>为以后的 Ajax 请求设置默认值。</td>
+          <td>
+            <ol>
+              <li>options：与 <code>$.ajax()</code> 方法中的键值对相同。</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><code>$.ajaxPrefilter()</code></td>
+          <td colspan="2">在请求发送前和 <code>$.ajax()</code> 方法处理前，设置自定义的 Ajax 选项或修改现有选项<a href="https://www.jquery123.com/jQuery.ajaxPrefilter/"></a>。</td>
+        </tr>
+        <tr>
+          <td rowspan="2"><code>$.ajaxTransport()</code></td>
+          <td colspan="2">创建一个对象，用于处理 Ajax 数据的实际传输<a href="https://www.jquery123.com/jQuery.ajaxTransport/"></a>。</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>辅助函数</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>函数</th>
+          <th>返回值</th>
+          <th>参数和说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>.serialize()</code></td>
+          <td>序列化表单元素的值，返回一个标准 URL 编码表示的查询字符串。</td>
+          <td rowspan="2">
+            <ul>
+              <li>元素必须含有 name 属性。</li>
+              <li>元素不能含有 disabled 属性。</li>
+              <li>复选框和单选框的值必须被选中。</li>
+              <li>文件选择元素的值不会被序列化。</li>
+              <li>提交按钮的值不会被序列化。</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><code>.serializeArray()</code></td>
+          <td>序列化表单元素的值，返回一个 JSON 数组，包含 name 和 value 两个键值对。</td>
+        </tr>
+        <tr>
+          <td><code>$.param()</code></td>
+          <td>
+            <ul>
+              <li>序列化 JSON 对象或数组，返回查询字符串。</li>
+              <li>数组的格式必须与 <code>.serializeArray()</code> 方法的返回值相同。</li>
+              <li>嵌套的数组会按照 <code>traditional</code> 参数的值，自动转化为一个同名的多值查询字符串。</li>
+              <li>有些框架解析序列化数据能力有限，尽量不要传递含有对象的数组，或者数组中嵌套其它数组。此方法无法对复杂数据结构进行编码。</li>
+            </ul>
+          </td>
+          <td class="text-nowrap">
+            <ol>
+              <li class="required">obj：要序列化的数据。</li>
+              <li>traditional：是否使用传统方式序列化。</li>
+            </ol>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pre><code class="javascript">// 序列化表单：返回字符串
+$('form').serialize();      // 'a=1&b=2'
+// 序列化表单：返回 JSON 数组
+$('form').serializeArray(); // [{name: 'a',value: '1'},{name: 'b',value: '2'}]
+// 序列化 JSON 对象
+var obj = { a: 1, b: 2 };
+$.param(obj);               // 'a=1&b=2'
+// 序列化 JSON 数组
+var arr = [{name: 'a',value: '1'},{name: 'b',value: '2'}];
+$.param(arr);               // 'a=1&b=2'
+// 序列化嵌套的数组
+var obj = { a: [1, 2, 3] };
+$.param(obj, true);         // 'a=1&a=2&a=3'
+$.param(obj);               // 'a%5B%5D=1&a%5B%5D=2&a%5B%5D=3'
+// 解码后
+decodeURIComponent($.param(obj)); // 'a[]=1&a[]=2&a[]=3'</code></pre>
+    <h2>数据处理</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>content-type</th>
+          <th>data</th>
+          <th>type</th>
+          <th>传输方式</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-nowrap" rowspan="3"><code>application/x-www-form-urlencoded</code></td>
+          <td><code>a=1&b=2</code></td>
+          <td><code>get/post</code></td>
+          <td class="text-nowrap"><code>Query String Parameters</code></td>
+          <td>请求数据为查询字符串，包含在请求 url 中。</td>
+        </tr>
+        <tr>
+          <td><code>{ a: 1, b: 2 }</code></td>
+          <td><code>get</code></td>
+          <td><code>Query String Parameters</code></td>
+          <td>请求数据为 JSON 对象，会使用 <code>$.param()</code> 自动转换成查询字符串，包含在请求 url 中。</td>
+        </tr>
+        <tr>
+          <td><code>{ a: 1, b: 2 }</code></td>
+          <td><code>post</code></td>
+          <td><code>Form Data</code></td>
+          <td>请求数据为 JSON 对象，会使用 <code>$.param()</code> 自动转换成查询字符串，包含在请求体中。</td>
+        </tr>
+        <tr>
+          <td><code>application/json</code></td>
+          <td class="text-nowrap"><code>'{ a: 1, b: 2 }'</code></td>
+          <td><code>post</code></td>
+          <td><code>Request Payload</code></td>
+          <td>请求数据为 JSON 字符串，包含在请求体中。可以使用 <code>JSON.stringify()</code> 把 JSON 对象转换成 JSON 字符串。</td>
+        </tr>
+        <tr>
+          <td><code>contentType: false</code><br /><code>processData: false</code></td>
+          <td><code>file: (binary)</code></td>
+          <td><code>post</code></td>
+          <td><code>Form Data</code></td>
+          <td>请求数据为包含二进制文件的 FormData 对象，包含在请求体中。需要设置 <code>contentType</code> 和 <code>processData</code> 选项为 <code>false</code>。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

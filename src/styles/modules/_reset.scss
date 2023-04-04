@@ -1,0 +1,32 @@
+// Reset
+// --------------------------
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  overflow-y: overlay;
+  font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+  font-size: $font-size-base;
+  color: $color-base;
+  letter-spacing: .2px;
+  background-color: $bg-body;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+}
+a {
+  color: $color-base;
+  text-decoration: none;
+  cursor: pointer;
+}
+code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+img {
+  vertical-align: top;
+}
+.fa {
+  line-height: inherit;
+}
