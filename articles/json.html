@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>JSON</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/json.gif" />JSON</h1>
+    <ul class="nav"></ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>JSON 基础</h1>
+    <h2>简介</h2>
+    <ul>
+      <li>JSON 即 JavaScript 对象表示法。</li>
+      <li>是一门独立的语言，使用 JavaScript 语法。</li>
+      <li>是一种轻量级的文本数据交换格式。</li>
+      <li>是纯文本，有层级结构，可通过 JavaScript 进行解析，可使用 AJAX 进行传输。</li>
+      <li>相比 XML，更短更快更容易解析。</li>
+    </ul>
+    <h2>语法</h2>
+    <div class="col-6">
+      <ul>
+        <li>数据为键值对 key/value 格式。</li>
+        <li>数据由逗号分隔。</li>
+        <li>花括号保存对象。</li>
+        <li>方括号保存数组。</li>
+      </ul>
+      <h2>键值对</h2>
+      <ul>
+        <li>key 必须是字符串，写在双引号中。</li>
+        <li>
+          value 可以是以下几种数据类型：
+          <ol>
+            <li><b>null</b></li>
+            <li><b>Boolean：</b>true 或 false。</li>
+            <li><b>Number：</b>整数或浮点数。</li>
+            <li><b>String：</b>在双引号中。</li>
+            <li><b>Object：</b>在花括号中。</li>
+            <li><b>Array：</b>在方括号中。</li>
+            <li><b>Function：</b>JSON 不允许包含函数，可作为字符串存储，解析后调用。</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <pre><code class="json">{
+    "null": null,
+    "boonlean": true,
+    "number": 1,
+    "string": "a",
+    "object": {
+        "id": 1,
+        "name": "a"
+    },
+    "array": [1, 2, 3],
+    "arrObj": [{
+        "id": 1,
+        "name": "a"
+    }, {
+        "id": 2,
+        "name": "b"
+    }, {
+        "id": 3,
+        "name": "c"
+    }],
+    "fun": "function () {return 1;}"
+};</code></pre>
+    </div>
+    <h1>JS 方法</h1>
+    <h2>JSON.parse()</h2>
+    <ul class="col-6">
+      <li><b>定义：</b>把 JSON 字符串转换成 JS 对象。</li>
+      <li>
+        <b>参数：</b>
+        <ol>
+          <li><b>value：</b>必需。一个有效的 JSON 字符串。包含的函数可解析后调用。</li>
+          <li><b>reviver：</b>可选。还原函数。转换后传入每个成员的键值对，并使用返回值。</li>
+        </ol>
+      </li>
+      <li><b>说明：</b>从服务器接收的数据一般是 JSON 字符串，可转换成 JS 对象后使用。</li>
+    </ul>
+    <div class="col-6">
+      <pre><code>// 声明一个 JSON 字符串
+var jsonStr = '{"number": 1, "string": "a", "fun": "function () {return 1;}"}';
+// 第一个参数是字符串 返回一个 JS 对象
+var obj = JSON.parse(jsonStr);
+// 第二个参数是函数 使用该函数返回值 返回 1
+var res = JSON.parse(jsonStr, function(key, value) {
+    if (key == 'number') {
+        return value;
+    }
+});
+// 包含的函数可解析后调用
+var fun = eval("(" + obj.fun + ")");    // 返回一个函数
+fun();                                  // 调用函数 返回 1</code></pre>
+    </div>
+    <h2>JSON.stringify()</h2>
+    <ul class="col-6">
+      <li><b>定义：</b>把 JS 对象转换成 JSON 字符串。</li>
+      <li>
+        <b>参数：</b>
+        <ol>
+          <li><b>object：</b>必需。一个有效的 JS 对象。包含函数的键值对会被删除。</li>
+          <li>
+            <b>replacer：</b>可选。过滤器。转换前使用的数组或函数。
+            <ol>
+              <li>数组：仅转换数组中的成员，顺序一致。当 JS 对象也为数组时将忽略此参数。</li>
+              <li>函数：传入每个成员的键值对，并使用返回值。返回 undefined 时排除成员。</li>
+            </ol>
+          </li>
+          <li><b>space：</b>可选。规定字符串缩进。数字，不大于 10。</li>
+        </ol>
+      </li>
+      <li><b>说明：</b>向服务器发送的数据一般是 JSON 字符串，可由 JS 对象转换后发送。</li>
+    </ul>
+    <div class="col-6">
+      <pre><code>// 声明一个 JS 数组和对象
+var arr = [1, 2]
+var obj = {
+    isTrue: true,
+    number: 1,
+    string: "a",
+    fun: function() { return 1; }
+};
+// 第一个参数是对象 返回 JSON 字符串 包含函数的键值对会被删除
+var jsonStr = JSON.stringify(arr); // '[1,2]'
+var jsonStr = JSON.stringify(obj); // '{ "isTrue": true, "number": 1, "string": "a" }'
+// 第二个参数是数组 返回数组中的成员 '{ "number": 1 }'
+var jsonStr = JSON.stringify(obj, ["number"]);
+// 第二个参数是函数 使用该函数的返回值 返回 '{ "isTrue": "这是返回值", "string": "a" }'
+var jsonStr = JSON.stringify(obj, function(key, value) {
+    switch (key) {
+        case "isTrue":
+            return '这是返回值';
+        case "number": // 被过滤
+            return undefined;
+        default:
+            return value;
+    }
+});
+// 第三个参数是数字 规定缩进
+var jsonStr = JSON.stringify(obj, null, 4);
+// {
+//     "isTrue": true,
+//     "number": 1,
+//     "string": "a"
+// }</code></pre>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>

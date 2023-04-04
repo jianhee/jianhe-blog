@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue.js demo</title>
+  <link rel="shortcut icon" href="./images/logo/github.png" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <p>{{message1}}</p>
+    <input v-model.number="message1" />
+    <button v-on:click="reverseMessage">逆转消息</button>
+    <p v-bind:title="message2">鼠标悬停几秒钟查看此处动态绑定的提示信息！</p>
+    <p v-if="seen">现在你看到我了</p>
+    <ol>
+      <li v-for="todo in todos">{{ todo.text }}</li>
+    </ol>
+    <p>创建一个 todo-item 组件的实例，使用 todo 对象给组件传参，todo 对象是变量，即其内容可以是动态的。</p>
+    <ol>
+      <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+    </ol>
+    <div id="example-3">
+      <input type="checkbox" id="jack" value="Jack" v-model="checkedNames1" />
+      <label for="jack">Jack</label>
+      <input type="checkbox" id="john" value="John" v-model="checkedNames2" />
+      <label for="john">John</label>
+      <input type="checkbox" id="mike" value="Mike" v-model="checkedNames2" />
+      <label for="mike">Mike</label>
+      <br />
+      <span>Checked names: {{ checkedNames1 }}</span>
+      <br />
+      <span>Checked names: {{ checkedNames2 }}</span>
+    </div>
+    <div id="example-5">
+      <select v-model="selected" multiple>
+        <option disabled>请选择</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <span>Selected: {{ selected }}</span>
+    </div>
+  </div>
+  <script>
+    // 定义一个组件
+    Vue.component(
+      // 组件的名称
+      'todo-item',
+      {
+        // 接收父作用域引用组件时传递的数据
+        props: ['todo'],
+        // 组件的内容
+        template: '<li>{{ todo.text }}</li>'
+      }
+    );
+    // 创建一个 Vue 实例
+    // eslint-disable-next-line no-unused-vars
+    const app = new Vue({
+      // 元素
+      el: '#app',
+      // 数据
+      data: {
+        message1: 'Hello World',
+        message2: `页面加载于${new Date().toLocaleString()}`,
+        seen: true,
+        todos: [{ text: '学习 JavaScript' }, { text: '学习 Vue' }, { text: '整个牛项目' }],
+        groceryList: [
+          { id: 0, text: '蔬菜' },
+          { id: 1, text: '奶酪' },
+          { id: 2, text: '随便其它什么人吃的东西' }
+        ],
+        checkedNames1: null,
+        checkedNames2: [],
+        selected: null
+      },
+      // 方法
+      methods: {
+        reverseMessage: function() {
+          this.message1 = this.message1.split('').reverse().join('');
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

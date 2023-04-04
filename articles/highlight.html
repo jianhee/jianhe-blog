@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>highlight.js</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="stylesheet" id="hljsLink" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+  <style>
+    .alert-info {
+      position: fixed;
+      margin-top: 20px;
+      margin-left: 300px;
+    }
+    .alert-info .fa {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><span>H</span>highlight.js</h1>
+    <ul class="nav">
+      <li>
+        <a href="javascript:void(0)">官方资料</a>
+        <ul class="dropdown">
+          <li><a href="https://highlightjs.org/">官网</a></li>
+          <li><a href="https://highlightjs.org/usage/">起步</a></li>
+          <li><a href="https://highlightjs.org/static/demo/">示例</a></li>
+          <li><a href="https://github.com/isagalaev/highlight.js">Github</a></li>
+          <li><a href="https://bootcdn.cn/highlight.js/">CDN</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+    <ul class="menu-root">
+      <li>
+        <a>更多样式</a>
+        <ul class="menu-sub" id="hljsStyles">
+          <li>default</li>
+          <li>a11y-dark</li>
+          <li>a11y-light</li>
+          <li>agate</li>
+          <li>an-old-hope</li>
+          <li>androidstudio</li>
+          <li>arduino-light</li>
+          <li>arta</li>
+          <li>ascetic</li>
+          <li>atom-one-dark-reasonable</li>
+          <li>atom-one-dark</li>
+          <li>atom-one-light</li>
+          <li>brown-paper</li>
+          <li>codepen-embed</li>
+          <li>color-brewer</li>
+          <li>dark</li>
+          <li>docco</li>
+          <li>far</li>
+          <li>foundation</li>
+          <li><a class="active">github</a></li>
+          <li>gml</li>
+          <li>googlecode</li>
+          <li>grayscale</li>
+          <li>hybrid</li>
+          <li>idea</li>
+          <li>ir-black</li>
+          <li>isbl-editor-dark</li>
+          <li>isbl-editor-light</li>
+          <li>lightfair</li>
+          <li>magula</li>
+          <li>mono-blue</li>
+          <li>monokai-sublime</li>
+          <li>monokai</li>
+          <li>nord</li>
+          <li>obsidian</li>
+          <li>paraiso-dark</li>
+          <li>paraiso-light</li>
+          <li>pojoaque</li>
+          <li>purebasic</li>
+          <li>rainbow</li>
+          <li>routeros</li>
+          <li>school-book</li>
+          <li>shades-of-purple</li>
+          <li>sunburst</li>
+          <li>tomorrow-night-blue</li>
+          <li>tomorrow-night-bright</li>
+          <li>vs</li>
+          <li>vs2015</li>
+          <li>xcode</li>
+          <li>xt256</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-container">
+    <div class="alert-info">
+      <span id="hljsPre" class="fa fa-fw fa-arrow-up"></span>
+      <span id="hljsIndex"></span>
+      <br />
+      <span id="hljsNext" class="fa fa-fw fa-arrow-down"></span>
+      <span id="hljsName"></span>
+    </div>
+    <h1>起步</h1>
+    <h2>Libs</h2>
+    <pre><code class="html">&lt;link rel="stylesheet" href="<span id="hljsUrl"></span>"&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"&gt;&lt;/script&gt;</code></pre>
+    <h2>HTML</h2>
+    <pre><code class="html">&lt;!-- 自动检测语言 --&gt;
+&lt;pre&gt;&lt;code&gt;...&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- 指定语言 --&gt;
+&lt;pre&gt;&lt;code class="javascript"&gt;...&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- 禁用 --&gt;
+&lt;pre&gt;&lt;code class="nohighlight"&gt;...&lt;/code&gt;&lt;/pre&gt;</code></pre>
+    <h2>JavaScript</h2>
+    <pre><code class="html">&lt;script&gt;
+    hljs.highlightAll();
+&lt;/script&gt;</code></pre>
+    <h1>示例</h1>
+    <h2>HTML</h2>
+    <pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html  lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;Page title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;img src="images/company_logo.png" alt="Company"&gt;
+    &lt;h1 class="hello-world"&gt;Hello, world!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <h2>CSS</h2>
+    <pre><code class="css">@font-face {
+    font-family: Chunkfive; src: url('Chunkfive.otf');
+}
+body,
+.usertext {
+    font-family: Chunkfive, sans;
+    color: #000;
+    background: #fff;
+}
+@import url(print.css);
+@media print {
+    a[href^=http]::after {
+        content: attr(href)
+    }
+}</code></pre>
+    <h2>JavaScript</h2>
+    <pre><code class="javascript">function $initHighlight(block, cls) {
+    try {
+        if (cls.search(/\bno\-highlight\b/) != -1) {
+            return process(block, true, 0x0F) + ` class="${cls}"`;
+        }
+    } catch (e) {
+        /* handle exception */
+    }
+    for (var i = 0 / 2; i < classes.length; i++) {
+        if (checkCondition(classes[i]) === null) {
+            console.log('undefined');
+        }
+    }
+}
+export $initHighlight;</code></pre>
+    <h2>JSON</h2>
+    <pre><code class="json">{
+    "title": "apples",
+    "count": [12000, 20000],
+    "description": {
+        "text": "123",
+        "sensitive": false
+    }
+}</code></pre>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+  <script>
+    // element
+    const $styles = $('#hljsStyles');
+    const $item = $styles.children('li');
+
+    // function: SetStyle
+    function SetStyle() {
+      const $active = $styles.find('.active');
+      const _index = $active.parent('li').index() + 1;
+      const _name = $active.text();
+      const _url = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/${_name}.min.css`;
+      $('#hljsIndex').text(`当前主题：${_index}/${$item.length}`);
+      $('#hljsName').text(_name);
+      $('#hljsUrl').text(_url);
+      $('#hljsLink').attr('href', _url);
+      hljs.highlightAll();
+    }
+
+    // page: load
+    SetStyle();
+
+    // item: add <a> tag
+    $item.each(function() {
+      if (this.children.length > 0) {
+        return true;
+      } else {
+        this.innerHTML = `<a>${this.innerText}</a>`;
+      }
+    });
+
+    // item: click
+    $item.click(function() {
+      $('.active').removeClass('active');
+      $(this).children('a').addClass('active');
+      SetStyle();
+    });
+
+    // tools: click pre
+    $('#hljsPre').click(() => {
+      let _index = $styles.find('.active').parent('li').index();
+      if (_index === 0) {
+        _index = $item.length - 1;
+      } else {
+        _index--;
+      }
+      $styles.find('.active').removeClass('active');
+      $item.eq(_index).find('a').addClass('active');
+      SetStyle();
+    });
+
+    // tools: click next
+    $('#hljsNext').click(() => {
+      let _index = $styles.find('.active').parent('li').index();
+      if (_index === $item.length - 1) {
+        _index = 0;
+      } else {
+        _index++;
+      }
+      $styles.find('.active').removeClass('active');
+      $item.eq(_index).find('a').addClass('active');
+      SetStyle();
+    });
+  </script>
+</body>
+
+</html>

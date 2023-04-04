@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>JavaScript 数据类型</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/js.png" />JavaScript 数据类型</h1>
+    <ul class="nav">
+      <li>
+        <a>参考资料</a>
+        <ul class="dropdown">
+          <li><a href="https://wangdoc.com/javascript/index.html">阮一峰</a></li>
+          <li><a href="https://www.w3school.com.cn/js/index.asp">W3school 教程</a></li>
+          <li><a href="https://www.w3school.com.cn/js/index_pro.asp">W3school 高级教程</a></li>
+          <li><a href="https://www.w3school.com.cn/jsref/index.asp">W3school 参考手册</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>数据类型</h1>
+    <h2>2个特殊值</h2>
+    <div class="h3">
+      <h3>null</h3>
+      <span>&</span>
+      <h3>undefined</h3>
+      <h4>对比</h4>
+      <div class="row">
+        <ul class="col-6">
+          <li><code>null</code> 表示空值。</li>
+          <li><code>undefined</code> 表示未定义或不存在，没有值。</li>
+          <li>undefined 由 null 派生，ECMAScript 定义它们相等，但不严格相等。</li>
+          <li>null 转换数值为 <code>0</code>。</li>
+          <li>undefined 转换数值为 <code>NaN</code>。</li>
+        </ul>
+        <div class="col-6">
+          <pre><code>var a = null;
+var b = undefined;
+null == undefined;  // true
+null === undefined; // false
+Number(null);       // 0
+Number(undefined);  // NaN</code></pre>
+        </div>
+      </div>
+      <h4>用法</h4>
+      <div class="row">
+        <ol class="col-6">
+          <li>null 被认为是对象的占位符，使用 typeof 返回 object。</li>
+          <li>变量已声明，但未赋值或初始化，默认值是 undefined。</li>
+          <li>变量未声明，直接使用会报错，typeof 返回 undefined。</li>
+          <li>函数无返回值，返回 undefined。</li>
+          <li>函数缺少参数，参数值 undefined。</li>
+          <li>对象属性不存在，该属性值 undefined。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code>typeof null;        // object
+var b;
+b;                  // undefined 未赋值
+c;                  // 报错
+typeof c;           // undefined 未声明
+function g() {}
+g();                // undefined 函数无返回值
+function f(x) {
+return x;
+}
+f();                // undefined 函数缺少参数
+var  o = new Object();
+o.p;                // undefined 对象属性不存在</code></pre>
+        </div>
+      </div>
+    </div>
+    <h2>3个原始类型</h2>
+    <h3>boolean</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>布尔值</b> 只有两个值 <code>true</code> 和 <code>false</code>，表示真伪，也叫逻辑值。</li>
+        <li>
+          <p>以下运算符会返回布尔值：</p>
+          <ol>
+            <li>比较运算符：<code>&gt;</code>，<code>&gt;=</code>，<code>&lt;</code>，<code>&lt;=</code></li>
+            <li>相等运算符：<code>===</code>，<code>!==</code>，<code>==</code>，<code>!=</code></li>
+            <li>逻辑运算符否： <code>!</code></li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var isTrue = true;
+if (isTrue == true) {
+// do something
+}</code></pre>
+      </div>
+    </div>
+    <h3>number</h3>
+    <h4>数值表示法</h4>
+    <ul>
+      <li>
+        <p><b>整数和浮点数</b></p>
+        <ol class="col-6">
+          <li>所有数字都是以64位二进制浮点数形式储存，即使整数也是如此。</li>
+          <li>浮点数不是精确的数字，涉及小数的运算要避免出错。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code class="javascript">0.3 / 0.1 === 3;     // false 结果为 2.9999999999999996
+(0.3 - 0.2) === 0.1; // false 结果为 0.09999999999999998</code></pre>
+        </div>
+      </li>
+      <li>
+        <p><b>科学计数法：</b></p>
+        <ol class="col-6">
+          <li>写法为 <code>e/E</code> 后跟整数，表示 <code>*10<sup>整数</sup></code>。</li>
+          <li>小数点前的数字多于21位时。</li>
+          <li>小数点后的零多于5位时。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code class="javascript">5e2;  // 500  等同于 5*10²
+5e-2; // 0.05 等同于 5*10¯²
+1234567890123456789012; // 1.2345678901234568e+21 22位整数
+0.0000003; // 3e-7 小数点后紧跟6个0</code></pre>
+        </div>
+      </li>
+      <li>
+        <p><b>进制：</b></p>
+        <ol class="col-6">
+          <li>十进制：没有前导0的数值。</li>
+          <li>二进制：有前缀 <code>0b/0B</code> 的数值。</li>
+          <li>十六进制：有前缀 <code>0x/0X</code> 的数值。</li>
+          <li>八进制：有前缀 <code>0o/0O</code> 的数值，或者有前导0后跟7及以内数字的数值（已废除）。</li>
+          <li>JavaScript 内部会自动将八进制、十六进制、二进制转为十进制。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code class="javascript">3;     // 3 十进制值
+0b11;  // 3 二进制值
+0xff;  // 255 十六进制值
+0o377; // 255 八进制值
+0777;  // 511 八进制值 前导0后跟7以内 易混乱已废除
+0888;  // 888 十进制值 前导0后跟7以外</code></pre>
+        </div>
+      </li>
+    </ul>
+    <h4>特殊值</h4>
+    <ul>
+      <li>
+        <p><code>0</code></p>
+        <ol class="col-6">
+          <li><code>+0</code> 和 <code>-0</code> 是等价的，都可以表示为 0。</li>
+          <li>0 除以 0 得到 <code>NaN</code>。</li>
+          <li>非 0 数值除以 0，得到 <code>Infinity/-Infinity</code>，正负号由数值和 0 共同决定。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code class="javascript">+0 === -0;  // true
+0 / 0;      // NaN
+1 / 0;      // Infinity
+1 / -0;     // -Infinity
+-1 / -0;    // Infinity</code></pre>
+        </div>
+      </li>
+      <li>
+        <p><code>NaN</code></p>
+        <ol class="col-6">
+          <li>NaN 表示非数字。</li>
+          <li>NaN 主要出现在将字符串解析成数字出错的场合，或者数学运算出错时。</li>
+          <li>NaN 与所有值都不相等，与任何值比较，都返回 false，包括它自己。</li>
+          <li>NaN 不是独立的数据类型，而是一个特殊数值。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code class="javascript">1 + 'x';        // NaN
+Math.log(-1);   // NaN
+Number('abc');  // NaN
+NaN === NaN;    // false
+typeof NaN;     // 'number'</code></pre>
+        </div>
+      </li>
+      <li>
+        <p><code>Infinity</code></p>
+        <ol class="col-6">
+          <li>&nbsp;<code>Infinity</code> 表示正无穷，大于一切数值。</li>
+          <li><code>-Infinity</code> 表示负无穷，小于一切数值。</li>
+          <li>Infinity 与 NaN 比较，返回 false。</li>
+          <li>Infinity 的运算规则了解即可。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code>Math.pow(2, 1024); // Infinity 运算结果超出最大值
+Infinity > 1000;   // true
+-Infinity < -1000; // true
+-Infinity < NaN;   // false</code></pre>
+        </div>
+      </li>
+      <li>
+        <p><b>其它特殊值：</b></p>
+        <ol class="col-6">
+          <li><code>Number.MAX_VALUE</code> 最大有效值</li>
+          <li><code>Number.MIN_VALUE</code> 最小有效值</li>
+          <li><code>Number.POSITIVE_INFINITY</code> 正无穷大</li>
+          <li><code>Number.NEGATIVE_INFINITY</code> 负无穷大</li>
+        </ol>
+        <div class="col-6">
+          <pre><code class="javascript">Number.MAX_VALUE; // 1.7976931348623157e+308
+Number.MIN_VALUE; // 5e-324
+Number.POSITIVE_INFINITY; // Infinity
+Number.NEGATIVE_INFINITY; // -Infinity</code></pre>
+        </div>
+      </li>
+    </ul>
+    <h4>数值组成</h4>
+    <ul>
+      <li>第1位：符号位，0 表示正数，1 表示负数。</li>
+      <li>第2位到第12位（共11位）：指数部分。</li>
+      <li>第13位到第64位（共52位）：小数部分（即有效数字）。</li>
+      <li>
+        <b>公式：</b><code>(-1)<sup>符号位</sup> * 1.xx...xx * 2<sup>指数部分</sup></code>
+      </li>
+    </ul>
+    <h4>数值精度</h4>
+    <div class="row">
+      <ul class="col-6">
+        <li>小数部分决定数值精度。</li>
+        <li>小数部分的第一位默认总是1，不保存在64位浮点数之中，所以有效数字最长为52+1=53个二进制位。</li>
+        <li>精度最多为53个二进制位，即-2<sup>53</sup>到2<sup>53</sup>之间都可以精确计算，超出范围开始出错。</li>
+        <li>2<sup>53</sup>是16位的十进制数值，所以15位的十进制数值都可以精确计算。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>Math.pow(2, 53);     // 9007199254740992
+Math.pow(2, 53) + 1; // 9007199254740992 开始出错
+Math.pow(2, 53) + 2; // 9007199254740994
+Math.pow(2, 53) + 3; // 9007199254740996
+Math.pow(2, 53) + 4; // 9007199254740996
+9007199254740992111; // 9007199254740992000 多出的三个有效数字，将无法保存</code></pre>
+      </div>
+    </div>
+    <h4>数值范围</h4>
+    <div class="row">
+      <ul class="col-6">
+        <li>指数部分决定数值大小。</li>
+        <li>指数部分最长为11个二进制位，最大值为2<sup>11</sup>-1=2047。</li>
+        <li>正数1024，负数1023，再加上52位小数部分，即2<sup>1024</sup>到2<sup>-1075</sup>之间都可以正确表示。</li>
+        <li>正向溢出：大于最大值，返回 <code>Infinity</code>。</li>
+        <li>负向溢出：小于最小值，返回 <code>0</code>。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>Math.pow(2, 1024);   // Infinity 正向溢出
+Math.pow(2, -1075);  // 0 负向溢出</code></pre>
+      </div>
+    </div>
+    <h3>string</h3>
+    <h4>定义</h4>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>字符串</b> 是零个或多个字符的集合，放在单引号或双引号内，表示文本。</li>
+        <li>字符可以是任意文本，包括字母、数字、符号等，也可以为空。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">'abc';  // 字母
+'123';  // 数值
+'&';    // 符号
+' ';    // 空</code></pre>
+      </div>
+    </div>
+    <h4>换行</h4>
+    <div class="row">
+      <ol class="col-6">
+        <li>字符串默认只能写在一行内，分成多行将会报错。</li>
+        <li>使用反斜杠 <code>\</code> 写在行尾可以换行。但反斜杠后面不能有任何字符，包括空格。</li>
+        <li>使用连接运算符 <code>+</code> 可以连接多个单行字符串。</li>
+      </ol>
+      <div class="col-6">
+        <pre><code class="javascript">'a
+b
+c'      // Uncaught SyntaxError: Invalid or unexpected token
+'a\
+b\
+c'      // abc
+'a' +
+'b' +
+'c'     // abc</code></pre>
+      </div>
+    </div>
+    <h4>属性</h4>
+    <div class="row">
+      <ol class="col-6">
+        <li><code>length</code> 属性返回字符串的长度，但该属性无法改变。</li>
+        <li>使用数组的方括号运算符，可以返回某个位置的字符。</li>
+      </ol>
+      <div class="col-6">
+        <pre><code class="javascript">var s = 'hello';
+s.length; // 5
+s[0];     // h
+</code></pre>
+      </div>
+    </div>
+    <h4>转义字符</h4>
+    <div class="row">
+      <ol class="col-6">
+        <li><code>\\</code> 反斜杠</li>
+        <li><code>\'</code> 单引号</li>
+        <li><code>\"</code> 双引号</li>
+        <li><code>\n</code> 换行符</li>
+      </ol>
+      <div class="col-6">
+        <pre><code class="javascript">'a \\ b'; // 'a \ b'
+'a \n b'; // 'a' // 'b' 输出两行</code></pre>
+      </div>
+    </div>
+    <h4>字符集</h4>
+    <ul>
+      <li>
+        <p><b>Unicode</b></p>
+        <ol class="col-6">
+          <li>JavaScript 使用 Unicode 字符集，所有字符都用 Unicode 表示和储存。</li>
+          <li>JavaScript 还允许直接使用 Unicode 码点表示字符，即 <code>\uxxxx</code> 形式。</li>
+          <li>JavaScript 解析代码时，会自动识别字符的表示形式，但输出时会转成字面形式。</li>
+        </ol>
+        <div class="col-6">
+          <pre><code>var s = '\u00A9';          // 使用码点表示字符 输出字面 '©'
+var f\u006F\u006F = 'abc'; // 使用码点声明变量
+foo;                       // 使用对应的字面可以输出变量值 'abc'
+</code></pre>
+        </div>
+      </li>
+      <li>
+        <p><b>UTF-16</b></p>
+        <ol>
+          <li>JavaScript 内部使用 UTF-16 格式储存字符。</li>
+          <li>码点在 <code>U+0000</code> 到 <code>U+FFFF</code> 之间的字符，长度为16位，即2个字节。</li>
+          <li>码点在 <code>U+10000</code> 到 <code>U+10FFFF</code> 之间的字符，长度为32位，即4个字节。</li>
+          <li>由于历史原因，JavaScript 只支持两字节的字符，不支持四字节的字符，四字节会被认为是两个字符，即 length 为 2。所以 JavaScript 返回的字符串长度可能是不正确的。</li>
+        </ol>
+      </li>
+      <li>
+        <p><b>Base64</b></p>
+        <ol>
+          <li>Base64 是一种编码方法，可以将任意值转成 0-9、A-Z、a-z、+ 和 / 这64个字符组成的可打印字符。</li>
+          <li>使用 Base64 编码可以避免出现特殊字符，简化程序的处理。</li>
+          <li>场景1：文本包含不可打印的符号，比如 ASCII 码0到31的符号，可以使用 Base64 编码转成可以打印的字符。</li>
+          <li>场景2：以文本格式传递二进制数据，也可以使用 Base64 编码。</li>
+        </ol>
+      </li>
+    </ul>
+    <h2>1个合成类型</h2>
+    <h3>object</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>各种值的集合。对象是拥有属性和方法的数据集合，可以看做是存放各种值的容器。JS 中的所有事物都是对象，包括字符串、数字、数组、日期等。</li>
+        <li><b>属性：</b>与对象相关的值。</li>
+        <li><b>方法：</b>能够在对象上执行的动作。</li>
+        <li><b>成员：</b>在面向对象的语言中，属性和方法常被称为对象的成员。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var car;                // 汽车是现实生活中的对象
+car.color = white;      // 汽车的属性
+car.start();            // 汽车的方法</code></pre>
+      </div>
+    </div>
+    <h1>方法</h1>
+    <h2>数据类型检测</h2>
+    <h3>typeof 运算符</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>检测一个值的数据类型。</li>
+        <li>
+          <p><b>返回值：</b></p>
+          <ol>
+            <li><code>undefined</code> 1.undefined 2.未赋值 3.未声明 4.函数无返回值</li>
+            <li><code>boolean</code> &nbsp;&nbsp;布尔值</li>
+            <li><code>number</code> &nbsp;&nbsp;&nbsp;数值</li>
+            <li><code>string</code> &nbsp;&nbsp;&nbsp;字符串</li>
+            <li><code>object</code> &nbsp;&nbsp;&nbsp;1.对象 2.null</li>
+            <li><code>function</code> &nbsp;函数</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var g;
+function f() {};
+typeof undefined;   // undefined
+typeof g;           // undefined 变量 g 未赋值
+typeof h;           // undefined 变量 h 未声明
+typeof f();         // undefined 函数 f 无返回值
+typeof true;        // boolean
+typeof 123;         // number
+typeof '123';       // string
+typeof [];          // object
+typeof {};          // object
+typeof null;        // object
+typeof f;           // function f 是一个函数</code></pre>
+      </div>
+    </div>
+    <h2>数值相关</h2>
+    <h3>isNaN()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>判断一个值是否为 NaN 非数值。</li>
+        <li><b>返回值：</b>非数值返回 true，数值返回 false。</li>
+        <li><b>说明：</b>非数值先转为数值再判断，所以字符串、对象等也可能返回 true，使用前最好判断一下数据类型。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>isNaN(NaN);     // true
+isNaN('a');     // true  字符串
+isNaN(['a']);   // true  数组
+isNaN({});      // true  对象
+isNaN(1);       // false 数值
+isNaN('1');     // false 字符串转为1
+isNaN([]);      // false 空数组转为0
+isNaN([1]);     // false 数组只有一个数值成员 转为1
+isNaN(['1']);   // false
+typeof value === 'number' && isNaN(value);</code></pre>
+      </div>
+    </div>
+    <h3>isFinite()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>判断一个值是否是有穷的数值。</li>
+        <li><b>返回值：</b>有穷返回 true，无穷返回 false。</li>
+        <li>
+          <p><b>类型：</b></p>
+          <ol>
+            <li>非数值返回 false。</li>
+            <li><code>Infinity/-Infinity</code>、<code>NaN</code>、<code>undefined</code> 返回 false。</li>
+            <li>其它数值都返回 true。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code>isFinite('a');          // false 非数值
+isFinite(Infinity);     // false
+isFinite(-Infinity);    // false
+isFinite(NaN);          // false
+isFinite(undefined);    // false
+isFinite(null);         // true
+isFinite(-1);           // true</code></pre>
+      </div>
+    </div>
+    <div class="h3">
+      <h3>parseInt()</h3>
+      <span>&</span>
+      <h3>parseFloat()</h3>
+    </div>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th></th>
+          <th>parseInt()</th>
+          <th>parseFloat()</th>
+          <th>示例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>返回值</th>
+          <td>
+            <ul>
+              <li>将字符串转为十进制整数。</li>
+              <li>小数点是无效字符。</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>将字符串转为十进制小数。</li>
+              <li>第一个小数点有效，后面的小数点是无效字符。</li>
+            </ul>
+          </td>
+
+          <td>
+            <pre><code class="javascript">parseInt('1.23');       // 1
+parseFloat('1.23');     // 1.23
+parseFloat('1.2.3');    // 1.2</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <th>转换</th>
+          <td colspan="2">
+            <ul>
+              <li>非字符串会先转为字符串再转换。</li>
+              <li>字符串头部的空格会被自动去除。</li>
+            </ul>
+          </td>
+          <td>
+            <pre><code class="javascript">parseInt(123);     // 等同于 parseInt('123')
+parseInt('  123'); // 123</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <th>规则</th>
+          <td colspan="2">
+            <ul>
+              <li>从第一个字符开始，依次解析转换。</li>
+              <li>如果字符能转为数值，则继续解析，否则停止解析，并返回已经转好的部分。</li>
+              <li>如果第一个字符不能转为数值，则返回 <code>NaN</code>。</li>
+              <li>如果第一个字符是正负号，并且后跟数值，会继续解析。</li>
+              <li>科学计数法会继续解析。</li>
+            </ul>
+          </td>
+          <td>
+            <pre><code class="javascript">parseInt('123a');   // 123
+parseInt('123*');   // 123
+parseInt('a123');   // NaN
+parseInt('abcd');   // NaN
+parseInt('');       // NaN
+parseInt('+');      // NaN
+parseInt('+123');   // 123</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <th>科学计数法</th>
+          <td colspan="2">
+            <ul>
+              <li>会自动转为科学计数法的数值，先转为以科学计数法表示的字符串再解析。</li>
+              <li>parseInt() 不会进行相应的转换，只解析有效字符。</li>
+              <li>parseFloat() 会进行相应的转换，再解析转换后的数值。</li>
+            </ul>
+          </td>
+          <td>
+            <pre><code class="javascript">parseInt(0.0000008);    // 等同于 parseInt('8e-7')
+parseInt('123e-2');     // 123
+parseFloat('123e-2');   // 1.23</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <th>进制</th>
+          <td>
+            <ul>
+              <li>字符串可以用其它进制的数表示。</li>
+              <li>比如 <code>0x/0X</code> 开头，按照十六进制数解析。</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>字符串必须以十进制的数表示。</li>
+              <li>前导会按照规则解析。</li>
+            </ul>
+          </td>
+          <td>
+            <pre><code class="javascript">parseInt('0x10');   // 16
+parseFloat('0x10'); // 0 x是无效字符</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <th>基模式</th>
+          <td>
+            <ul>
+              <li>第二个参数表示被解析的值的进制，默认为10。</li>
+              <li>参数可设置为2-36之间的整数，超出范围返回 NaN。</li>
+              <li>参数是 0、null、undefined，会直接忽略。</li>
+              <li>指定进制的数不包含的字符也是无效的。</li>
+            </ul>
+          </td>
+          <td>没有第二个参数，字符串按照十进制数解析。</td>
+          <td>
+            <pre><code class="javascript">parseInt('10');        // 10  默认
+parseInt('10', 2);     // 2   按照二进制数转换
+parseInt('10', 50);    // NaN 参数超出范围
+parseInt('10', null);  // 10  参数被忽略
+parseInt('123', 2);    // 1   二进制数只有01有效
+parseInt('312', 2);    // NaN</code></pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>转码</h2>
+    <div class="h3">
+      <h3>btoa()</h3>
+      <span>&</span>
+      <h3>atob()</h3>
+    </div>
+    <div class="row">
+      <ul class="col-6">
+        <li><code>btoa()</code> 将任意值转为 Base64 编码。</li>
+        <li><code>atob()</code> 将 Base64 编码转为原来的值。</li>
+        <li>非 ASCII 码的字符使用这两个方法，中间必须插入一个转码环节，否则会报错。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var string = 'Hello World!';
+btoa(string);               // 'SGVsbG8gV29ybGQh'
+atob('SGVsbG8gV29ybGQh');   // 'Hello World!'
+btoa('你好');               // 报错
+atob('你好');               // 报错</code></pre>
+      </div>
+    </div>
+    <h1>对象实例</h1>
+    <h2>new Object()</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>构建对象：</b>由运算符 <code>new</code> 加上要实例化的对象的名字来创建。</li>
+        <li><b>字面量：</b>由花括号声明，花括号内，对象的属性以键值对 key/value 的形式来定义，由逗号分隔。</li>
+        <li><b>访问对象属性：</b>使用 <code>.</code> 或 <code>[]</code>。</li>
+      </ul>
+      <div class="col-6">
+        <p>1.构建对象 再赋值</p>
+        <pre><code class="javascript">var person = new Object();
+person.firstname = 'Bill';
+person.lastname = 'Gates';
+person.id = 5566;</code></pre>
+        <p>2.构建对象 同时赋值</p>
+        <pre><code class="javascript">var person = new Object({
+firstname: 'Bill',
+lastname: 'Gates',
+id: 5566
+});</code></pre>
+        <p>3.对象字面量 直接赋值</p>
+        <pre><code class="javascript">var person = {
+firstname: 'Bill',
+lastname: 'Gates',
+id: 5566
+};</code></pre>
+        <p>4.访问属性</p>
+        <pre><code class="javascript">name = person.lastname;     // Gates
+name = person['lastname'];  // Gates</code></pre>
+      </div>
+    </div>
+    <h2>new Array()</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>Array 对象用于在单个变量中存储多个值。</li>
+        <li><b>字面量：</b>由中括号声明，中括号内的元素由逗号分隔。</li>
+        <li><b>访问数组元素：</b>使用 <code>[]</code> 和数组元素下标，0 是第一个元素。</li>
+      </ul>
+      <div class="col-6">
+        <p>1.构建数组 再赋值</p>
+        <pre><code class="javascript">var cars = new Array();
+cars[0]='Audi';
+cars[1]='BMW';
+cars[2]='Volvo';</code></pre>
+        <p>2.构建数组 同时赋值</p>
+        <pre><code class="javascript">var cars = new Array('Audi','BMW','Volvo');</code></pre>
+        <p>3.数组字面量 直接赋值</p>
+        <pre><code class="javascript">var cars = ['Audi','BMW','Volvo'];</code></pre>
+        <p>4.访问数组元素</p>
+        <pre><code class="javascript">cars[1];        // BMW</code></pre>
+      </div>
+    </div>
+    <h2>new Date()</h2>
+    <div class="row">
+      <div class="col-6">
+        <ul>
+          <li><b>定义：</b>Date 对象用于处理日期和时间。</li>
+          <li>
+            <b>参数：</b>可以是 4 种。
+            <ol>
+              <li>空：返回当前日期和时间。</li>
+              <li>13 位毫秒数。</li>
+              <li>数字格式的日期和时间。</li>
+              <li>字符串格式的日期和时间。</li>
+            </ol>
+          </li>
+          <li><b>返回值：</b>返回本地标准时间。</li>
+          <li>
+            <b>方法：</b>
+            <ol>
+              <li>必须结合一个 Date 对象来使用。</li>
+              <li><code>get</code> 根据本地时间返回值。</li>
+              <li><code>set</code> 根据本地时间设置值。</li>
+              <li><code>UTC</code> 根据世界时间返回或设置。</li>
+              <li><a data-dialog="#dialogDate">点击这里</a> 查看全部。</li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <pre><code>/* 创建 Date 对象的四种方法 */
+new Date();                     // Tue Sep 18 2018 10:02:15 GMT+0800 (中国标准时间)
+new Date(1536887640000);        // Fri Sep 14 2018 09:14:00 GMT+0800 (中国标准时间)
+new Date(2018, 8, 14, 9, 14, 0);
+new Date('2018, 9, 14 9:14:00');
+
+/* Date 对象方法 以 2018-9-14 9:14:00 星期五 为例 */
+var $date = new Date(2018, 8, 14, 9, 14, 0);
+$date.getFullYear();                // 2018
+$date.getMonth();                   // 8 实际月份 +1 为 9 月
+$date.getDate();                    // 14
+$date.getDay();                     // 5 星期五
+$date.getHours();                   // 9
+$date.getUTCHours();                // 1 UTC小时,相差 8h
+$date.getMinutes();                 // 14
+$date.getSeconds();                 // 0
+$date.getMilliseconds();            // 0
+$date.getTime();                    // 1536887640000
+Date.parse('2018, 9, 14 9:14:00');  // 1536887640000
+Date.UTC(2018, 8, 14, 9, 14, 0);    // 1536916440000 UTC毫秒,相差 8h
+$date.getTimezoneOffset();          // -480 时区为 GMT+0800
+$date.setHours(8);                  // 1536884040000 设置小时后的毫秒
+console.log($date);                 // Fri Sep 14 2018 08:14:00 GMT+0800 (中国标准时间)</code></pre>
+      </div>
+    </div>
+    <h2>Math</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>用于执行数学任务。</li>
+        <li><b>注释：</b>Math 对象没有构造函数 Math()，无需创建，可直接作为对象调用其属性和方法。</li>
+        <li>
+          <b>属性示例：</b>
+          <ol>
+            <li><code>Math.PI</code> 返回圆周率。</li>
+            <li><a href="https://www.w3school.com.cn/jsref/jsref_obj_math.asp">点击这里</a> 查看全部。</li>
+          </ol>
+        </li>
+        <li>
+          <b>方法示例：</b>
+          <ol>
+            <li><code>Math.abs(x)</code> 返回 x 的绝对值。</li>
+            <li><code>Math.max(x,y)</code> 返回 x 和 y 中的最大值。参数可以是多个值。</li>
+            <li><code>Math.min(x,y)</code> 返回 x 和 y 中的最小值。参数可以是多个值。</li>
+            <li><code>Math.random()</code> 返回 0 ~ 1 之间的随机数。</li>
+            <li><code>Math.round(x)</code> 返回 x 四舍五入后最接近的整数。</li>
+            <li><a href="https://www.w3school.com.cn/jsref/jsref_obj_math.asp">点击这里</a> 查看全部。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code>/* Math 对象属性 */
+Math.PI;            // 3.141592653589793
+
+/* Math 对象方法 */
+Math.abs(-1);       // 1
+Math.max(1, 5, 8);  // 8
+Math.min(1, 5, 8);  // 1
+Math.random();      // 0.6025256107836321
+Math.round(3.5);    // 4
+Math.round(-3.5);   // -3</code></pre>
+      </div>
+    </div>
+    <h2>原始类型构建对象</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><code>new Boolean()</code> Boolean 对象表示两个值 true 或 false。</li>
+        <li><code>new Number()</code> Number 对象是原始数值的包装对象。</li>
+        <li><code>new String()</code> String 对象用于处理字符串。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">new Boolean(0);     // 构造函数 返回 Boolean {false}
+Boolean(0);         // 转换函数 返回 false</code></pre>
+        <pre><code class="javascript">new Number(6);      // 构造函数 返回 Number {6}
+Number(6);          // 转换函数 返回 6</code></pre>
+        <pre><code class="javascript">new String(6);      // 构造函数 返回 String {'6'}
+String(6);          // 转换函数 返回 '6'</code></pre>
+      </div>
+    </div>
+    <h1>对象属性</h1>
+    <h2>length</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>String：</b>返回字符串的长度。</li>
+        <li><b>Array：</b>设置或返回数组中元素的数目。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = '123';
+var arr = [1, 2, 3]
+str.length;     // 3 字符串长度
+arr.length;     // 3 数组长度</code></pre>
+      </div>
+    </div>
+    <h2>constructor</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>返回对创建此对象的函数的引用。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'abc';
+var arr = ['a', 'b', 'c'];
+var bill = new employee('a', 'b', 1);
+console.log(str.constructor); // ƒ String() { [native code] }
+console.log(arr.constructor); // ƒ Array() { [native code] }</code></pre>
+      </div>
+    </div>
+    <h2>prototype</h2>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>向对象添加属性和方法。</li>
+      </ul>
+    </div>
+    <h1>对象方法</h1>
+    <h2>强制转换</h2>
+    <h3>Boolean()</h3>
+    <div class="col-6">
+      <ul>
+        <li><b>定义：</b>把给定的值转换成 Boolean 型。</li>
+        <li>
+          <b>返回值：</b>
+          <ol>
+            <li><b>false：</b>空字符串、数字 0、NaN、undefined、null。</li>
+            <li><b>true：</b>非空字符串、非 0 数字、对象。</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <pre><code>Boolean('');        // false
+Boolean(' ');           // true
+Boolean('0');           // true
+Boolean('123');         // true
+Boolean('abc');         // true
+Boolean('false');         // true
+
+Boolean(0);             // false
+Boolean(1);             // true
+
+Boolean(null);          // false
+Boolean([]);            // true
+Boolean({});            // true</code></pre>
+    </div>
+    <h3>Number()</h3>
+    <div class="col-6">
+      <ul>
+        <li><b>定义：</b>把给定的值转换成数字。</li>
+        <li>
+          <b>不同数据类型的返回值：</b>
+          <ol>
+            <li><b>Undefined：</b>返回 NaN。</li>
+            <li><b>Null：</b>返回 0。</li>
+            <li><b>Boolean：</b>返回 0 和 1。</li>
+            <li><b>Number：</b>返回原始值。</li>
+            <li><b>String：</b>对整体值判断，空返回 0，数字返回原始值，非数字值返回 NaN。</li>
+            <li><b>Array：</b>只有一项时与 String 类型相同，有多项时返回 NaN。</li>
+            <li><b>Object：</b>返回 NaN。</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <pre><code>Number(undefined);      // NaN
+Number(null);           // 0
+Number(false);          // 0
+Number(true);           // 1
+Number(123);            // 123
+
+Number('');             // 0
+Number('123');          // 123
+Number('1.23');         // 1.23
+Number('1.2.3');        // NaN 非数字
+Number('abc');          // NaN 非数字
+
+Number([]);             // 0
+Number([1]);            // 1
+Number(['1']);          // 1
+Number(['a']);          // NaN
+Number([1, 2]);         // NaN
+Number({});             // NaN</code></pre>
+    </div>
+    <h3>String()</h3>
+    <div class="col-6">
+      <ul>
+        <li><b>定义：</b>把给定的值转换成字符串。</li>
+        <li><b>说明：</b>String() 和 toString() 方法唯一的区别是 undefined 和 null 调用不会报错。</li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <pre><code>var a = null;
+a.toString();           // 报错
+String(undefined);      // 'undefined'
+String(null);           // 'null'</code></pre>
+    </div>
+    <h2>转换解析</h2>
+    <h3>toString()</h3>
+    <div class="col-6">
+      <ul>
+        <li><b>定义：</b>把对象转换成字符串，并返回结果。</li>
+        <li><b>说明：</b>所有对象都有该方法，无论它是真对象还是伪对象。</li>
+        <li>
+          <b>不同对象的返回值：</b>
+          <ol>
+            <li><b>Boolean：</b>伪对象，返回原始值 true 或 false。</li>
+            <li><b>Number：</b>伪对象，<b>默认模式</b> 返回十进制数字值，<b>基模式</b> 返回指定的其他进制的数字值。</li>
+            <li><b>String：</b>伪对象，一定有该方法。</li>
+            <li><b>Array：</b>数组对象，返回数组中的元素，用逗号分隔。<code>join()</code> 方法没有参数时与该方法返回值相同。</li>
+            <li><b>Date：</b>返回本地时间。</li>
+          </ol>
+        </li>
+        <li>
+          <b>相关方法：</b>
+          <ol>
+            <li><code>toLocaleString()</code> 转换成本地格式的字符串。</li>
+            <li><code>toLocaleString()</code> 和 <code>toUTCString()</code> 根据本地时间/世界时转换。</li>
+            <li><code>toTimeString()</code> 和 <code>toDateString()</code> 转换时间/日期部分。</li>
+            <li><code>toLocaleTimeString()</code> 和 <code>toLocaleDateString()</code> 根据本地时转换时间/日期部分。</li>
+          </ol>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <pre><code>var isTrue = false;
+isTrue.toString();      // 输出 'false';
+
+var iNum1 = 10;
+var iNum2 = 10.0;
+var iNum3 = 10.1;
+iNum1.toString();       // 输出 '10'   十进制形式
+iNum2.toString();       // 输出 '10'   十进制形式小数 省略小数点后末尾的0
+iNum3.toString();       // 输出 '10.1' 十进制形式小数
+iNum1.toString(2);      // 输出 '1010' 二进制形式
+iNum1.toString(8);      // 输出 '12'   八进制形式
+iNum1.toString(16);     // 输出 'A'    十六进制形式
+
+var arr = ['a','b','c']
+arr.toString();         // 输出 a,b,c</code></pre>
+    </div>
+    <h3>valueOf()</h3>
+    <ul>
+      <li><b>定义：</b>返回对象的原始值。</li>
+      <li><b>说明：</b>对于许多对象，该方法与 <code>toString()</code> 方法的返回值相同。</li>
+    </ul>
+    <h3>join()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>把数组对象转换成字符串。</li>
+        <li><b>参数：</b>可选。指定要使用的分隔符，省略时使用逗号，此时与 <code>toString()</code> 方法返回值相同。</li>
+        <li><b>返回值：</b>返回一个字符串，使用指定的分隔符分隔。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var arr = [1, 2, 3];
+arr.join();             // 1,2,3
+arr.join('.');          // 1.2.3</code></pre>
+      </div>
+    </div>
+    <h3>split()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>把字符串分割成字符串数组。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li>必需。指定要分割的位置，可以是字符串或正则表达式。</li>
+            <li>可选。指定要返回的长度，省略时整个字符串都会被分割并返回。</li>
+          </ol>
+        </li>
+        <li><b>返回值：</b>返回一个数组，不包含分隔符。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'a|b|c';
+str.split('|');     // ['a', 'b', 'c']
+str.split('|', 2);  // ['a', 'b']</code></pre>
+      </div>
+    </div>
+    <h3>toFixed()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>将 Number 四舍五入为指定小数位数的数字。</li>
+        <li><b>参数：</b>必需。规定小数的位数，0 ~ 20 之间。</li>
+        <li><b>返回值：</b>返回 Number 的字符串表示。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var num = new Number(13.357);
+num.toFixed(2);     // 13.36 保留 2 位小数</code></pre>
+      </div>
+    </div>
+    <h3>隐式类型转换</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>说明：</b>js数据类型不严格，没有浮点和整型，隐式类型转换指字符串和数字之间的转换。</li>
+        <li>
+          <b>转换方式：</b>
+          <ol>
+            <li><b>加法运算：</b>默认将数字看成字符串进行拼接。</li>
+            <li><b>减乘除取余运算</b> 和 <b>比较运算：</b>自动把字符串转换为数字，转换数字的默认方法是调用Number()。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var x = '2';
+var y = 1;
+alert(x + y);   // '21'
+
+alert(x - y);   // 1
+alert(x * y);   // 2
+alert(x / y);   // 2
+alert(x % y);   // 0
+
+alert(x > y);   // true
+alert(x == y);  // false</code></pre>
+      </div>
+    </div>
+    <h2>查找替换</h2>
+    <h3>charAt()和charCodeAt()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>检索字符串中指定位置的字符。</li>
+        <li><b>参数：</b>指定位置的字符在字符串中的下标。</li>
+        <li><b>返回值：</b>返回指定位置的 字符/字符的 Unicode 编码。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var str = 'abc';
+str.charAt(0);      // a
+str.charCodeAt(0);  // 97</code></pre>
+      </div>
+    </div>
+    <h3>indexOf()和lastIndexOf()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>从头到尾/从尾到头 在字符串或数组中检索指定的值。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li>必需。规定要检索的字符或元素。</li>
+            <li>可选。规定开始检索的位置。省略时从 第一个/最后一个 开始。</li>
+          </ol>
+        </li>
+        <li><b>说明：</b>检索数组时，字符必须与某个数组元素完全相同，不能只是元素的一部分。</li>
+        <li><b>返回值：</b>返回检索内容在字符串或数组中 首次/最后一次 出现的位置，没有时返回 -1。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'ababab';
+str.indexOf('ab');         // 0
+str.lastIndexOf('ab');     // 4
+str.indexOf('ab',2)        // 2  从第三个开始检索
+str.indexOf('AB');         // -1 大小写敏感
+
+var arr = ['ab', 'ab', 'ab'];
+arr.indexOf('ab');         // 0
+arr.lastIndexOf('ab');     // 2
+arr.indexOf('a');          // -1 必须与数组元素完全相同</code></pre>
+      </div>
+    </div>
+    <h3>search()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在字符串中检索指定的值或与正则表达式匹配的值。</li>
+        <li><b>参数：</b>必需。规定要检索的值。可以是字符串或要匹配的 RegExp 对象。</li>
+        <li><b>返回值：</b>返回第一个相匹配的值的位置，不能全局检索，没有返回-1。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = '123abc123abc';
+str.search(/\d+/);     // 0  检索正则
+str.search(/abc/);     // 3  检索字符串
+str.search(/ABC/);     // -1 大小写敏感
+str.search(/ABC/i);    // 3  添加 i 忽略大小写</code></pre>
+      </div>
+    </div>
+    <h3>match()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在字符串或数组中检索指定的值或与正则表达式匹配的值。</li>
+        <li><b>参数：</b>与 <b>search()</b> 相同。</li>
+        <li>
+          <b>返回值：</b>返回一个数组，包含相匹配的值，没有时返回 null。
+          <ol>
+            <li>默认返回第一个相匹配的值和相关信息。可忽略相关信息直接当做值使用。</li>
+            <li>添加 g 时返回字符串中全部相匹配的值。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var str = '123abc123abc';
+str.match(/\d+/);      // ['123']        检索正则
+str.match(/\d+/g);     // ['123', '123'] 全局检索正则
+str.match(/abc/);      // ['abc'] 检索字符串
+str.match(/ABC/);      // null    大小写敏感
+str.match(/ABC/i);     // ['abc'] 添加 i 忽略大小写</code></pre>
+      </div>
+    </div>
+    <h3>replace()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在字符串中替换指定的值或与正则表达式匹配的值。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li>必需。规定要替掉的旧值。可以是字符串或要匹配的 RegExp 对象。</li>
+            <li>必需。规定要换上的新值。可以是字符串或生成字符串的函数。</li>
+          </ol>
+        </li>
+        <li>
+          <b>返回值：</b>返回一个新的字符串。
+          <ol>
+            <li>默认替换字符串中第一个相匹配的值。</li>
+            <li>添加 g 时替换字符串中全部相匹配的值。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var str = '123abc123abc';
+str.replace('abc', '字母');  // '123字母123abc'
+str.replace(/abc/g, '字母'); // '123字母123字母' 全局替换
+str.replace(/\d+/, '数字');  // '数字abc123abc'
+str.replace(/\d+/g, '数字'); // '数字abc数字abc'</code></pre>
+      </div>
+    </div>
+    <h2>截取字符</h2>
+    <h3>slice()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在字符串或数组中选取指定位置之间的值。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li><b>start：</b>必需。规定开始位置（包括）。0 第一个，-1 最后一个。</li>
+            <li><b>end：</b>可选。规定结束位置（不包括）。0 第一个，-1 最后一个，空 选取到最后一个。</li>
+          </ol>
+        </li>
+        <li><b>返回值：</b>返回新的字符串或数组，包含选取的指定的值。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = '012345';
+var arr = [0, 1, 2, 3, 4, 5];
+str.slice(1);         // '12345' 从第1个开始选到最后
+arr.slice(1);         // [1, 2, 3, 4, 5]
+str.slice(-1);        // '5'     从最后1个开始选
+arr.slice(-1);        // [5]
+str.slice(1, 3);      // '12'    从第2个开始选取到第3个
+arr.slice(1, 3);      // [1, 2]
+arr.slice(1, -1);     // '1234'  从第2个开始选取到倒数第2个
+arr.slice(1, -1);     // [1, 2, 3, 4]</code></pre>
+      </div>
+    </div>
+    <h3>substring()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在字符串中选取指定位置之间的字符。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li><b>start：</b>必需。规定开始位置（包括），非负数。0 第一个。</li>
+            <li><b>end：</b>可选。规定结束位置（不包括），非负数。0 第一个，空 选取到最后一个。</li>
+          </ol>
+        </li>
+        <li><b>返回值：</b>返回新的字符串，包含选取的字符。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'abcde';
+str.substring(1);      // bcde 从第2个开始选到最后
+str.substring(1, 2);   // b    从第2个开始选到第2个</code></pre>
+      </div>
+    </div>
+    <h3>substr() 不建议使用</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在字符串中选取指定数目的字符。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li><b>start：</b>必需。规定开始位置（包括）。0 第一个，-1 最后一个。</li>
+            <li><b>length：</b>可选。规定选择数目。空 选取到最后一个。</li>
+          </ol>
+        </li>
+        <li><b>返回值：</b>返回新的字符串，包含选取的字符。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'abcde';
+str.substr(1);      // bcde 从第2个开始选到最后
+str.substr(1, 2);   // bc   从第2个开始选2个</code></pre>
+      </div>
+    </div>
+    <h2>添加删除</h2>
+    <h3>concat()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>连接字符串或数组。</li>
+        <li><b>参数：</b>字符串或数组。</li>
+        <li><b>返回值：</b>返回一个新的字符串或数组，类型与原变量相同。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str1 = 'a';
+var str2 = 'b';
+var arr1 = [1, 2];
+var arr2 = [3, 4];
+str1.concat(str2);         // 字符串+字符串 'ab'
+str1.concat(arr1);         // 字符串+数组   'a1,2'
+arr1.concat(str1);         // 数组+ 字符串  [1, 2, "a"]
+arr1.concat(arr2);         // 数组+ 数组    [1, 2, 3, 4]
+arr1.concat(str1, arr2);   // 连接多个      [1, 2, "a", 3, 4]</code></pre>
+      </div>
+    </div>
+    <h3>push()和unshift()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>向数组的 末尾/开头 添加元素。unshift()不兼容IE浏览器。</li>
+        <li><b>参数：</b>要添加到数组的元素。</li>
+        <li><b>返回值：</b>改变后的新数组的长度。</li>
+        <li><b>原数组：</b>改变。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var arr1 = [1, 2, 3];
+var arr2 = [1, 2, 3];
+console.log(arr1.push('a', 'b'));       // 5
+console.log(arr1);                      // [1, 2, 3, 'a', 'b']
+console.log(arr2.unshift('a', 'b'));    // 5
+console.log(arr2);                      // ['a', 'b', 1, 2, 3]</code></pre>
+      </div>
+    </div>
+    <h3>pop()和shift()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>删除并返回数组的 最后一个/第一个元素。</li>
+        <li><b>返回值：</b>返回原数组的 最后一个/第一个元素。原数组为空则返回 undefined 值。</li>
+        <li><b>原数组：</b>改变，长度-1。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var arr1 = [1, 2, 3];
+var arr2 = [1, 2, 3];
+arr1.pop();             // 3
+arr2.shift();           // 1
+console.log(arr1);      // [1, 2]
+console.log(arr2);      // [2, 3]
+var arr0 = [];
+arr0.pop();             // undefined
+arr0.shift();           // undefined
+console.log(arr0);      // []</code></pre>
+      </div>
+    </div>
+    <h3>splice()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>在数组中添加或删除元素。</li>
+        <li>
+          <b>参数：</b>
+          <ol>
+            <li><b>index：</b>必需。要添加或删除元素的位置（包括该元素）。0 第一个，-1 最后一个。</li>
+            <li><b>howmany：</b>必需。要删除的元素数量。0 不会删除元素。</li>
+            <li><b>item：</b>可选。向数组添加的新元素。</li>
+          </ol>
+        </li>
+        <li><b>返回值：</b>如果删除了元素，返回一个新数组，包含被删除的元素。</li>
+        <li><b>原数组：</b>改变，添加或删除后的数组。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var arr1 = [0, 1, 2, 3, 4];
+arr1.splice(0,0);           // 从第1个开始删除0个添加0个 []
+console.log(arr1);          // 原数组不变 [0, 1, 2, 3, 4]
+arr1.splice(1,2);           // 从第2个开始删除2个添加0个 [1, 2]
+console.log(arr1);          // 原数组剩余3个 [0, 3, 4]
+arr1.splice(1,0,'a','b');   // 从第2个开始删除0个添加2个 []
+console.log(arr1);          // 原数组剩余7个 [0, 'a', 'b', 1, 2, 3, 4]
+arr1.splice(1,2,'a','b');   // 从第2个开始删除2个添加2个 [1, 2]
+console.log(arr1);          // 原数组剩余5个 [0, 'a', 'b', 3, 4]</code></pre>
+      </div>
+    </div>
+    <h2>比较排序</h2>
+    <h3>localeCompare()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>用本地特定的顺序来比较两个字符串。</li>
+        <li>
+          <b>返回值：</b>返回说明比较结果的数字。例如比较 a 和 b：
+          <ol>
+            <li>a &lt; b 时，返回值 &lt; 0，a 在 b 之前。</li>
+            <li>a = b 时，返回值 = 0，a 和 b 并列。</li>
+            <li>a &gt; b 时，返回值 &gt; 0，a 在 b 之后。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'b';
+str.localeCompare('a');    // 1 说明 b 在 a 之后
+str.localeCompare('b');    // 0
+str.localeCompare('c');    // -1 说明 b 在 c 之前
+str.localeCompare('d');    // -1</code></pre>
+      </div>
+    </div>
+    <h3>reverse()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>颠倒数组中元素的顺序。</li>
+        <li><b>原数组：</b>改变。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var arr1 = [1, 2, 3, 4];
+arr1.reverse();             // [4, 3, 2, 1]</code></pre>
+      </div>
+    </div>
+    <h3>sort()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>对数组的元素进行排序。</li>
+        <li>
+          <b>参数：</b>可选。可以是：
+          <ol>
+            <li><b>省略：</b>默认按字符编码排序。</li>
+            <li><b>比较函数：</b>添加两个参数 ab，a &lt; b 时， 返回值 &lt; 0， a 在 b 之前。</li>
+          </ol>
+        </li>
+        <li><b>返回值：</b>返回重新排序后的数组。</li>
+        <li><b>原数组：</b>改变。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var arr1 = ['Jo', 'Th', 'Ja', 'Ad'];
+var arr2 = ['10', '5', '100', '1'];
+arr1.sort();            // 'Ad',  'Ja', 'Jo', 'Th'
+arr2.sort();            // ['1', '10', '100', '5'] 字符编码排序
+arr2.sort(sortNumber);  // ['1', '5', '10', '100'] 大小排序
+function sortNumber(a, b) {
+return a - b;
+}</code></pre>
+      </div>
+    </div>
+    <h2>其它字符串相关</h2>
+    <h3>eval()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>计算某个字符串，并执行其中的的 JavaScript 代码。</li>
+        <li><b>参数：</b>必需。原始字符串，不能是 String 对象。其中含有要计算的 JavaScript 表达式或要执行的语句。</li>
+        <li><b>返回值：</b>计算后得到的值。</li>
+        <li>
+          <b>错误抛出：</b>
+          <ol>
+            <li>参数中没有合法的表达式或语句。</li>
+            <li>非法调用 eval()。</li>
+            <li>覆盖 eval 属性或把 eval() 方法赋予另一个属性，并通过该属性调用它。</li>
+            <li>传递给 eval() 的 Javascript 代码生成了一个异常，eval() 将把该异常传递给调用者。</li>
+          </ol>
+        </li>
+      </ul>
+      <div class="col-6">
+        <pre><code>var str = 'function () {return 1;}';
+var a = eval('1+1');            // 2
+var b = eval('(' + str + ')');  // 返回一个函数
+b();                            // 执行函数 返回结果 1</code></pre>
+      </div>
+    </div>
+    <h3>fromCharCode()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>从字符编码创建一个字符串。</li>
+        <li><b>参数：</b>必需。一个或多个 Unicode 值。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code>String.fromCharCode(65,66,67) // ABC</code></pre>
+      </div>
+    </div>
+    <h3>anchor()</h3>
+    <div class="row">
+      <ul class="col-6">
+        <li><b>定义：</b>创建 HTML 锚。</li>
+        <li><b>参数：</b>必需。锚的名称。</li>
+      </ul>
+      <div class="col-6">
+        <pre><code class="javascript">var txt = 'Hello World!';
+txt.anchor('myanchor');</code></pre>
+      </div>
+      <pre><code class="html">// 输出纯粹的 HTML
+&lt;a name="myanchor"&gtHello world!&lt;/a&gt</code></pre>
+    </div>
+    <h3>设置样式</h3>
+    <p>和使用 html 标签效果相同。</p>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>说明</th>
+          <th>效果</th>
+        </tr>
+      </thead>
+      <tbody id="text">
+        <tr>
+          <th></th>
+          <td>正常字体</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>big()</th>
+          <td>大号字体</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>small()</th>
+          <td>小号字体</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>bold()</th>
+          <td>粗体</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>italics()</th>
+          <td>斜体</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>strike()</th>
+          <td>删除线</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>blink()</th>
+          <td>闪动，IE 不支持</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>fixed()</th>
+          <td>打字机文本</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>fontcolor()</th>
+          <td>指定颜色</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>fontsize()</th>
+          <td>指定字号</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>sub()</th>
+          <td>显示为下标</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>sup()</th>
+          <td>显示为上标</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>link()</th>
+          <td>链接</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>toLowerCase()</th>
+          <td>转换为小写</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>toUpperCase()</th>
+          <td>转换为大写</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>toLocaleLowerCase()</th>
+          <td>转换为小写</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>toLocaleUpperCase()</th>
+          <td>转换为大写</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="dialog" id="dialogDate" title="Date 对象方法">
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>对应值</th>
+          <th>方法</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="4">* 年份</th>
+          <td><code>getFullYear()</code></td>
+          <td rowspan="4">
+            <b>get 返回值</b>：4位数字。
+            <br />
+            <b>set 参&nbsp;&nbsp;数：</b>数字值，与返回值一致。年月日一组，时分秒毫秒一组，第一个必需，后边可选。
+            <br />
+            <b>set 返回值：</b>调整过的日期的毫秒数。
+            <br />
+            <b>set 原对象：</b>调整过的日期。
+          </td>
+        </tr>
+        <tr>
+          <td><code>getUTCFullYear()</code></td>
+        </tr>
+        <tr>
+          <td><code>setFullYear()</code></td>
+        </tr>
+        <tr>
+          <td><code>setUTCFullYear()</code></td>
+        </tr>
+        <tr>
+          <th>* 月份</th>
+          <td><code>getMonth()</code></td>
+          <td>0 ~ 11 <br />0 是 1 月</td>
+        </tr>
+        <tr>
+          <th>* 天</th>
+          <td><code>getDate()</code></td>
+          <td>1 ~ 31</td>
+        </tr>
+        <tr>
+          <th>* 星期</th>
+          <td><code>getDay()</code> <br />没有set方法</td>
+          <td>0 ~ 6 <br />0 是星期天</td>
+        </tr>
+        <tr>
+          <th>* 小时</th>
+          <td><code>getHours()</code></td>
+          <td>0 ~ 23</td>
+        </tr>
+        <tr>
+          <th>* 分钟</th>
+          <td><code>getMinutes()</code></td>
+          <td>0 ~ 59</td>
+        </tr>
+        <tr>
+          <th>* 秒</th>
+          <td><code>getSeconds()</code></td>
+          <td>0 ~ 59</td>
+        </tr>
+        <tr>
+          <th>* 毫秒</th>
+          <td><code>getMilliseconds()</code></td>
+          <td>0 ~ 999</td>
+        </tr>
+        <tr>
+          <th rowspan="3">毫秒</th>
+          <td><code>getTime()</code></td>
+          <td rowspan="3">指定时间距 GMT 时间 1970 年 1 月 1 日之间的毫秒数。 <br />1.指定时间由 Date 对象定义，本地时间。 <br />2.指定时间由该方法的参数定义，本地时间，必须是表示日期和时间的字符串。 <br />3.指定时间由该方法的参数定义，UTC 时间，必须是表示日期和时间的数字。</td>
+        </tr>
+        <tr>
+          <td><code>Date.parse()</code></td>
+        </tr>
+        <tr>
+          <td><code>Date.UTC()</code></td>
+        </tr>
+        <tr>
+          <th>时差</th>
+          <td><code>getTimezoneOffset()</code></td>
+          <td>本地时间和 GMT 时间之间的时差，以分钟为单位。 <br />返回值/60 可得到本地时区。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+  <script type="text/javascript">
+    const txt = 'Hello World!';
+    $('#text tr').eq(0).children('td:last').html(txt);
+    $('#text tr').eq(1).children('td:last').html(txt.big());
+    $('#text tr').eq(2).children('td:last').html(txt.small());
+    $('#text tr').eq(3).children('td:last').html(txt.bold());
+    $('#text tr').eq(4).children('td:last').html(txt.italics());
+    $('#text tr').eq(5).children('td:last').html(txt.strike());
+    $('#text tr').eq(6).children('td:last').html(txt.blink());
+    $('#text tr').eq(7).children('td:last').html(txt.fixed());
+    $('#text tr').eq(8).children('td:last').html(txt.fontcolor('Red'));
+    $('#text tr').eq(9).children('td:last').html(txt.fontsize(12));
+    $('#text tr').eq(10).children('td:last').html(txt.sub());
+    $('#text tr').eq(11).children('td:last').html(txt.sup());
+    $('#text tr').eq(12).children('td:last').html(txt.link('javascript:void(0);'));
+    $('#text tr').eq(13).children('td:last').html(txt.toLowerCase());
+    $('#text tr').eq(14).children('td:last').html(txt.toUpperCase());
+  </script>
+</body>
+
+</html>

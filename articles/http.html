@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>通信协议</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../styles/article.css" />
+  <link rel="shortcut icon" href="../images/logo/github.png" />
+</head>
+
+<body>
+  <div class="page-header">
+    <h1 class="logo"><img data-src="../images/logo/http.png" />通信协议</h1>
+  </div>
+  <div class="page-sidebar">
+    <ul class="menu-root" id="menu"></ul>
+  </div>
+  <div class="page-container">
+    <h1>基础知识</h1>
+    <h2>互联网名词</h2>
+    <ol>
+      <li><b>互联网：</b>internet，由各种通信设备相互连接组成的网络系统，有广域网、城域网、局域网等。</li>
+      <li><b>因特网：</b>Internet，基于 TCP/IP 协议，是互联网中最大的一种，提供多种服务。</li>
+      <li><b>万维网：</b>WWW，万维网并不等同因特网，是因特网提供的服务之一。全称 World Wide Web，缩写 WWW、W3、Web，又称环球网、环球信息网。</li>
+    </ol>
+    <h2>因特网服务</h2>
+    <ol>
+      <li><b>万维网服务：</b>基于 HTTP（超文本传输协议），由各种超文本链接相互连接组成的网络系统，用于信息交互。</li>
+      <li><b>文件传输服务：</b>基于 FTP（文件传输协议）。</li>
+      <li><b>电子邮件服务：</b>基于 SMTP（简单邮件传输协议）。</li>
+      <li><b>远程登录服务：</b>基于 Telnet（远程登录协议协议），如 QQ。</li>
+    </ol>
+    <h1>TCP/IP协议</h1>
+    <h2>简介</h2>
+    <ul>
+      <li><b>TCP/IP协议族：</b>TCP/IP协议是一个网络通信模型，以及一整个网络传输协议家族，是互联网的基础通信架构，统称TCP/IP协议族。</li>
+      <li><b>TCP/IP模型：</b>TCP/IP协议提供点对点的链接机制，将数据应该如何封装、定址、传输、路由以及在目的地如何接收，都加以标准化。它通常将软件通信过程抽象化为四个抽象层，采取协议堆栈的方式，分别实现出不同通信协议。协议套组下的各种协议，依其功能不同，被分别归属到这四个层次结构之中，常被视为是简化的七层 OSI 模型。</li>
+    </ul>
+    <img data-src="../images/article/tcp-ip.png" />
+    <h2>通信流程</h2>
+    <p>TCP/IP协议采用分组交换的通信方式，逐层进行。</p>
+    <ol>
+      <li><b>应用层：</b>负责提供应用程序网络接口。应用层处理特定的应用程序细节，将数据发送给传输层。</li>
+      <li><b>传输层：</b>负责为两台主机间的应用程序提供端到端的连接。TCP（传输控制协议）将数据分成大小一定的数据包（基本传输单位）并添加序列号，发送给网络层。</li>
+      <li><b>网络层：</b>（互联网层）负责寻址和路由选择。IP（网间协议）给每个数据包添加发送主机和接收主机的地址，选择最佳路由，发送给链路层。</li>
+      <li><b>链路层：</b>（网络接口层）负责处理传输媒介的物理接口。链路层以比特流（帧）的形式将数据包发送给物理层。</li>
+      <li><b>物理层：</b>（硬件层）负责接收并读取数据。目的主机接收数据帧后，从协议栈中由底往上读取数据，同时去掉各层协议上的报文头。这层通常不包含在四层结构中。</li>
+    </ol>
+    <h2>数据的可靠性</h2>
+    <ul>
+      <li>IP协议不保证通信的可靠性，因为数据包有多种传输途径，可能出现顺序颠倒、数据丢失、数据失真、重复的现象。</li>
+      <li>TCP协议保证通信的可靠性，负责检查数据和处理错误，必要时还可以请求发送端重发。</li>
+      <li>TCP/IP协议可以确保数据安全、可靠地传输到指定的目的地。</li>
+    </ul>
+    <h1>HTTP协议</h1>
+    <h2>简介</h2>
+    <h4>定义</h4>
+    <ul>
+      <li><b>HTTP协议：</b>超文本传输协议。是因特网上应用最为广泛的一种网络传输协议，所有的 WWW（万维网）文件都必须遵守这个标准。</li>
+      <li><b>DNS：</b>域名系统。万维网上作为域名和IP地址相互映射的一个分布式数据库。通过域名得到对应的IP地址的过程叫域名解析。</li>
+    </ul>
+    <h4>特点</h4>
+    <ol>
+      <li><b>无连接：</b>HTTP协议限制每次连接只处理一个请求。服务端处理完客户端的请求，并收到客户端的应答后，即断开连接，这样可以节省传输时间。</li>
+      <li><b>无状态：</b>HTTP协议对于事务处理没有记忆能力。如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。</li>
+      <li><b>媒体独立：</b>HTTP协议允许传输任意类型的数据。正在传输的类型由 <code>Content-Type</code> 加以标记。</li>
+    </ol>
+    <h4>工作原理</h4>
+    <ol>
+      <li>基于&nbsp;&nbsp; <b>TCP/IP协议</b> 传递数据。</li>
+      <li>工作于 <b>客户端-服务端架构</b> 上。</li>
+      <li>采用&nbsp;&nbsp; <b>请求/响应模型</b>。客户端（浏览器等）通过 URL 向服务端（WEB 服务器等）发送请求报文，服务器解析请求并响应。</li>
+    </ol>
+    <h2>通信流程</h2>
+    <p>以浏览器请求WEB服务器为例，地址栏键入URL按下回车之后会经历以下流程：</p>
+    <ol>
+      <li><b>浏览器解析IP地址：</b>浏览器请求DNS服务器，解析URL中域名对应的IP地址。</li>
+      <li><b>浏览器建立TCP连接：</b>通过IP地址和端口，浏览器与WEB服务器建立TCP套接字连接，即TCP三次握手。</li>
+      <li><b>浏览器发送HTTP请求：</b>通过TCP套接字，浏览器向WEB服务器发送HTTP请求报文。</li>
+      <li><b>服务器响应HTTP请求：</b>WEB服务器接收并解析请求，定位请求资源，将资源复本写到TCP套接字，向浏览器发送响应（状态码、响应头、数据包等）。</li>
+      <li><b>服务器释放TCP连接：</b>若 <code>connection: close</code>，则服务器主动浏览器被动关闭TCP连接。若 <code>connection: keepalive</code>，则连接会保持打开状态，服务器继续接收请求。</li>
+      <li><b>浏览器解析响应：</b>浏览器首先解析状态行，根据状态码确认请求是否成功。然后解析每一个响应头，获取文档长度和字符集等信息。然后读取响应正文，如HTML，根据其语法对其进行格式化，并在浏览器窗口中显示。</li>
+    </ol>
+    <h2>请求和响应</h2>
+    <h4>HTTP Request</h4>
+    <ol class="col-6">
+      <li><b>请求行：</b>Request line，说明请求方法、请求地址、使用的HTTP版本。</li>
+      <li><b>请求头：</b>Request Headers，说明服务器要使用的附加信息。<a data-dialog="#dialogRequestHeaders">点击这里</a> 查看常见信息。</li>
+      <li><b>空行：</b>请求头后面的空行是必须的。</li>
+      <li><b>请求数据：</b>Request Params，发送给服务器的参数。</li>
+    </ol>
+    <div class="col-6">
+      <pre><code class="http">GET http://www.jianhe.com HTTP/1.1</code></pre>
+      <pre><code class="http">Connection:keep-alive
+content-type:application/x-www-form-urlencoded</code></pre>
+      <pre><code class="javascript">id=1&name=2</code></pre>
+    </div>
+    <h4>HTTP Response</h4>
+    <ol class="col-6">
+      <li><b>状态行</b>：说明HTTP版本、状态码、状态消息。</li>
+      <li><b>响应头</b>：Response Headers，说明客户端要使用的附加信息。<a data-dialog="#dialogResponseHeaders">点击这里</a> 查看常见信息。</li>
+      <li><b>空行</b>：响应头后面的空行是必须的。</li>
+      <li><b>响应正文</b>：Response，请求的服务端文档的完整内容。</li>
+    </ol>
+    <div class="col-6">
+      <pre><code class="http">HTTP/1.1 200 OK</code></pre>
+      <pre><code class="http">content-encoding:gzip
+content-type:application/json;charset=UTF-8
+date:Tue, 23 Oct 2018 14:49:02 GMT</code></pre>
+      <pre><code class="javascript">{"code":200,"message":"成功","data":{"id":1,"name":2}}</code></pre>
+    </div>
+    <h2>请求方法</h2>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th>方法</th>
+          <th>版本</th>
+          <th>描述</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>* GET</th>
+          <td>HTTP1.0</td>
+          <td>请求指定的页面信息，并返回实体主体。</td>
+        </tr>
+        <tr>
+          <th>* POST</th>
+          <td>HTTP1.0</td>
+          <td>向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。</td>
+        </tr>
+        <tr>
+          <th>HEAD</th>
+          <td>HTTP1.0</td>
+          <td>类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头。</td>
+        </tr>
+        <tr>
+          <th>PUT</th>
+          <td>HTTP1.1新增</td>
+          <td>从客户端向服务器传送的数据取代指定的文档的内容。</td>
+        </tr>
+        <tr>
+          <th>DELETE</th>
+          <td>HTTP1.1新增</td>
+          <td>请求服务器删除指定的页面。</td>
+        </tr>
+        <tr>
+          <th>CONNECT</th>
+          <td>HTTP1.1新增</td>
+          <td>HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</td>
+        </tr>
+        <tr>
+          <th>OPTIONS</th>
+          <td>HTTP1.1新增</td>
+          <td>允许客户端查看服务器的性能。</td>
+        </tr>
+        <tr>
+          <th>TRACE</th>
+          <td>HTTP1.1新增</td>
+          <td>回显服务器收到的请求，主要用于测试或诊断。</td>
+        </tr>
+      </tbody>
+    </table>
+    <h4>GET/POST 对比</h4>
+    <table class="table-border">
+      <thead>
+        <tr>
+          <th></th>
+          <th>GET</th>
+          <th>POST</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>功能</th>
+          <td>常用于从指定的服务器请求数据</td>
+          <td>常用于向指定的服务器提交数据，也可获取数据</td>
+        </tr>
+        <tr>
+          <th>可见性</th>
+          <td>提交的数据拼接在 URL 中，在地址栏显示： <br />1.英文字母/数字原样发送， <br />2.空格转换为+ <br />3.中文/其他字符转换为加密字符如 %E4%BD</td>
+          <td>提交的数据包含在 HTTP 请求体中，不在地址栏显示</td>
+        </tr>
+        <tr>
+          <th>刷新/后退</th>
+          <td>无害</td>
+          <td>数据会被重新提交</td>
+        </tr>
+        <tr>
+          <th>缓存</th>
+          <td>能被缓存</td>
+          <td>不会缓存</td>
+        </tr>
+        <tr>
+          <th>历史记录</th>
+          <td>请求参数会保留在浏览器历史记录中</td>
+          <td>请求参数不会保留在浏览器历史记录中</td>
+        </tr>
+        <tr>
+          <th>数据长度</th>
+          <td>有限制，不适合传输大型数据。 <br />注：HTTP协议没有对URL长度和传输的数据大小进行限制，但特定浏览器和服务器对URL长度有限制。</td>
+          <td>理论上无限制。 <br />注：实际上服务器会对post提交的数据大小进行限制，而且它没有定义传输数据结构的语义和规则，不支持复杂数据类型。</td>
+        </tr>
+        <tr>
+          <th>数据类型</th>
+          <td>只允许 ASCII 字符</td>
+          <td>没有限制，允许二进制数据</td>
+        </tr>
+        <tr>
+          <th>编码类型</th>
+          <td><code>application/x-www-form-urlencoded</code></td>
+          <td><code>application/x-www-form-urlencoded</code> 或 <code>multipart/form-data</code></td>
+        </tr>
+        <tr>
+          <th>取值方法</th>
+          <td><code>Request.QueryString</code></td>
+          <td><code>Request.Form</code></td>
+        </tr>
+        <tr>
+          <th>安全性</th>
+          <td>很不安全： <br />1.请求参数会明文出现在URL上，密码等敏感信息会泄露 <br />2.请求参数会保存在浏览器历史纪录和缓存中 <br />3.可能会造成 CSRF攻击（Cross-site request forgery 跨站域请求伪造）</td>
+          <td>相对安全： <br />1.请求参数不会出现在URL上 <br />2.请求参数不会保存在浏览器历史纪录中</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>状态码</h2>
+    <p>服务器响应会返回以下五类状态码。</p>
+    <ul>
+      <li><b>1xx：</b>信息响应类。表示接收到请求并且继续处理。</li>
+      <li><b>2xx：</b>处理成功响应类。表示动作被成功接收、理解和接受。</li>
+      <li><b>3xx：</b>重定向响应类。表示为了完成指定的动作，必须接受进一步处理。</li>
+      <li><b>4xx：</b>客户端错误类。表示客户请求包含语法错误或不能正确执行。</li>
+      <li><b>5xx：</b>服务端错误。服务器不能正确执行一个正确的请求。</li>
+    </ul>
+    <p>常见状态码如下。<a href="https://tool.oschina.net/commons?type=5">点击这里</a> 查看全部状态码详解。</p>
+    <table class="table-border table-hover">
+      <thead>
+        <tr>
+          <th>状态码</th>
+          <th>状态信息</th>
+          <th>状态说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>200</td>
+          <td>OK</td>
+          <td>成功</td>
+        </tr>
+        <tr>
+          <td>400</td>
+          <td>Bad Request</td>
+          <td>请求无效：1.语法错误 2.请求参数错误</td>
+        </tr>
+        <tr>
+          <td>401</td>
+          <td>Unauthorized</td>
+          <td>未授权：需要用户身份验证</td>
+        </tr>
+        <tr>
+          <td>403</td>
+          <td>Forbidden</td>
+          <td>拒绝访问：用户身份已验证但是没有权限</td>
+        </tr>
+        <tr>
+          <td>404</td>
+          <td>Not Found</td>
+          <td>资源不存在：查看路径是否错误</td>
+        </tr>
+        <tr>
+          <td>405</td>
+          <td>Method not allowed</td>
+          <td>请求方法错误</td>
+        </tr>
+        <tr>
+          <td>408</td>
+          <td>Request Timeout</td>
+          <td>请求超时</td>
+        </tr>
+        <tr>
+          <td>500</td>
+          <td>Internal Server Error</td>
+          <td>服务器内部错误</td>
+        </tr>
+        <tr>
+          <td>502</td>
+          <td>Bad Gateway</td>
+          <td>网关无效：网关或代理服务器尝试执行请求时，从上游服务器接收到无效的响应，需要先清空缓存。</td>
+        </tr>
+        <tr>
+          <td>503</td>
+          <td>Service Unavailable</td>
+          <td>服务不可用：临时的服务器维护或者过载</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="dialog" id="dialogRequestHeaders" title="请求头信息">
+      <table class="table-border table-hover">
+        <thead>
+          <tr>
+            <th>请求头</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Accept</th>
+            <td>客户端接收的资源类型</td>
+          </tr>
+          <tr>
+            <th>Accept-Encoding</th>
+            <td>客户端接收的编码方法和压缩类型</td>
+          </tr>
+          <tr>
+            <th>Accept-Language</th>
+            <td>客户端接收的语言类型</td>
+          </tr>
+          <tr>
+            <th>Connection</th>
+            <td>客户端与服务端的连接模式，决定请求结束后是否会关闭连接</td>
+          </tr>
+          <tr>
+            <th>Content-Type</th>
+            <td>服务端文档的MIME类型和编码方式，决定客户端读取内容的方式，点击查看 <a href="https://tool.oschina.net/commons">全部类型</a></td>
+          </tr>
+          <tr>
+            <th>Cookie</th>
+            <td>客户端缓存的服务端信息</td>
+          </tr>
+          <tr>
+            <th>If-Modified-Since</th>
+            <td>客户端缓存时间，这个时间之后改动的文档才会返回，否则返回一个304（Not Modified）状态</td>
+          </tr>
+          <tr>
+            <th>Date</th>
+            <td>客户端请求服务端的时间</td>
+          </tr>
+          <tr>
+            <th>Host</th>
+            <td>请求的目的主机地址和端口号</td>
+          </tr>
+          <tr>
+            <th>Origin</th>
+            <td>请求来自哪里，包含域名</td>
+          </tr>
+          <tr>
+            <th>Referer</th>
+            <td>请求来自哪里，包含域名、文件名、参数等，一般用于流量统计</td>
+          </tr>
+          <tr>
+            <th>User-Agent</th>
+            <td>客户端版本和操作系统版本，由浏览器定义并自动发送</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="dialog" id="dialogResponseHeaders" title="响应头信息">
+      <table class="table-border table-hover">
+        <thead>
+          <tr>
+            <th>响应头</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Allow</th>
+            <td>服务端支持的请求方法</td>
+          </tr>
+          <tr>
+            <th>Content-Encoding</th>
+            <td>服务端文档的编码方法和压缩类型</td>
+          </tr>
+          <tr>
+            <th>Content-Language</th>
+            <td>服务端文档的语言类型</td>
+          </tr>
+          <tr>
+            <th>Content-Length</th>
+            <td>服务端文档的长度</td>
+          </tr>
+          <tr>
+            <th>Content-Type</th>
+            <td>服务端文档的MIME类型和编码方式</td>
+          </tr>
+          <tr>
+            <th>Content-Disposition</th>
+            <td>服务端要求客户端打开文档的方式，显示或下载等</td>
+          </tr>
+          <tr>
+            <th>Date</th>
+            <td>服务端响应的GMT时间</td>
+          </tr>
+          <tr>
+            <th>Expires</th>
+            <td>客户端缓存失效时间</td>
+          </tr>
+          <tr>
+            <th>Last-Modified</th>
+            <td>服务端文档的最后修改时间</td>
+          </tr>
+          <tr>
+            <th>Location</th>
+            <td>客户端访问服务端的页面路径</td>
+          </tr>
+          <tr>
+            <th>Refresh</th>
+            <td>
+              <p>服务端要求客户端N秒之后刷新本页面或访问指定页面，可使用 <code>meta</code> 标签设置：</p>
+              <pre><code class="html">&lt;meta http-equiv="Refresh" content="5;URL=http://host/path"&gt;</code></pre>
+            </td>
+          </tr>
+          <tr>
+            <th>Server</th>
+            <td>
+              <p>服务端Web服务器名称</p>
+            </td>
+          </tr>
+          <tr>
+            <th>Set-Cookie</th>
+            <td>服务端发送到客户端的缓存数据</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  <script src="../scripts/article.js"></script>
+</body>
+
+</html>
